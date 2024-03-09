@@ -1,0 +1,52 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    background-image: url(background_img.jpg);
+    background-repeat:no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+.navig_bar{
+display: flex;
+padding: 2% 6%;
+justify-content: space-between;
+align-items: center;
+}
+.nav-links ul li {
+    list-style: none;
+    display: inline-block;
+    padding: 8px 12px;
+    position: relative;
+
+}
+.nav-links ul li  a{
+    color: #fff;
+    text-decoration: none;
+    font-size: 20px;
+    transition: all .3s ease;
+    font-family: myfont , sans-serif;
+
+}
+@font-face {
+    font-family: myfont;
+    src: url(batmfa__.ttf);
+}
+
+header{
+    min-height: 100hv;
+    width: 100%;
+    background: rgb(0,3,7);
+    background: radial-gradient(circle, rgba(0,3,7,0.876715652081145) 0%, rgba(220,242,6,0.7786764363948704) 100%);
+    background-position: center;
+    background-size: cover;
+    position: relative;
+}
+
+.logo{
+    mix-blend-mode: multiply;
+}
