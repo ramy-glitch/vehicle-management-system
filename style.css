@@ -32,6 +32,20 @@ align-items: center;
     transition: all .3s ease;
 }
 
+.nav-links ul li::after {
+    content: '';
+    width: 0%;
+    height: 2px;
+    background-color: #dcf206;
+    display: block;
+    margin: auto;
+    transition: 0.5s;
+}
+
+.nav-links ul li:hover::after {
+    width: 100%;
+}
+
 @font-face {
     font-family: myfont;
     src: url(batmfa__.ttf);
@@ -50,3 +64,4 @@ header{
 .logo{
     mix-blend-mode: multiply;
 }
+
