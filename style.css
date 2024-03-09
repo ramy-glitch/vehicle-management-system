@@ -3,13 +3,7 @@
     padding: 0;
 }
 
-body{
-    background-image: url(background_img.jpg);
-    background-repeat:no-repeat;
-    background-position: center;
-    background-attachment: fixed;
-    background-size: cover;
-}
+
 
 .navig_bar{
 display: flex;
