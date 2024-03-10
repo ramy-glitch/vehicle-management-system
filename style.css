@@ -51,11 +51,6 @@ margin-top: 0%;
 
 
 
-@font-face {
-    font-family: hh;
-    src: url(batmfo__.ttf);
-}
-
 header{
     min-height: 100hv;
     width: 100%;
@@ -85,17 +80,18 @@ header{
 
 .Welcome_header h1{
     font-size: 62px;
-    font-family: hh ,sans-serif;
+    margin-top: 15%;
 }
 
 .Welcome_header p{
+    
     margin: 20px 0 40px;
     font-size: 16px;
     color: #fff;
 }
 
 .highlighted_age{
-    color: #919514;
+    color: #2e2f20;
 }
 
 .visitus_btn{
