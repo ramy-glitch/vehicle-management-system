@@ -4,19 +4,20 @@
     font-family: myfont , sans-serif;
 }
 
-.background-image{
+body{
     background-image: url(background_img.jpg);
     background-repeat:no-repeat;
     background-position: center;
     background-attachment: fixed;
-    background-size: cover;
+    background-size:cover;
 }
 
 .navig_bar{
-display: flex;
+display:flex;
 padding: 2% 6%;
 justify-content: space-between;
 align-items: center;
+margin-top: 0%;
 }
 .nav-links ul li {
     list-style: none;
@@ -65,3 +66,28 @@ header{
     mix-blend-mode: multiply;
 }
 
+main{
+    background: rgb(166,172,21);
+    background: radial-gradient(circle, rgba(166,172,21,0.7002450638458508) 0%, rgba(166,172,21,0.4789565484396884) 49%);
+}
+
+.Welcome_header{
+    width: 90%;
+    color: #fff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.Welcome_header h1{
+    font-size: 62px;
+    font-style: url(batmfo__.ttf);
+}
+
+.Welcome_header p{
+    margin: 10px 0 40px;
+    font-size: 14px;
+    color: #fff;
+}
