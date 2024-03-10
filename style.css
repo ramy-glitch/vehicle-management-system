@@ -5,11 +5,13 @@
 }
 
 body{
-    background-image: url(background_img.jpg);
     background-repeat:no-repeat;
     background-position: center;
     background-attachment: fixed;
     background-size:cover;
+
+    background: rgb(166,172,21);
+    background: radial-gradient(circle, rgba(166,172,21,0.8178921226693803) 0%, rgba(0,24,28,1) 49%);
 }
 
 .navig_bar{
@@ -52,6 +54,11 @@ margin-top: 0%;
     src: url(batmfa__.ttf);
 }
 
+@font-face {
+    font-family: hh;
+    src: url(batmfo__.ttf);
+}
+
 header{
     min-height: 100hv;
     width: 100%;
@@ -60,16 +67,14 @@ header{
     background-position: center;
     background-size: cover;
     position: relative;
+    margin-top: 0%;
 }
 
 .logo{
     mix-blend-mode: multiply;
 }
 
-main{
-    background: rgb(166,172,21);
-    background: radial-gradient(circle, rgba(166,172,21,0.7002450638458508) 0%, rgba(166,172,21,0.4789565484396884) 49%);
-}
+
 
 .Welcome_header{
     width: 90%;
@@ -83,11 +88,15 @@ main{
 
 .Welcome_header h1{
     font-size: 62px;
-    font-style: url(batmfo__.ttf);
+    font-family: hh ,sans-serif;
 }
 
 .Welcome_header p{
     margin: 10px 0 40px;
     font-size: 14px;
     color: #fff;
+}
+
+.highlighted_age{
+    color: #a6ac15;
 }
