@@ -98,7 +98,7 @@ header{
 }
 
 .highlighted_age{
-    color: #a6ac15;
+    color: #919514;
 }
 
 .visitus_btn{
@@ -116,7 +116,7 @@ header{
 .visitus_btn:hover{
     border: 1px solid #000;
     background: #000;
-    transition: 1s;
+    transition: 1s;}
 
 
 
