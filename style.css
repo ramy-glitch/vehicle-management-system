@@ -55,7 +55,7 @@ header{
     min-height: 100hv;
     width: 100%;
     background: rgb(0,3,7);
-    background: radial-gradient(circle, rgba(0,3,7,0.876715652081145) 0%, rgba(220,242,6,0.7786764363948704) 100%);
+    background: radial-gradient(circle, rgba(0,3,7,1) 0%, rgba(147,167,11,1) 49%);
     background-position: center;
     background-size: cover;
     position: relative;
