@@ -1,7 +1,7 @@
 *{
     margin: 0;
     padding: 0; 
-    font-family: myfont , sans-serif;
+    font-family: Kode Mono, sans-serif;
 }
 
 body{
@@ -49,10 +49,7 @@ margin-top: 0%;
     width: 100%;
 }
 
-@font-face {
-    font-family: myfont;
-    src: url(batmfa__.ttf);
-}
+
 
 @font-face {
     font-family: hh;

@@ -2,19 +2,17 @@
     margin: 0;
     padding: 0; 
     box-sizing: border-box;
-    font-family: myfont , sans-serif;
+    font-family: Kode Mono, sans-serif;
 }
 
-@font-face {
-    font-family: myfont;
-    src: url(batmfa__.ttf);
-}
+
 
 body{
     background-repeat:no-repeat;
     background-position: center;
     background-attachment: fixed;
     background-size:cover;
+    background: rgb(166,172,21);
 }
 
 main{
