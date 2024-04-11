@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maintenance Expenses Form</title>
+</head>
+<body>
+    <h2>Maintenance Expenses Form</h2>
+    <form action="/submit_maintenance_expenses" method="post">
+        <label for="routine_maintenance_costs">Routine Maintenance Costs:</label><br>
+        <input type="number" id="routine_maintenance_costs" name="routine_maintenance_costs" step="0.01" min="0" required><br><br>
+
+        <label for="repair_costs">Repairs:</label><br>
+        <input type="number" id="repair_costs" name="repair_costs" step="0.01" min="0"><br><br>
+
+        <label for="parts_supplies_costs">Parts and Supplies:</label><br>
+        <input type="number" id="parts_supplies_costs" name="parts_supplies_costs" step="0.01" min="0"><br><br>
+
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>

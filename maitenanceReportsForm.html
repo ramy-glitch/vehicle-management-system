@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maintenance Report Form</title>
+</head>
+<body>
+    <h2>Maintenance Report Form</h2>
+    <form action="/submit_maintenance_report" method="post">
+        <label for="report_id">Report ID:</label><br>
+        <input type="text" id="report_id" name="report_id" required><br><br>
+
+        <label for="maintenance_id">Maintenance ID:</label><br>
+        <input type="text" id="maintenance_id" name="maintenance_id" required><br><br>
+
+        <label for="date_time">Date and Time:</label><br>
+        <input type="datetime-local" id="date_time" name="date_time" required><br><br>
+
+        <label for="vehicle_id">Vehicle ID:</label><br>
+        <input type="text" id="vehicle_id" name="vehicle_id" required><br><br>
+
+        <label for="report_details">Report Details:</label><br>
+        <textarea id="report_details" name="report_details" rows="4" cols="50" required></textarea><br><br>
+
+        <label for="parts_used">Parts Used:</label><br>
+        <textarea id="parts_used" name="parts_used" rows="4" cols="50"></textarea><br><br>
+
+        <label for="service_provider">Service Provider:</label><br>
+        <input type="text" id="service_provider" name="service_provider"><br><br>
+
+        <label for="follow_up_required">Follow-up Required:</label><br>
+        <select id="follow_up_required" name="follow_up_required" required>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+        </select><br><br>
+
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>

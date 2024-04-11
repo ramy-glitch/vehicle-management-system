@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Driver Expenses Form</title>
+</head>
+<body>
+    <h2>Driver Expenses Form</h2>
+    <form action="/submit_driver_expenses" method="post">
+        <label for="salary">Salary:</label><br>
+        <input type="number" id="salary" name="salary" step="0.01" min="0" required><br><br>
+
+        <label for="benefits">Benefits:</label><br>
+        <input type="number" id="benefits" name="benefits" step="0.01" min="0"><br><br>
+
+        <label for="training_costs">Training Costs:</label><br>
+        <input type="number" id="training_costs" name="training_costs" step="0.01" min="0"><br><br>
+
+        <label for="per_diem_allowances">Per Diem/Allowances:</label><br>
+        <input type="number" id="per_diem_allowances" name="per_diem_allowances" step="0.01" min="0"><br><br>
+
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>

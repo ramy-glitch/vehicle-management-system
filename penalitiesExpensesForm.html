@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Penalties and Fines Form</title>
+</head>
+<body>
+    <h2>Penalties and Fines Form</h2>
+    <form action="/submit_penalties_fines" method="post">
+        <label for="parking_tickets">Parking Tickets:</label><br>
+        <input type="number" id="parking_tickets" name="parking_tickets" min="0"><br><br>
+
+        <label for="speeding_tickets">Speeding Tickets:</label><br>
+        <input type="number" id="speeding_tickets" name="speeding_tickets" min="0"><br><br>
+
+        <label for="other_traffic_violations">Other Traffic Violations:</label><br>
+        <input type="number" id="other_traffic_violations" name="other_traffic_violations" min="0"><br><br>
+
+        <label for="late_fees">Late Fees:</label><br>
+        <input type="number" id="late_fees" name="late_fees" step="0.01" min="0"><br><br>
+
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>
