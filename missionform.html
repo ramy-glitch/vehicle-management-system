@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mission Information Form</title>
+</head>
+<body>
+    <h2>Mission Information Form</h2>
+    <form action="/submit_mission_info" method="post">
+        <label for="mission_id">Mission ID:</label><br>
+        <input type="text" id="mission_id" name="mission_id" required><br><br>
+
+        <label for="assigned_vehicle">Assigned Vehicle:</label><br>
+        <input type="text" id="assigned_vehicle" name="assigned_vehicle" required><br><br>
+
+        <label for="assigned_driver">Assigned Driver:</label><br>
+        <input type="text" id="assigned_driver" name="assigned_driver" required><br><br>
+
+        <label for="start_datetime">Start Date and Time:</label><br>
+        <input type="datetime-local" id="start_datetime" name="start_datetime" required><br><br>
+
+        <label for="end_datetime">End Date and Time:</label><br>
+        <input type="datetime-local" id="end_datetime" name="end_datetime" required><br><br>
+
+        <label for="origin">Origin:</label><br>
+        <input type="text" id="origin" name="origin" required><br><br>
+
+        <label for="destination">Destination:</label><br>
+        <input type="text" id="destination" name="destination" required><br><br>
+
+        <label for="purpose">Purpose:</label><br>
+        <textarea id="purpose" name="purpose" rows="4" cols="50" required></textarea><br><br>
+
+        <label for="status">Status:</label><br>
+        <select id="status" name="status" required>
+            <option value="scheduled">Scheduled</option>
+            <option value="in_progress">In Progress</option>
+            <option value="completed">Completed</option>
+            <option value="cancelled">Cancelled</option>
+        </select><br><br>
+
+        <label for="mission_details">Mission Details:</label><br>
+        <textarea id="mission_details" name="mission_details" rows="4" cols="50"></textarea><br><br>
+
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>

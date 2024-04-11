@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maintenance Information Form</title>
+</head>
+<body>
+    <h2>Maintenance Information Form</h2>
+    <form action="/submit_maintenance_info" method="post">
+        <label for="maintenance_id">Maintenance ID:</label><br>
+        <input type="text" id="maintenance_id" name="maintenance_id" required><br><br>
+
+        <label for="vin">Vehicle Identification Number (VIN):</label><br>
+        <input type="text" id="vin" name="vin" required><br><br>
+
+        <label for="date_of_maintenance">Date of Maintenance:</label><br>
+        <input type="date" id="date_of_maintenance" name="date_of_maintenance" required><br><br>
+
+        <label for="maintenance_type">Type of Maintenance:</label><br>
+        <input type="text" id="maintenance_type" name="maintenance_type" required><br><br>
+
+        <label for="maintenance_details">Details of Maintenance:</label><br>
+        <textarea id="maintenance_details" name="maintenance_details" rows="4" cols="50" required></textarea><br><br>
+
+        <label for="parts_replaced">Parts Replaced or Repaired:</label><br>
+        <textarea id="parts_replaced" name="parts_replaced" rows="4" cols="50"></textarea><br><br>
+
+        <label for="service_provider">Service Provider:</label><br>
+        <input type="text" id="service_provider" name="service_provider"><br><br>
+
+        <label for="cost">Cost:</label><br>
+        <input type="number" id="cost" name="cost" step="0.01" min="0" required><br><br>
+
+        <label for="next_maintenance_date">Next Scheduled Maintenance:</label><br>
+        <input type="date" id="next_maintenance_date" name="next_maintenance_date"><br><br>
+
+        <label for="notes">Notes:</label><br>
+        <textarea id="notes" name="notes" rows="4" cols="50"></textarea><br><br>
+
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>
