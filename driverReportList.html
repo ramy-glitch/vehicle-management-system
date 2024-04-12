@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>List of Drivers</title>
-    <link  rel="stylesheet" href="style.css"/>
+    <title>List of Driver Reports</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -33,53 +33,56 @@
     </div>
 
 <div class="container">
-    <h1>List of Drivers</h1>
+    <h1>List of Driver Reports</h1>
 
     <!-- Search and Filter -->
     <div class="search-container">
-        <input type="text" class="search-input" placeholder="Search drivers...">
+        <input type="text" class="search-input" placeholder="Search reports...">
         <select class="filter-select">
             <option value="all">All</option>
-            <option value="active">Active</option>
-            <option value="inactive">Inactive</option>
+            <option value="pending">Pending</option>
+            <option value="resolved">Resolved</option>
         </select>
         <button class="btn btn-primary">Search</button>
     </div>
 
-    <!-- Insert New Driver Button -->
-    <a href="new_driver.html" class="btn btn-primary" style="width: fit-content;">Insert New Driver</a>
-
-    <!-- Driver List Table -->
+    <!-- Driver Reports List Table -->
     <table>
         <thead>
             <tr>
-                <th>Full Name</th>
-                <th>Phone Number</th>
-                <th>Status</th>
-                <th>License Plate Number</th>
+                <th>Report ID</th>
+                <th>Driver ID</th>
+                <th>Driver Phone</th>
+                <th>Vehicle VIN</th>
+                <th>Mission ID</th>
+                <th>Vehicle Location</th>
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td>John Doe</td>
+                <td>1</td>
+                <td>123</td>
                 <td>123-456-7890</td>
-                <td>Active</td>
-                <td>ABC123</td>
+                <td>123456789</td>
+                <td>1</td>
+                <td>Location A</td>
                 <td>
                     <button class="btn btn-secondary">View</a></button>
-                    <button class="btn btn-secondary">Edit</a></button>
+                    <button class="btn btn-secondary">Response</a></button>
                     <button class="btn btn-secondary">Delete</a></button>
                 </td>
             </tr>
             <tr>
-                <td>Jane Smith</td>
+                <td>2</td>
+                <td>456</td>
                 <td>987-654-3210</td>
-                <td>Inactive</td>
-                <td>XYZ789</td>
+                <td>987654321</td>
+                <td>2</td>
+                <td>Location B</td>
                 <td>
                     <button class="btn btn-secondary">View</a></button>
-                    <button class="btn btn-secondary">Edit</a></button>
+                    <button class="btn btn-secondary">Response</a></button>
                     <button class="btn btn-secondary">Delete</a></button>
                 </td>
             </tr>
