@@ -54,6 +54,25 @@ body {
     text-decoration: none;
 }
 
+
+
+.navbar .navbar-menu .navbar-item .dropdown li{
+    display: block;
+}
+
+.navbar .navbar-menu .navbar-item .dropdown{
+    width:fit-content;
+    position: absolute;
+    justify-content: space-between;
+    background: #007bffa3;
+    display: none;
+}
+
+.navbar .navbar-menu li:hover .dropdown{
+    display: block;
+}
+
+
 .container {
     max-width: 1000px;
     margin: 0 auto;
