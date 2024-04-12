@@ -55,7 +55,7 @@ body {
 }
 
 .container {
-    max-width: 800px;
+    max-width: 1000px;
     margin: 0 auto;
     background-color: #fff;
     padding: 20px;
@@ -82,7 +82,7 @@ th, td {
     color: #fff;
     border-radius: 10px;
     width: 70px;
-    display:inline-table;
+    display:inline;
     text-align: center;
 }
 .btn-primary {
