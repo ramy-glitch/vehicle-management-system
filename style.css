@@ -74,7 +74,7 @@ body {
 
 
 .container {
-    max-width: 1000px;
+    max-width: 1200px;
     margin: 0 auto;
     background-color: #fff;
     padding: 20px;
@@ -94,6 +94,7 @@ th, td {
     padding: 12px;
     text-align: left;
     border-bottom: 1px solid #ddd;
+
 }
 .btn {
     padding: 8px 10px;

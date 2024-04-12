@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>List of Drivers</title>
-    <link  rel="stylesheet" href="style.css"/>
+    <title>List of Admin Reports</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
 
     <div class="navbar">
         <div class="navbar-brand"><a href="adminHomePage.html">Admin Dashboard</a></div>
@@ -16,7 +17,7 @@
             <li class="navbar-item"><a href="driversList.html" class="nav-link">Drivers List</a></li>
             <li class="navbar-item"><a href="maintenanceList.html" class="nav-link">Maintenances List</a></li>
             <li class="navbar-item"><a href="missionList.html" class="nav-link">Missions List</a></li>
-            <li class="navbar-item"><a href="#" class="nav-link">Notifications</a></li>
+            <li class="navbar-item"><a href="maintenanceReportList.html" class="nav-link">Notifications</a></li>
             
             <li class="navbar-item"><a href="#" class="nav-link">Reports List</a>
             <ul class="dropdown">
@@ -33,53 +34,50 @@
     </div>
 
 <div class="container">
-    <h1>List of Drivers</h1>
+    <h1>List of Admin Reports</h1>
 
     <!-- Search and Filter -->
     <div class="search-container">
-        <input type="text" class="search-input" placeholder="Search drivers...">
+        <input type="text" class="search-input" placeholder="Search reports...">
         <select class="filter-select">
             <option value="all">All</option>
-            <option value="active">Active</option>
-            <option value="inactive">Inactive</option>
+            <option value="pending">Pending</option>
+            <option value="resolved">Resolved</option>
         </select>
         <button class="btn btn-primary">Search</button>
     </div>
 
-    <!-- Insert New Driver Button -->
-    <a href="new_driver.html" class="btn btn-primary" style="width: fit-content;">Insert New Driver</a>
-
-    <!-- Driver List Table -->
+    <!-- Admin Reports List Table -->
     <table>
         <thead>
             <tr>
-                <th>Full Name</th>
-                <th>Phone Number</th>
-                <th>Status</th>
-                <th>License Plate Number</th>
+                <th>Report ID</th>
+                <th>Issue</th>
+                <th>Admin ID</th>
+                <th>Date</th>
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td>John Doe</td>
-                <td>123-456-7890</td>
-                <td>Active</td>
-                <td>ABC123</td>
+                <td>1</td>
+                <td>System Error</td>
+                <td>123</td>
+                <td>2024-04-16</td>
                 <td>
                     <button class="btn btn-secondary">View</a></button>
-                    <button class="btn btn-secondary">Edit</a></button>
+                    <button class="btn btn-secondary">Response</a></button>
                     <button class="btn btn-secondary">Delete</a></button>
                 </td>
             </tr>
             <tr>
-                <td>Jane Smith</td>
-                <td>987-654-3210</td>
-                <td>Inactive</td>
-                <td>XYZ789</td>
+                <td>2</td>
+                <td>User Access Issue</td>
+                <td>456</td>
+                <td>2024-04-17</td>
                 <td>
                     <button class="btn btn-secondary">View</a></button>
-                    <button class="btn btn-secondary">Edit</a></button>
+                    <button class="btn btn-secondary">Response</a></button>
                     <button class="btn btn-secondary">Delete</a></button>
                 </td>
             </tr>
