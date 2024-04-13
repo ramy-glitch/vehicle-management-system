@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List of Driver Expenses</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f7f7f7;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        .btn {
+            padding: 8px 16px;
+            margin-right: 8px;
+            text-decoration: none;
+            color: #fff;
+            border-radius: 4px;
+        }
+        .btn-primary {
+            background-color: #007bff;
+        }
+        .btn-secondary {
+            background-color: #6c757d;
+        }
+        .search-container {
+            margin-bottom: 20px;
+        }
+        .search-input {
+            padding: 8px;
+            width: 300px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        .filter-select {
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>List of Driver Expenses</h1>
+
+    <!-- Search and Filter -->
+    <div class="search-container">
+        <input type="text" class="search-input" placeholder="Search expenses...">
+        <select class="filter-select">
+            <option value="all">All</option>
+            <option value="salary">Salary</option>
+            <option value="benefits">Benefits</option>
+            <option value="training">Training Costs</option>
+            <option value="allowances">Per Diem/Allowances</option>
+        </select>
+        <button class="btn btn-primary">Search</button>
+    </div>
+
+    <!-- Driver Expenses List Table -->
+    <table>
+        <thead>
+            <tr>
+                <th>Expense ID</th>
+                <th>Type</th>
+                <th>Admin ID</th>
+                <th>Date</th>
+                <th>Amount</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>Salary</td>
+                <td>123</td>
+                <td>2024-04-15</td>
+                <td>$2000</td>
+                <td>
+                    <a href="view_expense.html" class="btn btn-secondary">View Details</a>
+                    <a href="edit_expense.html" class="btn btn-secondary">Edit</a>
+                    <a href="delete_expense.html" class="btn btn-secondary">Delete Expense</a>
+                </td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Training Costs</td>
+                <td>456</td>
+                <td>2024-04-16</td>
+                <td>$500</td>
+                <td>
+                    <a href="view_expense.html" class="btn btn-secondary">View Details</a>
+                    <a href="edit_expense.html" class="btn btn-secondary">Edit</a>
+                    <a href="delete_expense.html" class="btn btn-secondary">Delete Expense</a>
+                </td>
+            </tr>
+            <!-- Add more rows as needed -->
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>
