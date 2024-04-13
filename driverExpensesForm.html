@@ -4,33 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Driver Expenses Form</title>
-    <link rel="stylesheet" href="form.css"/>
+    <link rel="stylesheet" href="form.css">
 </head>
 <body>
     <div class="container">
         <h2>Driver Expenses Form</h2>
         <form action="/submit_driver_expenses" method="post">
-            
-            <label for="salary">Driver ID:</label>
-            <input type="number" id="salary" name="salary" step="0.01" min="0" required>
-            
+            <label for="driver_id">Driver ID:</label>
+            <input type="number" id="driver_id" name="driver_id" min="0" required>
+
             <label for="salary">Salary:</label>
-            <input type="number" id="salary" name="salary" step="0.01" min="0" required>
+            <input type="number" id="salary" name="salary" min="0" required>
 
             <label for="benefits">Benefits:</label>
-            <input type="number" id="benefits" name="benefits" step="0.01" min="0">
+            <input type="number" id="benefits" name="benefits" min="0">
 
             <label for="training_costs">Training Costs:</label>
-            <input type="number" id="training_costs" name="training_costs" step="0.01" min="0">
+            <input type="number" id="training_costs" name="training_costs" min="0">
 
             <label for="per_diem_allowances">Per Diem/Allowances:</label>
-            <input type="number" id="per_diem_allowances" name="per_diem_allowances" step="0.01" min="0">
+            <input type="number" id="per_diem_allowances" name="per_diem_allowances" min="0">
 
-            <input type="button" value="Back">
-            <br>
             <input type="submit" value="Submit">
+            <input type="button" value="Back" onclick="window.history.back()">
         </form>
     </div>
 </body>
 </html>
+
 
