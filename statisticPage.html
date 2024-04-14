@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>List of Maintenance Expenses</title>
-    <link  rel="stylesheet" href="style.css"/>
+    <title>Statistics</title>
+    <link  rel="stylesheet" href="statistic.css"/>
 </head>
 <body>
+
     <div class="navbar">
         <div class="navbar-brand"><a href="adminHomePage.html">Admin Dashboard</a></div>
         <ul class="navbar-menu">
@@ -39,63 +40,97 @@
         </ul>
     </div>
 
-    <div class="container">
-    <h1>List of Maintenance Expenses</h1>
 
-    <!-- Search and Filter -->
-    <div class="search-container">
-        <input type="text" class="search-input" placeholder="Search expenses...">
-        <select class="filter-select">
-            <option value="all">All</option>
-            <option value="oil_change">Oil Change</option>
-            <option value="tire_rotation">Tire Rotation</option>
-            <option value="brake_inspection">Brake Inspection</option>
-            <option value="repairs">Repairs</option>
-        </select>
-        <button class="btn btn-primary">Search</button>
-    </div>
+<h1>Statistics</h1>
 
-    <!-- Maintenance Expenses List Table -->
-    <table>
-        <thead>
-            <tr>
-                <th>Expense ID</th>
-                <th>Type</th>
-                <th>Maintenance ID</th>
-                <th>Date</th>
-                <th>Amount</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>1</td>
-                <td>Oil Change</td>
-                <td>123</td>
-                <td>2024-04-15</td>
-                <td>$100</td>
-                <td>
-                    <button class="btn btn-secondary">View</a></button>
-                    <button class="btn btn-secondary">Edit</a></button>
-                    <button class="btn btn-secondary">Delete</a></button>
-                </td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>Tire Rotation</td>
-                <td>456</td>
-                <td>2024-04-16</td>
-                <td>$50</td>
-                <td>
-                    <button class="btn btn-secondary">View</a></button>
-                    <button class="btn btn-secondary">Edit</a></button>
-                    <button class="btn btn-secondary">Delete</a></button>
-                </td>
-            </tr>
-            <!-- Add more rows as needed -->
-        </tbody>
-    </table>
-</div>
+<!-- Vehicle Statistics -->
+<h2>Vehicle Statistics</h2>
+<table>
+    <tr>
+        <th>Total Number of Vehicles</th>
+        <td>100</td>
+    </tr>
+    <tr>
+        <th>Vehicle Utilization</th>
+        <td>75%</td>
+    </tr>
+    <tr>
+        <th>Fuel Efficiency</th>
+        <td>20 miles per gallon</td>
+    </tr>
+    <tr>
+        <th>Maintenance Costs</th>
+        <td>Total: $50,000 | Average per Vehicle: $500</td>
+    </tr>
+</table>
+
+<!-- Driver Statistics -->
+<h2>Driver Statistics</h2>
+<table>
+    <tr>
+        <th>Total Number of Drivers</th>
+        <td>50</td>
+    </tr>
+    <tr>
+        <th>Driver Performance</th>
+        <td>Completed Missions: 500 | Adherence to Schedules: 90%</td>
+    </tr>
+    <tr>
+        <th>Driver Safety</th>
+        <td>Traffic Violations: 20 | Accidents: 5</td>
+    </tr>
+</table>
+
+<!-- Mission Statistics -->
+<h2>Mission Statistics</h2>
+<table>
+    <tr>
+        <th>Total Number of Missions</th>
+        <td>200</td>
+    </tr>
+    <tr>
+        <th>Mission Success Rate</th>
+        <td>85%</td>
+    </tr>
+    <tr>
+        <th>Average Mission Duration</th>
+        <td>2 hours</td>
+    </tr>
+</table>
+
+<!-- Expense Statistics -->
+<h2>Expense Statistics</h2>
+<table>
+    <tr>
+        <th>Total Expenses</th>
+        <td>$150,000</td>
+    </tr>
+    <tr>
+        <th>Cost per Mile</th>
+        <td>$0.50 per mile</td>
+    </tr>
+    <tr>
+        <th>Cost per Mission</th>
+        <td>$750 per mission</td>
+    </tr>
+</table>
+
+<!-- Maintenance Statistics -->
+<h2>Maintenance Statistics</h2>
+<table>
+    <tr>
+        <th>Total Maintenance Costs</th>
+        <td>$50,000</td>
+    </tr>
+    <tr>
+        <th>Average Maintenance Cost per Vehicle</th>
+        <td>$500</td>
+    </tr>
+    <tr>
+        <th>Maintenance Frequency</th>
+        <td>Every 3 months</td>
+    </tr>
+</table>
 
 </body>
 </html>
