@@ -31,7 +31,7 @@ form {
 label {
     font-weight: bold;
 }
-
+input[type="datetime-local"],
 input[type="email"],
 input[type="tel"],
 input[type="number"],
