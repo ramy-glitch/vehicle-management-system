@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Penalties and Fines Form</title>
+    <link rel="stylesheet" href="form.css">
 </head>
 <body>
+    <div class="container">
     <h2>Penalties and Fines Form</h2>
     <form action="/submit_penalties_fines" method="post">
         <label for="parking_tickets">Parking Tickets:</label><br>
@@ -21,6 +23,9 @@
         <input type="number" id="late_fees" name="late_fees" step="0.01" min="0"><br><br>
 
         <input type="submit" value="Submit">
+        <input type="button" value="Back" onclick="window.location.href='penalitiesExpensesList.html'">
     </form>
+    </div>
 </body>
 </html>
+
