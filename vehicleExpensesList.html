@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List of Vehicle Expenses</title>
+    <link  rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+    <div class="navbar">
+        <div class="navbar-brand"><a href="adminHomePage.html">Admin Dashboard</a></div>
+        <ul class="navbar-menu">
+            <li class="navbar-item"><a href="adminHomePage.html" class="nav-link">Dashboard</a></li>
+            <li class="navbar-item"><a href="vehiclesList.html" class="nav-link">Vehicles</a></li>
+            <li class="navbar-item"><a href="driversList.html" class="nav-link">Drivers</a></li>
+            <li class="navbar-item"><a href="maintenanceList.html" class="nav-link">Maintenances</a></li>
+            <li class="navbar-item"><a href="missionList.html" class="nav-link">Missions</a></li>
+            <li class="navbar-item"><a href="#" class="nav-link">Notifications</a></li>
+            
+            <li class="navbar-item"><a href="#" class="nav-link">Reports</a>
+            <ul class="dropdown">
+                <li><a href="driverReportList.html">Driver Reports</a></li>
+                <li><a href="maintenanceReportList.html">Maintenance Reports</a></li>
+                <li><a href="adminReportList.html">Admin Reports</a></li>
+            </ul>
+            </li>
+            
+            <li class="navbar-item"><a href="#" class="nav-link">Expenses Up-to-date</a>
+                <ul class="dropdown">
+                    <li><a href="driverExpensesList.html">Driver Expenses</a></li>
+                    <li><a href="maintenanceExpensesList.html">Maintenance Expenses</a></li>
+                    <li><a href="missionExpensesList.html">Missions Expenses</a></li>
+                    <li><a href="vehicleExpensesList.html">Vehicle Expenses</a></li>
+                    <li><a href="penaltiesExpensestList.html">Penalties and Fines</a></li>
+                </ul>
+            </li>
+            <li class="navbar-item"><a href="statisticPage.html" class="nav-link">Statistics</a></li>
+            <li class="navbar-item"><a href="#" class="nav-link">Account</a></li>
+        </ul>
+    </div>
+<div class="container">
+    <h1>List of Vehicle Expenses</h1>
+
+    <!-- Search and Filter -->
+    <div class="search-container">
+        <input type="text" class="search-input" placeholder="Search expenses...">
+        <select class="filter-select">
+            <option value="all">All</option>
+            <option value="fuel">Fuel</option>
+            <option value="insurance">Insurance</option>
+            <option value="maintenance">Maintenance</option>
+            <option value="other">Other</option>
+        </select>
+        <button class="btn btn-primary">Search</button>
+    </div>
+    <a href="vehicleExpensesForm.html" class="btn btn-primary">Add New Expense</a>
+
+    <!-- Vehicle Expenses List Table -->
+    <table>
+        <thead>
+            <tr>
+                <th>Expense ID</th>
+                <th>Type</th>
+                <th>Vehicle ID</th>
+                <th>Date</th>
+                <th>Amount</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>Fuel</td>
+                <td>123</td>
+                <td>2024-04-15</td>
+                <td>$200</td>
+                <td>
+                    <button class="btn btn-secondary">View</a></button>
+                    <button class="btn btn-secondary">Edit</a></button>
+                    <button class="btn btn-secondary">Delete</a></button>
+                </td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Insurance</td>
+                <td>456</td>
+                <td>2024-04-16</td>
+                <td>$150</td>
+                <td>
+                    <button class="btn btn-secondary">View</a></button>
+                    <button class="btn btn-secondary">Edit</a></button>
+                    <button class="btn btn-secondary">Delete</a></button>
+                </td>
+            </tr>
+            <!-- Add more rows as needed -->
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

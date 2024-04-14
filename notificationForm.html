@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notification Information Form</title>
+</head>
+<body>
+    <h2>Notification Information Form</h2>
+    <form action="/submit_notification_info" method="post">
+        <label for="notification_id">Notification ID:</label><br>
+        <input type="text" id="notification_id" name="notification_id" required><br><br>
+
+        <label for="title">Title:</label><br>
+        <input type="text" id="title" name="title" required><br><br>
+
+        <label for="message">Message:</label><br>
+        <textarea id="message" name="message" rows="4" cols="50" required></textarea><br><br>
+
+        <label for="date_time">Date and Time:</label><br>
+        <input type="datetime-local" id="date_time" name="date_time" required><br><br>
+
+        <label for="notification_type">Type of Notification:</label><br>
+        <input type="text" id="notification_type" name="notification_type" required><br><br>
+
+        <label for="priority_level">Priority Level:</label><br>
+        <select id="priority_level" name="priority_level" required>
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+        </select><br><br>
+
+        <label for="associated_entity">Associated Entity:</label><br>
+        <input type="text" id="associated_entity" name="associated_entity"><br><br>
+
+        <label for="action_required">Action Required:</label><br>
+        <textarea id="action_required" name="action_required" rows="4" cols="50"></textarea><br><br>
+
+        <label for="status">Status:</label><br>
+        <select id="status" name="status" required>
+            <option value="unread">Unread</option>
+            <option value="read">Read</option>
+            <option value="resolved">Resolved</option>
+        </select><br><br>
+
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>

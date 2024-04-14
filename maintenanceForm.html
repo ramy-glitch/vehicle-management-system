@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maintenance Information Form</title>
+    <link rel="stylesheet" href="form.css"/>
+</head>
+<body>
+    <div class="container">
+        <h2>Maintenance Information Form</h2>
+        <form action="/submit_maintenance_info" method="post">
+            <label for="maintenance_id">Maintenance ID:</label>
+            <input type="text" id="maintenance_id" name="maintenance_id" required>
+
+            <label for="vin">Vehicle Identification Number (VIN):</label>
+            <input type="text" id="vin" name="vin" required>
+
+            <label for="date_of_maintenance">Date of Maintenance:</label>
+            <input type="date" id="date_of_maintenance" name="date_of_maintenance" required>
+
+            <label for="maintenance_type">Type of Maintenance:</label>
+            <input type="text" id="maintenance_type" name="maintenance_type" required>
+
+            <label for="maintenance_details">Details of Maintenance:</label>
+            <textarea id="maintenance_details" name="maintenance_details" rows="4" required></textarea>
+
+            <label for="parts_replaced">Parts Replaced or Repaired:</label>
+            <textarea id="parts_replaced" name="parts_replaced" rows="4"></textarea>
+
+            <label for="service_provider">Service Provider:</label>
+            <input type="text" id="service_provider" name="service_provider">
+
+            <label for="cost">Cost:</label>
+            <input type="number" id="cost" name="cost"  min="0" required>
+
+            <label for="next_maintenance_date">Next Scheduled Maintenance:</label>
+            <input type="date" id="next_maintenance_date" name="next_maintenance_date">
+
+            <label for="notes">Notes:</label>
+            <textarea id="notes" name="notes" rows="4"></textarea>
+
+            <input type="submit" value="Submit">
+            <input type="button" value="Back" onclick="window.location.href='maintenanceList.html'">
+        </form>
+    </div>
+</body>
+</html>
+

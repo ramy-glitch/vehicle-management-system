@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehicle Expenses Form</title>
+    <link rel="stylesheet" href="form.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Vehicle Expenses Form</h2>
+        <form action="/submit_vehicle_expenses" method="post">
+            <label for="vehicle_id">Vehicle ID:</label>
+            <input type="number" id="vehicle_id" name="vehicle_id" min="0" required>
+
+            <label for="fuel_costs">Fuel Costs:</label>
+            <input type="number" id="fuel_costs" name="fuel_costs" min="0" required>
+
+            <label for="insurance_costs">Insurance Costs:</label>
+            <input type="number" id="insurance_costs" name="insurance_costs" min="0">
+
+            <label for="depreciation">Depreciation:</label>
+            <input type="number" id="depreciation" name="depreciation" min="0">
+
+            <label for="license_fees">License & Registration Fees:</label>
+            <input type="number" id="license_fees" name="license_fees" min="0">
+
+            <input type="submit" value="Submit">
+            <input type="button" value="Back" onclick="window.location.href='vehicleExpensesList.html'">
+        </form>
+    </div>
+</body>
+</html>
+
