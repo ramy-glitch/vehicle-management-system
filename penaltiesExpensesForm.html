@@ -10,17 +10,22 @@
     <div class="container">
     <h2>Penalties and Fines Form</h2>
     <form action="/submit_penalties_fines" method="post">
-        <label for="parking_tickets">Parking Tickets:</label>
-        <input type="number" id="parking_tickets" name="parking_tickets" min="0">
+        <label for="driver_id">Driver's Licence number:</label>   
+        <input type="number" id="driver_id" name="driver_id" required>
 
-        <label for="speeding_tickets">Speeding Tickets:</label>
-        <input type="number" id="speeding_tickets" name="speeding_tickets" min="0">
+        <label for="vehicle_LP">Licence Plate number:</label>   
+        <input type="vehicle_LP" id="vehicle_LP" name="vehicle_LP" required>
 
-        <label for="other_traffic_violations">Other Traffic Violations:</label>
-        <input type="number" id="other_traffic_violations" name="other_traffic_violations" min="0">
+        <label for="penalty_type">Penalty Type:</label>
+        <input type="text" id="penalty_type" name="penalty_type" required>
 
-        <label for="late_fees">Late Fees:</label>
-        <input type="number" id="late_fees" name="late_fees" step="0.01" min="0">
+        <label for="penalty_date">Penalty Date:</label>
+        <input type="date" id="penalty_date" name="penalty_date" required>
+
+        <label for="penalty_amount">Penalty Amount:</label>
+        <input type="number" id="penalty_amount" name="penalty_amount" min="0" required>
+
+
 
         <input type="submit" value="Submit">
         <input type="button" value="Back" onclick="window.location.href='penaltiesExpensestList.html'">
