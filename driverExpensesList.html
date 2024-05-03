@@ -28,6 +28,7 @@
             
             <li class="navbar-item"><a href="#" class="nav-link">Expenses Up-to-date</a>
                 <ul class="dropdown">
+                    
                     <li><a href="driverExpensesList.html">Driver Expenses</a></li>
                     <li><a href="maintenanceExpensesList.html">Maintenance Expenses</a></li>
                     <li><a href="missionExpensesList.html">Missions Expenses</a></li>
@@ -51,20 +52,17 @@
             <option value="salary">Salary</option>
             <option value="benefits">Benefits</option>
             <option value="training">Training Costs</option>
-            <option value="allowances">Per Diem/Allowances</option>
         </select>
         <button class="btn btn-primary">Search</button>
     </div>
  
-    <!-- Insert New Driver Expense Button -->
-    <a href="driverExpensesForm.html" class="btn btn-primary">Add New Driver Expense</a>
+
     <!-- Driver Expenses List Table -->
     <table>
         <thead>
             <tr>
-                <th>Expense ID</th>
                 <th>Type</th>
-                <th>Driver ID</th>
+                <th>Driver License Number</th>
                 <th>Date</th>
                 <th>Amount</th>
                 <th>Actions</th>
@@ -72,27 +70,25 @@
         </thead>
         <tbody>
             <tr>
-                <td>1</td>
                 <td>Salary</td>
                 <td>123</td>
                 <td>2024-04-15</td>
                 <td>$2000</td>
                 <td>
-                    <button class="btn btn-secondary">View</a></button>
-                    <button class="btn btn-secondary">Edit</a></button>
-                    <button class="btn btn-secondary">Delete</a></button>
+                    <button class="btn btn-secondary">View</button>
+                    <button class="btn btn-secondary"><a href="vehicleform.html">Edit</a></button>
+                    <button class="btn btn-secondary">Delete</button>
                 </td>
             </tr>
             <tr>
-                <td>2</td>
                 <td>Training Costs</td>
                 <td>456</td>
                 <td>2024-04-16</td>
                 <td>$500</td>
                 <td>
-                    <button class="btn btn-secondary">View</a></button>
-                    <button class="btn btn-secondary">Edit</a></button>
-                    <button class="btn btn-secondary">Delete</a></button>
+                    <button class="btn btn-secondary">View</button>
+                    <button class="btn btn-secondary"><a href="vehicleform.html">Edit</a></button>
+                    <button class="btn btn-secondary">Delete</button>
                 </td>
             </tr>
             <!-- Add more rows as needed -->
