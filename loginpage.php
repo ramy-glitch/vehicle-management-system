@@ -1,7 +1,7 @@
 <?php
 if (file_exists('Config/db_link.php')) 
 {
-	require 'db_link.php';
+	require 'dblink.php';
 }
 else {
 	die("File not found");
