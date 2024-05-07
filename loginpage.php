@@ -1,5 +1,5 @@
 <?php
-if (file_exists('Config/db_link.php')) 
+if (file_exists('dblink.php')) 
 {
 	require 'dblink.php';
 }
