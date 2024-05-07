@@ -22,7 +22,7 @@ if (isset($_POST["sbt"])) {
         $hash = $row['adminpwd'];
         
         if (password_verify($password, $hash)) {
-            header("Location: adminHomePage.html"); // Redirect to the user's page
+            header("Location: adminHomePage.php"); // Redirect to the user's page
             exit;
         } else {
             $message = "Invalid password.";

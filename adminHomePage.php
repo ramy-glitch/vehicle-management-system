@@ -9,9 +9,9 @@
 <body>
 
 <div class="navbar">
-    <div class="navbar-brand"><a href="adminHomePage.html">Admin Dashboard</a></div>
+    <div class="navbar-brand"><a href="adminHomePage.php">Admin Dashboard</a></div>
     <ul class="navbar-menu">
-        <li class="navbar-item"><a href="adminHomePage.html" class="nav-link">Dashboard</a></li>
+        <li class="navbar-item"><a href="adminHomePage.php" class="nav-link">Dashboard</a></li>
         <li class="navbar-item"><a href="vehiclesList.html" class="nav-link">Vehicles</a></li>
         <li class="navbar-item"><a href="driversList.html" class="nav-link">Drivers</a></li>
         <li class="navbar-item"><a href="maintenanceList.html" class="nav-link">Maintenances</a></li>
