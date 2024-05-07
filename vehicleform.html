@@ -12,7 +12,7 @@
     <form action="" method="post">
 
         <label for="vehicle_type">Type of Vehicle:</label>
-        <input type="text" id="vehicle_type" name="vehicle_type">
+        <input type="text" id="vehicle_type" name="vehicle_type" required>
 
         <label for="license_plate">License Plate Number:</label>
         <input type="text" id="license_plate" name="license_plate" required>
@@ -32,12 +32,12 @@
         <label for="fuel_type">Fuel Type:</label>
         <input type="text" id="fuel_type" name="fuel_type" required>
 
-        <label for="service_history">Service History:</label>
-        <textarea id="service_history" name="service_history" rows="4" cols="50"></textarea>
-
         <label for="insurance_info">Insurance Information:</label>
-        <textarea id="insurance_info" name="insurance_info" rows="4" cols="50"></textarea>
+        <textarea id="insurance_info" name="insurance_info" rows="4" cols="50" required></textarea>
 
+        <label for="location">Location:</label>
+        <input type="text" id="location" name="location" required>
+        
         <label for="current_status">Current Status:</label>
         <select id="current_status" name="current_status" required>
             <option value="in_service">In Service</option>
@@ -45,8 +45,6 @@
             <option value="out_of_service">Out of Service</option>
         </select>
 
-        <label for="location">Location:</label>
-        <input type="text" id="location" name="location">
 
         <input type="submit" value="Submit">
         <input type="button" value="Back" onclick="window.location.href='vehiclesList.html'">
