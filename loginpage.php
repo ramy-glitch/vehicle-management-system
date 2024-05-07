@@ -63,12 +63,11 @@ if (isset($_POST["sbt"])) {
             <div class="input-group">
                 <label for="username">Username:</label>
                 <input type="text" id="username" name="username" required>
-                <?php if (! isset($_POST["username"])) echo "<p>Enter username!</p>"; echo $message; ?>
             </div>
             <div class="input-group">
                 <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required>
-                <?php if (! isset($_POST["password"])) echo "<p>Enter password!</p>"; echo $message;?>
+                <input type="password" id="password" name="password" required><br>
+                <?php if (isset($_POST["username"]) && isset($_POST["password"])) echo $message;?>
             </div>
             <button type="submit" name="sbt">Login</button>
         </form>
