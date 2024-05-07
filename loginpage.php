@@ -9,27 +9,31 @@ else {
 
 $message = "";
 
-if (isset($_POST["sbt"])) {
+if (isset($_POST["username"]) && isset($_POST["password"])) {
     $username = $_POST["username"];
     $password = $_POST["password"];
+
+    if (isset($_POST["sbt"])) {
     
     $query = "SELECT username,adminpwd FROM adminlist WHERE username = '$username'";
     
     $result = mysqli_query($link, $query);
     
-    if (mysqli_num_rows($result) > 0) {
+        if (mysqli_num_rows($result) > 0) {
         $row = mysqli_fetch_assoc($result);
         $hash = $row['adminpwd'];
         
-        if (password_verify($password, $hash)) {
+            if (password_verify($password, $hash)) {
             header("Location: adminHomePage.php"); // Redirect to the user's page
             exit;
-        } else {
-            $message = "Invalid password.";
-        }
-    } else {
-        $message = "Invalid username.";
+            } else {$message = "Invalid password.";}
+                                                
+        }else {$message = "Invalid username.";}
+            
+        
     }
+}else{
+    $message = "both username and password are required";
 }
 ?>
 
@@ -67,7 +71,7 @@ if (isset($_POST["sbt"])) {
             <div class="input-group">
                 <label for="password">Password:</label>
                 <input type="password" id="password" name="password" required><br>
-                <?php if (isset($_POST["username"]) && isset($_POST["password"])) echo $message;?>
+                <?php  echo $message;?>
             </div>
             <button type="submit" name="sbt">Login</button>
         </form>
