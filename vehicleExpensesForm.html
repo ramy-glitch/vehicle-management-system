@@ -9,24 +9,18 @@
 <body>
     <div class="container">
         <h2>Vehicle Expenses Form</h2>
-        <form action="/submit_vehicle_expenses" method="post">
+        <form action="" method="post">
             <label for="vehicle_LP">License Plate number:</label>
-            <input type="number" id="vehicle_LP" name="vehicle_LP"  required>
+            <input type="text" id="vehicle_LP" name="vehicle_LP"  required>
 
             <label for="type_of_expense">Type of Expense:</label>
             <input type="number" id="type_of_expense" name="type_of_expense"  required>
 
-            <label for="insurance_costs">Insurance Costs:</label>
-            <input type="number" id="insurance_costs" name="insurance_costs" >
-
-            <label for="depreciation">Depreciation:</label>
-            <input type="number" id="depreciation" name="depreciation" >
-
-            <label for="license_fees">License & Registration Fees:</label>
-            <input type="number" id="license_fees" name="license_fees">
-
             <label for="fee_date">Date:</label>
-            <input type="date" id="fee_date" name="fee_date">
+            <input type="date" id="fee_date" name="fee_date" required>
+
+            <label for="amount">Amount:</label>
+            <input type="number" id="amount" name="amount"  min="0" required>
 
             <input type="submit" value="Submit">
             <input type="button" value="Back" onclick="window.location.href='vehicleExpensesList.html'">
