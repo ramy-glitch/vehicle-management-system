@@ -9,7 +9,7 @@ else {
 
 $message = "";
 
-if (isset($_POST["username"]) && isset($_POST["password"])) {
+if (isset($_POST["username"]) && isset($_POST["password"]) && !empty($_POST["username"]) && !empty($_POST["password"])){
     $username = $_POST["username"];
     $password = $_POST["password"];
 
@@ -35,6 +35,9 @@ if (isset($_POST["username"]) && isset($_POST["password"])) {
 }else{
     $message = "both username and password are required";
 }
+
+mysqli_close($link);
+
 ?>
 
 
@@ -71,7 +74,7 @@ if (isset($_POST["username"]) && isset($_POST["password"])) {
             <div class="input-group">
                 <label for="password">Password:</label>
                 <input type="password" id="password" name="password" required><br>
-                <?php  echo $message;?>
+                <?php  echo "<br>$message";?>
             </div>
             <button type="submit" name="sbt">Login</button>
         </form>
