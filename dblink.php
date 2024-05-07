@@ -15,7 +15,6 @@ if(mysqli_connect_error())
 }
 else
 {
-    echo "Connection established successfully. <br >";
+    echo "Connection established successfully.";
 }
-mysqli_close($link);
 ?>

@@ -1,3 +1,41 @@
+<?php
+if (file_exists('Config/db_link.php')) 
+{
+	require 'db_link.php';
+}
+else {
+	die("File not found");
+}
+
+$message = "";
+
+if (isset($_POST["sbt"])) {
+    $username = $_POST["username"];
+    $password = $_POST["password"];
+    
+    $query = "SELECT username,adminpwd FROM adminlist WHERE username = '$username'";
+    
+    $result = mysqli_query($link, $query);
+    
+    if (mysqli_num_rows($result) > 0) {
+        $row = mysqli_fetch_assoc($result);
+        $hash = $row['adminpwd'];
+        
+        if (password_verify($password, $hash)) {
+            header("Location: adminHomePage.html"); // Redirect to the user's page
+            exit;
+        } else {
+            $message = "Invalid password.";
+        }
+    } else {
+        $message = "Invalid username.";
+    }
+}
+?>
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,7 +51,7 @@
     <a href="index.html"><img class="logo" src="logo-black.png" alt="logo" width="200px"></a>
     <ul class="navbar-menu">
         <li><a href="index.html">Home</a></li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <li><a href="loginpage.html">Log in</a></li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <li><a href="loginpage.php">Log in</a></li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     </ul>
 </div>
 <br><br><br><br><br><br><br><br><br>
@@ -25,12 +63,14 @@
             <div class="input-group">
                 <label for="username">Username:</label>
                 <input type="text" id="username" name="username" required>
+                <?php if (! isset($_POST["username"])) echo "<p>Enter username!</p>"; echo $message; ?>
             </div>
             <div class="input-group">
                 <label for="password">Password:</label>
                 <input type="password" id="password" name="password" required>
+                <?php if (! isset($_POST["password"])) echo "<p>Enter password!</p>"; echo $message;?>
             </div>
-            <button type="submit">Login</button>
+            <button type="submit" name="sbt">Login</button>
         </form>
     </div>
 </div>
