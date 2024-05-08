@@ -1,12 +1,35 @@
 <?php
+// Initialize variables to store form data and error messages
+$report_title = $report_content = '';
+$errorMessages = [];
 
-    $tab = array(
-        "report_title" => $_POST["report_title"],
-        "report_content" => $_POST["report_content"]
-    );
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Retrieve form data
+    $report_title = $_POST["report_title"];
+    $report_content = $_POST["report_content"];
 
+    // Validate report title
+    if (empty($report_title)) {
+        $errorMessages["report_title"] = "Report title is required.";
+    }
+
+    // Validate report content
+    if (empty($report_content)) {
+        $errorMessages["report_content"] = "Report content is required.";
+    }
+
+    // Process form data if no validation errors
+    if (empty($errorMessages)) {
+        // Process the form data (e.g., save to database)
+        // For example, you can use a function to save the report to a database
+        // saveReport($report_title, $report_content);
+
+        // Redirect after successful submission
+        header("Location: adminReportList.php");
+        exit;
+    }
+}
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -18,17 +41,23 @@
 </head>
 <body>
     <div class="container">
-    <h2>Admin Report Form</h2>
-    <form action="" method="post">
-        <label for="report_title">Report Title:</label>
-        <input type="text" id="report_title" name="report_title" required>
+        <h2>Admin Report Form</h2>
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+            <label for="report_title">Report Title:</label>
+            <input type="text" id="report_title" name="report_title" value="<?php echo htmlspecialchars($report_title); ?>" required>
+            <?php if(isset($errorMessages["report_title"])) { ?>
+                <p style="color: red;"><?php echo $errorMessages["report_title"]; ?></p>
+            <?php } ?>
 
-        <label for="report_content">Report Content:</label>
-        <textarea id="report_content" name="report_content" rows="6" required></textarea>
+            <label for="report_content">Report Content:</label>
+            <textarea id="report_content" name="report_content" rows="6" required><?php echo htmlspecialchars($report_content); ?></textarea>
+            <?php if(isset($errorMessages["report_content"])) { ?>
+                <p style="color: red;"><?php echo $errorMessages["report_content"]; ?></p>
+            <?php } ?>
 
-        <input type="submit" value="Submit">
-        <input type="button" value="Back" onclick="window.location.href='adminReportList.php'">
-    </form>
+            <input type="submit" value="submit" name="submit">
+            <input type="button" value="Back" onclick="window.location.href='adminReportList.php'">
+        </form>
     </div>
 </body>
 </html>
