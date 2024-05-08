@@ -1,4 +1,6 @@
-<?php 
+<?php
+
+    $tab;
 
     if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_post["sbt"])){
     
@@ -19,7 +21,6 @@
 
 
 } else {
-    
     $tab = array(
         "assigned_vehicle" => "",
         "driver_name" => "",
