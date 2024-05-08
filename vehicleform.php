@@ -58,6 +58,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $errorMessages["location"] = "Please enter the location of the vehicle.";
     }
 
+    if (empty($current_status) || !in_array($current_status, ["in_service", "under_maintenance", "out_of_service"])) {
+        $errorMessages["current_status"] = "Please select the current status of the vehicle.";
+    }
+
     // Process form data if no validation errors
     if (empty($errorMessages)) {
         // Process the form data (e.g., save to database)
