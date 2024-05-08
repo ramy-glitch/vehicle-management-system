@@ -19,35 +19,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $cost = $_POST["cost"];}
 
     // Validate each input field
-    if (empty($assigned_vehicle)) {
+    if (empty($assigned_vehicle) || !preg_match("~^\d{6}-[1-9]\d{2}-([1-4][0-9]|5[0-8])$~", $assigned_vehicle)){     // Matches 123456-123-58
         $errorMessages["assigned_vehicle"] = "Please enter a valid license plate number.";
     }
 
-    if (empty($driver_name)) {
+    if (empty($driver_name) || !preg_match("/^[a-zA-Z]+(?:[ ]*[a-zA-Z]+)*$/", $driver_name)){    // Matches full name with spaces
         $errorMessages["driver_name"] = "Please enter a valid driver name.";
     }
 
-    if (empty($driver_phone)) {
+    if (empty($driver_phone) || !preg_match("/^(02|07|05|06)\d{8}$/", $driver_phone)){          // Matches 07xxxxxxxx or 05xxxxxxxx or 06xxxxxxxx or 02xxxxxxxx
         $errorMessages["driver_phone"] = "Please enter a valid driver phone number.";
     }
 
-    if (empty($start_datetime)) {
+
+    if (empty($start_datetime) || !preg_match('/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/', $start_datetime)) {  // Matches yyyy-mm-ddThh:mm
         $errorMessages["start_datetime"] = "Please enter a valid start date and time.";
     }
 
-    if (empty($end_datetime)) {
+    if (empty($end_datetime) || !preg_match('/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/', $end_datetime)) {       // Matches yyyy-mm-ddThh:mm
         $errorMessages["end_datetime"] = "Please enter a valid end date and time.";
     }
 
-    if (empty($origin)) {
+    if (empty($origin) || !preg_match("/^[a-zA-Z]+(?:[ ]*[a-zA-Z]+)*$/", $origin)){
         $errorMessages["origin"] = "Please enter a valid origin location.";
     }
 
-    if (empty($destination)) {
+    if (empty($destination) || !preg_match("/^[a-zA-Z]+(?:[ ]*[a-zA-Z]+)*$/", $destination)){
         $errorMessages["destination"] = "Please enter a valid destination location.";
     }
 
-    if (empty($purpose)) {
+    if (empty($purpose) || !preg_match("/^[a-zA-Z]+(?:[ ]*[a-zA-Z]+)*$/", $purpose)){
         $errorMessages["purpose"] = "Please enter a valid purpose.";
     }
 
@@ -79,12 +80,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
 
             <label for="assigned_vehicle">License Plate Number:</label>
-            <input type="text" id="assigned_vehicle" name="assigned_vehicle" value="<?php echo htmlspecialchars($assigned_vehicle); ?>" required>
+            <input type="text" id="assigned_vehicle" name="assigned_vehicle" value="<?php echo htmlspecialchars($assigned_vehicle); ?>" placeholder="xxxxxx-xxx-xx" required>
             <?php if(isset($errorMessages["assigned_vehicle"])) { ?>
                 <p style="color: red;"><?php echo $errorMessages["assigned_vehicle"]; ?></p>
             <?php } ?>
 
-            <label for="driver_name">Driver Name:</label>
+            <label for="driver_name">Driver full Name:</label>
             <input type="text" id="driver_name" name="driver_name" value="<?php echo htmlspecialchars($driver_name); ?>" required>
             <?php if(isset($errorMessages["driver_name"])) { ?>
                 <p style="color: red;"><?php echo $errorMessages["driver_name"]; ?></p>
