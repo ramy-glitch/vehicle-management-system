@@ -11,7 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $report_content = $_POST["report_content"];
     $report_date = $_POST["report_date"];
     }
-}
+
 
     // Validate report title
     if (empty($report_title)) {
