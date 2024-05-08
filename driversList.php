@@ -54,7 +54,7 @@
     </div>
 
     <!-- Insert New Driver Button -->
-    <a href="driverForm.html" class="btn btn-primary">Add New Driver</a>
+    <a href="driverForm.php" class="btn btn-primary">Add New Driver</a>
 
     <!-- Driver List Table -->
     <table>

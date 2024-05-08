@@ -55,7 +55,7 @@
     </div>
 
         <!-- Write a new report Button -->
-        <a href="adminReportsForm.html" class="btn btn-primary" style="width: fit-content;">Write a Report</a>
+        <a href="adminReportsForm.php" class="btn btn-primary" style="width: fit-content;">Write a Report</a>
 
     <!-- Admin Reports List Table -->
     <table>

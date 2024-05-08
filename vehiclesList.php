@@ -54,7 +54,7 @@
     </div>
 
     <!-- Insert New Vehicle Button -->
-    <a href="vehicleForm.html" class="btn btn-primary">Add New Vehicle</a>
+    <a href="vehicleForm.php" class="btn btn-primary">Add New Vehicle</a>
 
     <!-- Vehicle List Table -->
     <table>

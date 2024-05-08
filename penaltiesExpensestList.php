@@ -55,7 +55,7 @@
         <button class="btn btn-primary">Search</button>
     </div>
 
-    <a href="penaltiesExpensesForm.html" class="btn btn-primary">Add New Expense</a>
+    <a href="penaltiesExpensesForm.php" class="btn btn-primary">Add New Expense</a>
 
     <!-- Penalties and Fines Expenses List Table -->
     <table>

@@ -54,7 +54,7 @@
         </select>
         <button class="btn btn-primary">Search</button>
     </div>
-    <a href="vehicleExpensesForm.html" class="btn btn-primary">Add New Expense</a>
+    <a href="vehicleExpensesForm.php" class="btn btn-primary">Add New Expense</a>
 
     <!-- Vehicle Expenses List Table -->
     <table>

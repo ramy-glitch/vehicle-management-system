@@ -55,7 +55,7 @@
     </div>
 
     <!-- Insert New Mission Button -->
-    <a href="missionForm.html" class="btn btn-primary">Schedule New Mission</a>
+    <a href="missionForm.php" class="btn btn-primary">Schedule New Mission</a>
 
     <!-- Mission List Table -->
     <table>

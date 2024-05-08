@@ -54,7 +54,7 @@
     </div>
 
     <!-- Insert New Maintenance Button -->
-    <a href="maintenanceForm.html" class="btn btn-primary">Schedule New Maintenance</a>
+    <a href="maintenanceForm.php" class="btn btn-primary">Schedule New Maintenance</a>
 
     <!-- Maintenance List Table -->
     <table>
