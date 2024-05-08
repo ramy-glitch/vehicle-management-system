@@ -1,6 +1,10 @@
 <?php 
 
-    $tab = array(
+    if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_post["sbt"])){
+    
+    
+    
+        $tab = array(
         "assigned_vehicle" => $_POST["assigned_vehicle"],
         "driver_name" => $_POST["driver_name"],
         "driver_phone" => $_POST["driver_phone"],
@@ -10,8 +14,25 @@
         "destination" => $_POST["destination"],
         "purpose" => $_POST["purpose"],
         "status" => $_POST["status"],
-        "cost" => $_POST["cost"]
-    );
+        "cost" => $_POST["cost"]);
+
+
+
+} else {
+    
+    $tab = array(
+        "assigned_vehicle" => "",
+        "driver_name" => "",
+        "driver_phone" => "",
+        "start_datetime" => "",
+        "end_datetime" => "",
+        "origin" => "",
+        "destination" => "",
+        "purpose" => "",
+        "status" => "",
+        "cost" => "");
+}
+
 
 ?>
 
@@ -63,7 +84,7 @@
             <label for="cost">Cost:</label>
             <input type="number" id="cost" name="cost" min="0" required>
 
-            <input type="submit" value="Submit">
+            <input type="submit" value="Submit" name="sbt">
             <input type="button" value="Back" onclick="window.location.href='missionList.php'">
         </form>
     </div>
