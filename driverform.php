@@ -29,16 +29,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $errorMessages["full_name"] = "Please enter a valid full name.";
     }
 
-    $pattern = "/^(0[1-9]|1[0-2])\/(0[1-9]|[1-2][0-9]|3[0-1])\/\d{4}$/"; // Matches mm/dd/yyyy
+    
+    $pattern = '/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/';       // Matches yyyy-mm-dd
+
     if (!preg_match($pattern, $date_of_birth)) {
 
         $errorMessages["date_of_birth"] = "Please enter a valid date of birth.";
     } else {
         // Further validation to ensure it's a valid date
-        $date_parts = explode('/', $date_of_birth);
-        $month = (int) $date_parts[0];
-        $day = (int) $date_parts[1];
-        $year = (int) $date_parts[2];
+        $date_parts = explode('-', $date_of_birth);
+        $month = (int) $date_parts[1];
+        $day = (int) $date_parts[2];
+        $year = (int) $date_parts[0];
 
         if (!checkdate($month, $day, $year)) {
             $errorMessages["date_of_birth"] = "Please enter a valid date of birth.";
@@ -61,25 +63,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $errorMessages["password"] = "Please enter a valid password.";
     }
 
-    if (!preg_match($pattern, $employment_date)) {                                 // Matches mm/dd/yyyy            
+    if (!preg_match($pattern, $employment_date)) {                                 // Matches yyyy-mm-dd           
         $errorMessages["employment_date"] = "Please enter a valid employment date.";
     }else {
         // Further validation to ensure it's a valid date
-        $date_parts = explode('/', $employment_date);
-        $month = (int) $date_parts[0];
-        $day = (int) $date_parts[1];
-        $year = (int) $date_parts[2];
+        $date_parts = explode('-', $employment_date);
+        $month = (int) $date_parts[1];
+        $day = (int) $date_parts[2];
+        $year = (int) $date_parts[0];
 
         if (!checkdate($month, $day, $year)) {
             $errorMessages["employment_date"] = "Please enter a valid employment date.";
         }
-    }   
+    }  
 
     if (empty($monthly_salary) || !is_numeric($monthly_salary) || $monthly_salary < 0){
         $errorMessages["monthly_salary"] = "Please enter a valid monthly salary.";
     }
 
-    if (empty($status)) {
+    if (empty($status) || !in_array($status, ["active", "inactive", "on_leave"])) {   // Matches one of the three values
         $errorMessages["status"] = "Please select a valid status.";
     }
 
