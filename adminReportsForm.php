@@ -17,7 +17,7 @@
         <textarea id="report_content" name="report_content" rows="6" required></textarea>
 
         <input type="submit" value="Submit">
-        <input type="button" value="Back" onclick="window.location.href='adminReportList.html'">
+        <input type="button" value="Back" onclick="window.location.href='adminReportList.php'">
     </form>
     </div>
 </body>

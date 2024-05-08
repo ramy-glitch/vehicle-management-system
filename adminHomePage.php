@@ -12,29 +12,29 @@
     <div class="navbar-brand"><a href="adminHomePage.php">Admin Dashboard</a></div>
     <ul class="navbar-menu">
         <li class="navbar-item"><a href="adminHomePage.php" class="nav-link">Dashboard</a></li>
-        <li class="navbar-item"><a href="vehiclesList.html" class="nav-link">Vehicles</a></li>
-        <li class="navbar-item"><a href="driversList.html" class="nav-link">Drivers</a></li>
-        <li class="navbar-item"><a href="maintenanceList.html" class="nav-link">Maintenances</a></li>
-        <li class="navbar-item"><a href="missionList.html" class="nav-link">Missions</a></li>
+        <li class="navbar-item"><a href="vehiclesList.php" class="nav-link">Vehicles</a></li>
+        <li class="navbar-item"><a href="driversList.php" class="nav-link">Drivers</a></li>
+        <li class="navbar-item"><a href="maintenanceList.php" class="nav-link">Maintenances</a></li>
+        <li class="navbar-item"><a href="missionList.php" class="nav-link">Missions</a></li>
         <li class="navbar-item"><a href="#" class="nav-link">Notifications</a></li>
         
         <li class="navbar-item"><a href="#" class="nav-link">Reports</a>
         <ul class="dropdown">
-            <li><a href="driverReportList.html">Driver Reports</a></li>
-            <li><a href="adminReportList.html">Admin Reports</a></li>
+            <li><a href="driverReportList.php">Driver Reports</a></li>
+            <li><a href="adminReportList.php">Admin Reports</a></li>
         </ul>
         </li>
         
         <li class="navbar-item"><a href="#" class="nav-link">Expenses Up-to-date</a>
             <ul class="dropdown">
-                <li><a href="driverExpensesList.html">Driver Expenses</a></li>
-                <li><a href="maintenanceExpensesList.html">Maintenance Expenses</a></li>
-                <li><a href="missionExpensesList.html">Missions Expenses</a></li>
-                <li><a href="vehicleExpensesList.html">Vehicle Expenses</a></li>
-                <li><a href="penaltiesExpensestList.html">Penalties and Fines</a></li>
+                <li><a href="driverExpensesList.php">Driver Expenses</a></li>
+                <li><a href="maintenanceExpensesList.php">Maintenance Expenses</a></li>
+                <li><a href="missionExpensesList.php">Missions Expenses</a></li>
+                <li><a href="vehicleExpensesList.php">Vehicle Expenses</a></li>
+                <li><a href="penaltiesExpensestList.php">Penalties and Fines</a></li>
             </ul>
         </li>
-        <li class="navbar-item"><a href="statisticPage.html" class="nav-link">Statistics</a></li>
+        <li class="navbar-item"><a href="statisticPage.php" class="nav-link">Statistics</a></li>
         <li class="navbar-item"><a href="#" class="nav-link">Account</a></li>
     </ul>
 </div>
@@ -49,11 +49,11 @@
     <div class="section">
         <h1>Quick Access</h1>
         <div>
-            <button class="action-button" onclick="window.location.href='vehicleForm.html'">Add New Vehicle</button>
-            <button class="action-button" onclick="window.location.href='driverForm.html'">Add New Driver</button>
-            <button class="action-button" onclick="window.location.href='missionForm.html'">Create Mission</button>
-            <button class="action-button secondary" onclick="window.location.href='maintenanceList.html'">Manage Maintenance</button>
-            <button class="action-button secondary" onclick="window.location.href='adminAccount.html'">Configure Settings</button>
+            <button class="action-button" onclick="window.location.href='vehicleForm.php'">Add New Vehicle</button>
+            <button class="action-button" onclick="window.location.href='driverForm.php'">Add New Driver</button>
+            <button class="action-button" onclick="window.location.href='missionForm.php'">Create Mission</button>
+            <button class="action-button secondary" onclick="window.location.href='maintenanceList.php'">Manage Maintenance</button>
+            <button class="action-button secondary" onclick="window.location.href='adminAccount.php'">Configure Settings</button>
         </div>
     </div>
 

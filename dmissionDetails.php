@@ -42,7 +42,7 @@
                 <option value="cancelled">Cancelled</option>
             </select>
 
-            <input type="button" value="Back" onclick="window.location.href='dmissionsList.html'">
+            <input type="button" value="Back" onclick="window.location.href='dmissionsList.php'">
         </form>
     </div>
 </body>
