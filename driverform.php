@@ -1,3 +1,25 @@
+<?php
+
+    $tab = array(
+        "license_number" => $_POST["license_number"],
+        "full_name" => $_POST["full_name"],
+        "date_of_birth" => $_POST["date_of_birth"],
+        "phone_number" => $_POST["phone_number"],
+        "address" => $_POST["address"],
+        "username" => $_POST["username"],
+        "password" => $_POST["password"],
+        "employment_date" => $_POST["employment_date"],
+        "monthly_salary" => $_POST["monthly_salary"],
+        "driving_history" => $_POST["driving_history"],
+        "vehicle_assignment" => $_POST["vehicle_assignment"],
+        "status" => $_POST["status"]
+    );
+
+?>
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +33,7 @@
     <div class="container">
         
         <h2>Driver Information: </h2>
-        <form action="/submit_driver_info" method="post">
+        <form action="" method="post">
 
             <label for="license_number">Driver’s License Number:</label>
             <input type="text" id="license_number" name="license_number" required>

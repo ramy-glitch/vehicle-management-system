@@ -1,3 +1,15 @@
+<?php
+
+    $tab = array(
+        "driver_id" => $_POST["driver_id"],
+        "vehicle_LP" => $_POST["vehicle_LP"],
+        "penalty_type" => $_POST["penalty_type"],
+        "penalty_date" => $_POST["penalty_date"],
+        "penalty_amount" => $_POST["penalty_amount"]
+    );
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,7 +21,7 @@
 <body>
     <div class="container">
     <h2>Penalties and Fines Form</h2>
-    <form action="/submit_penalties_fines" method="post">
+    <form action="" method="post">
         <label for="driver_id">Driver's Licence number:</label>   
         <input type="number" id="driver_id" name="driver_id" required>
 

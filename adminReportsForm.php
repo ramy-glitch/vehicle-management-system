@@ -1,3 +1,13 @@
+<?php
+
+    $tab = array(
+        "report_title" => $_POST["report_title"],
+        "report_content" => $_POST["report_content"]
+    );
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,7 +19,7 @@
 <body>
     <div class="container">
     <h2>Admin Report Form</h2>
-    <form action="/submit_report" method="post">
+    <form action="" method="post">
         <label for="report_title">Report Title:</label>
         <input type="text" id="report_title" name="report_title" required>
 

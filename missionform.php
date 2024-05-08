@@ -1,3 +1,20 @@
+<?php 
+
+    $tab = array(
+        "assigned_vehicle" => $_POST["assigned_vehicle"],
+        "driver_name" => $_POST["driver_name"],
+        "driver_phone" => $_POST["driver_phone"],
+        "start_datetime" => $_POST["start_datetime"],
+        "end_datetime" => $_POST["end_datetime"],
+        "origin" => $_POST["origin"],
+        "destination" => $_POST["destination"],
+        "purpose" => $_POST["purpose"],
+        "status" => $_POST["status"],
+        "cost" => $_POST["cost"]
+    );
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,7 +26,7 @@
 <body>
     <div class="container">
         <h2>Mission Information:</h2>
-        <form action="/submit_mission_info" method="post">
+        <form action="" method="post">
 
             <label for="assigned_vehicle">Licence Plate Number:</label>
             <input type="text" id="assigned_vehicle" name="assigned_vehicle" required>

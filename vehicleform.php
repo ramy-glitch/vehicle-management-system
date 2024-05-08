@@ -1,3 +1,29 @@
+
+
+<?php
+
+$tab = array(
+    "vehicle_type" => $_POST["vehicle_type"],
+    "license_plate" => $_POST["license_plate"],
+    "make_model" => $_POST["make_model"],
+    "year_manufact" => $_POST["year_manufacture"],
+    "color" => $_POST["color"],
+    "odometer_reading" => $_POST["odometer_reading"],
+    "fuel_type" => $_POST["fuel_type"],
+    "insurance_info" => $_POST["insurance_info"],
+    "location" => $_POST["location"],
+    "current_status" => $_POST["current_status"]
+);
+
+
+
+
+?>
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

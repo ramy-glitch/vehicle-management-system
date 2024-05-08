@@ -1,3 +1,23 @@
+<?php
+
+    $tab = array(
+        "vin" => $_POST["vin"],
+        "date_of_maintenance" => $_POST["date_of_maintenance"],
+        "maintenance_type" => $_POST["maintenance_type"],
+        "maintenance_details" => $_POST["maintenance_details"],
+        "workshop_name" => $_POST["workshop_name"],
+        "workshop_phone" => $_POST["workshop_phone"],
+        "cost" => $_POST["cost"],
+        "next_maintenance_date" => $_POST["next_maintenance_date"]
+    );
+
+?>
+
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

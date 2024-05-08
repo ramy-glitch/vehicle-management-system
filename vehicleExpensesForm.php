@@ -1,3 +1,16 @@
+
+<?php
+    
+    $tab = array(
+        "vehicle_LP" => $_POST["vehicle_LP"],
+        "type_of_expense" => $_POST["type_of_expense"],
+        "fee_date" => $_POST["fee_date"],
+        "amount" => $_POST["amount"]
+    );
+
+    ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
