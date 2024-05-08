@@ -21,19 +21,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $status = $_POST["status"];}
 
     // Validate each input field
-    if (empty($license_number)) {
+    if (empty($license_number) || !preg_match("/^[a-zA-Z0-9]{9}$/", $license_number)){ // Matches 9 characters of letters and numbers
         $errorMessages["license_number"] = "Please enter a valid driver's license number.";
     }
 
-    if (empty($full_name)) {
+    if (empty($full_name) || !preg_match("/^[a-zA-Z]+(?:[ ]*[a-zA-Z]+)*$/", $full_name)) { // Matches full name with spaces
         $errorMessages["full_name"] = "Please enter a valid full name.";
     }
 
-    if (empty($date_of_birth)) {
+    $pattern = "/^(0[1-9]|1[0-2])\/(0[1-9]|[1-2][0-9]|3[0-1])\/\d{4}$/"; // Matches mm/dd/yyyy
+    if (!preg_match($pattern, $date_of_birth)) {
+
         $errorMessages["date_of_birth"] = "Please enter a valid date of birth.";
+    } else {
+        // Further validation to ensure it's a valid date
+        $date_parts = explode('/', $date_of_birth);
+        $month = (int) $date_parts[0];
+        $day = (int) $date_parts[1];
+        $year = (int) $date_parts[2];
+
+        if (!checkdate($month, $day, $year)) {
+            $errorMessages["date_of_birth"] = "Please enter a valid date of birth.";
+        }
     }
 
-    if (empty($phone_number)) {
+    if (empty($phone_number) || !preg_match("/^(07|05|06)\d{8}$/", $phone_number)) {  // Matches 07xxxxxxxx or 05xxxxxxxx or 06xxxxxxxx
         $errorMessages["phone_number"] = "Please enter a valid phone number.";
     }
 
@@ -49,11 +61,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $errorMessages["password"] = "Please enter a valid password.";
     }
 
-    if (empty($employment_date)) {
+    if (!preg_match($pattern, $employment_date)) {                                 // Matches mm/dd/yyyy            
         $errorMessages["employment_date"] = "Please enter a valid employment date.";
-    }
+    }else {
+        // Further validation to ensure it's a valid date
+        $date_parts = explode('/', $employment_date);
+        $month = (int) $date_parts[0];
+        $day = (int) $date_parts[1];
+        $year = (int) $date_parts[2];
 
-    if (empty($monthly_salary)) {
+        if (!checkdate($month, $day, $year)) {
+            $errorMessages["employment_date"] = "Please enter a valid employment date.";
+        }
+    }   
+
+    if (empty($monthly_salary) || !is_numeric($monthly_salary) || $monthly_salary < 0){
         $errorMessages["monthly_salary"] = "Please enter a valid monthly salary.";
     }
 
@@ -87,7 +109,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
             
         <label for="license_number">Driver’s License Number:</label>
-            <input type="text" id="license_number" name="license_number" value="<?php echo htmlspecialchars($license_number); ?>" required>
+            <input type="text" id="license_number" name="license_number" value="<?php echo htmlspecialchars($license_number); ?>" placeholder="xxxxxxxxx" required>
             
             <?php if(isset($errorMessages["license_number"])) { ?>
                 <p style="color: red;"><?php echo $errorMessages["license_number"]; ?></p>
@@ -95,7 +117,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             
             <label for="full_name">Full Name:</label>
-            <input type="text" id="full_name" name="full_name" value="<?php echo htmlspecialchars($full_name); ?>" required>
+            <input type="text" id="full_name" name="full_name" value="<?php echo htmlspecialchars($full_name); ?>" placeholder="your full name" required>
             
             <?php if(isset($errorMessages["full_name"])) { ?>
                 <p style="color: red;"><?php echo $errorMessages["full_name"]; ?></p>
@@ -110,7 +132,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <?php } ?>
 
             <label for="phone_number">Phone Number:</label>
-            <input type="tel" id="phone_number" name="phone_number" value="<?php echo htmlspecialchars($phone_number); ?>" required>
+            <input type="tel" id="phone_number" name="phone_number" value="<?php echo htmlspecialchars($phone_number); ?>" placeholder="xxxxxxxxxx" required>
             
             <?php if(isset($errorMessages["phone_number"])) { ?>
                 <p style="color: red;"><?php echo $errorMessages["phone_number"]; ?></p>
