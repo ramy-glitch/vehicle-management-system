@@ -24,7 +24,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $errorMessages["vehicle_type"] = "Please enter the type of vehicle.";
     }
 
-    if (empty($license_plate)) {
+    $pattern = '~^\d{6}-[1-9]\d{2}-([1-4][0-9]|5[0-8])$~';
+
+    if (!preg_match($pattern, $license_plate)) {                                     // Matches 123456-123-58
         $errorMessages["license_plate"] = "Please enter the license plate number.";
     }
 
@@ -32,7 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $errorMessages["make_model"] = "Please enter the make and model of the vehicle.";
     }
 
-    if (empty($year_manufacture) || !is_numeric($year_manufacture) || $year_manufacture < 1900 || $year_manufacture > 2100) {
+    if (!is_numeric($year_manufacture) || $year_manufacture < 1900 || $year_manufacture > 2100) {
         $errorMessages["year_manufacture"] = "Please enter a valid year of manufacture.";
     }
 
@@ -88,7 +90,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             
             <!-- License Plate Number -->
             <label for="license_plate">License Plate Number:</label>
-            <input type="text" id="license_plate" name="license_plate" value="<?php echo htmlspecialchars($license_plate); ?>" required>
+            <input type="text" id="license_plate" name="license_plate" value="<?php echo htmlspecialchars($license_plate); ?>" placeholder="xxxxxx-xxx-xx" required>
             <?php if(isset($errorMessages["license_plate"])) { ?>
                 <p style="color: red;"><?php echo $errorMessages["license_plate"]; ?></p>
             <?php } ?>
