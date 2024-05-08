@@ -47,7 +47,7 @@
             <input type="number" id="cost" name="cost" min="0" required>
 
             <input type="submit" value="Submit">
-            <input type="button" value="Back" onclick="window.location.href='missionList.html'">
+            <input type="button" value="Back" onclick="window.location.href='missionList.php'">
         </form>
     </div>
 </body>

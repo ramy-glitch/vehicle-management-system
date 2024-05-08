@@ -59,7 +59,7 @@
             </select>
 
             <input type="submit" value="Submit">
-            <input type="button" value="Back" onclick="window.location.href='driversList.html'">
+            <input type="button" value="Back" onclick="window.location.href='driversList.php'">
         </form>
     </div>
 </body>

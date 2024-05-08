@@ -47,7 +47,7 @@
 
 
         <input type="submit" value="Submit">
-        <input type="button" value="Back" onclick="window.location.href='vehiclesList.html'">
+        <input type="button" value="Back" onclick="window.location.href='vehiclesList.php'">
     </form>
     </div>
 </body>

@@ -37,7 +37,7 @@
 
 
             <input type="submit" value="Submit">
-            <input type="button" value="Back" onclick="window.location.href='maintenanceList.html'">
+            <input type="button" value="Back" onclick="window.location.href='maintenanceList.php'">
         </form>
     </div>
 </body>

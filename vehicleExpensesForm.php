@@ -23,7 +23,7 @@
             <input type="number" id="amount" name="amount"  min="0" required>
 
             <input type="submit" value="Submit">
-            <input type="button" value="Back" onclick="window.location.href='vehicleExpensesList.html'">
+            <input type="button" value="Back" onclick="window.location.href='vehicleExpensesList.php'">
         </form>
     </div>
 </body>

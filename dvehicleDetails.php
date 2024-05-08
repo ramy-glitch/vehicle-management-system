@@ -50,7 +50,7 @@
         <label for="location">Location:</label>
         <input type="text" id="location" name="location">
 
-        <input type="button" value="Back" onclick="window.location.href='driverHomePage.html'">
+        <input type="button" value="Back" onclick="window.location.href='driverHomePage.php'">
 
     </form>
     </div>

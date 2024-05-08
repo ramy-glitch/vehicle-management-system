@@ -8,36 +8,37 @@
 </head>
 <body>
 
-    <div class="navbar">
-        <div class="navbar-brand"><a href="adminHomePage.php">Admin Dashboard</a></div>
-        <ul class="navbar-menu">
-            <li class="navbar-item"><a href="adminHomePage.php" class="nav-link">Dashboard</a></li>
-            <li class="navbar-item"><a href="vehiclesList.html" class="nav-link">Vehicles</a></li>
-            <li class="navbar-item"><a href="driversList.html" class="nav-link">Drivers</a></li>
-            <li class="navbar-item"><a href="maintenanceList.html" class="nav-link">Maintenances</a></li>
-            <li class="navbar-item"><a href="missionList.html" class="nav-link">Missions</a></li>
-            <li class="navbar-item"><a href="#" class="nav-link">Notifications</a></li>
-            
-            <li class="navbar-item"><a href="#" class="nav-link">Reports</a>
-            <ul class="dropdown">
-                <li><a href="driverReportList.html">Driver Reports</a></li>
-                <li><a href="adminReportList.html">Admin Reports</a></li>
-            </ul>
-            </li>
-            
-            <li class="navbar-item"><a href="#" class="nav-link">Expenses Up-to-date</a>
-                <ul class="dropdown">
-                    <li><a href="driverExpensesList.html">Driver Expenses</a></li>
-                    <li><a href="maintenanceExpensesList.html">Maintenance Expenses</a></li>
-                    <li><a href="missionExpensesList.html">Missions Expenses</a></li>
-                    <li><a href="vehicleExpensesList.html">Vehicle Expenses</a></li>
-                    <li><a href="penaltiesExpensestList.html">Penalties and Fines</a></li>
-                </ul>
-            </li>
-            <li class="navbar-item"><a href="statisticPage.html" class="nav-link">Statistics</a></li>
-            <li class="navbar-item"><a href="#" class="nav-link">Account</a></li>
+<div class="navbar">
+    <div class="navbar-brand"><a href="adminHomePage.php">Admin Dashboard</a></div>
+    <ul class="navbar-menu">
+        <li class="navbar-item"><a href="adminHomePage.php" class="nav-link">Dashboard</a></li>
+        <li class="navbar-item"><a href="vehiclesList.php" class="nav-link">Vehicles</a></li>
+        <li class="navbar-item"><a href="driversList.php" class="nav-link">Drivers</a></li>
+        <li class="navbar-item"><a href="maintenanceList.php" class="nav-link">Maintenances</a></li>
+        <li class="navbar-item"><a href="missionList.php" class="nav-link">Missions</a></li>
+        <li class="navbar-item"><a href="#" class="nav-link">Notifications</a></li>
+        
+        <li class="navbar-item"><a href="#" class="nav-link">Reports</a>
+        <ul class="dropdown">
+            <li><a href="driverReportList.php">Driver Reports</a></li>
+            <li><a href="adminReportList.php">Admin Reports</a></li>
         </ul>
-    </div>
+        </li>
+        
+        <li class="navbar-item"><a href="#" class="nav-link">Expenses Up-to-date</a>
+            <ul class="dropdown">
+                <li><a href="driverExpensesList.php">Driver Expenses</a></li>
+                <li><a href="maintenanceExpensesList.php">Maintenance Expenses</a></li>
+                <li><a href="missionExpensesList.php">Missions Expenses</a></li>
+                <li><a href="vehicleExpensesList.php">Vehicle Expenses</a></li>
+                <li><a href="penaltiesExpensestList.php">Penalties and Fines</a></li>
+            </ul>
+        </li>
+        <li class="navbar-item"><a href="statisticPage.php" class="nav-link">Statistics</a></li>
+        <li class="navbar-item"><a href="#" class="nav-link">Account</a></li>
+    </ul>
+</div>
+
 <div class="container">
     <h1>List of Penalties and Fines Expenses</h1>
 
