@@ -4,9 +4,11 @@ $report_title = $report_content = '';
 $errorMessages = [];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    
+    if (isset($_POST["submit"])) {
     // Retrieve form data
     $report_title = $_POST["report_title"];
-    $report_content = $_POST["report_content"];
+    $report_content = $_POST["report_content"];}
 
     // Validate report title
     if (empty($report_title)) {
