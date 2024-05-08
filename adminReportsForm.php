@@ -1,6 +1,6 @@
 <?php
 // Initialize variables to store form data and error messages
-$report_title = $report_content = '';
+$report_title = $report_content = $report_date = '';
 $errorMessages = [];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -8,7 +8,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST["submit"])) {
     // Retrieve form data
     $report_title = $_POST["report_title"];
-    $report_content = $_POST["report_content"];}
+    $report_content = $_POST["report_content"];
+    $report_date = $_POST["report_date"];
+    }
+}
 
     // Validate report title
     if (empty($report_title)) {
@@ -18,6 +21,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Validate report content
     if (empty($report_content)) {
         $errorMessages["report_content"] = "Report content is required.";
+    }
+
+    if(empty($report_date) || !preg_match('/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/', $report_date)){  // Matches yyyy-mm-dd
+        $errorMessages["report_date"] = "Report date is required.";
     }
 
     // Process form data if no validation errors
@@ -56,6 +63,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <?php if(isset($errorMessages["report_content"])) { ?>
                 <p style="color: red;"><?php echo $errorMessages["report_content"]; ?></p>
             <?php } ?>
+
+            <label for="report_date">Report Date:</label>
+            <input type="date" id="report_date" name="report_date" value="<?php echo htmlspecialchars($report_date);?>" required>
+            <?php if(isset($errorMessages["report_date"])) { ?>
+                <p style="color: red;"><?php echo $errorMessages["report_date"]; ?></p>
+            <?php } ?>
+
 
             <input type="submit" value="submit" name="submit">
             <input type="button" value="Back" onclick="window.location.href='adminReportList.php'">

@@ -18,15 +18,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $next_maintenance_date = $_POST["next_maintenance_date"];}
 
     // Validate input fields
-    if (empty($vehicle_pn)) {
+    $pattern = '~^\d{6}-[1-9]\d{2}-([1-4][0-9]|5[0-8])$~';
+    if (empty($vehicle_pn) || !preg_match($pattern, $vehicle_pn)) {
         $errorMessages["vehicle_pn"] = "Please enter the vehicle plate number.";
     }
 
-    if (empty($date_of_maintenance)) {
+    if (empty($date_of_maintenance) || !preg_match('/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/', $date_of_maintenance)) {   // Matches yyyy-mm-dd
         $errorMessages["date_of_maintenance"] = "Please enter the date of maintenance.";
     }
 
-    if (empty($maintenance_type)) {
+    if (empty($maintenance_type) || !preg_match("/^[a-zA-Z]+(?:[ ]*[a-zA-Z]+)*$/", $maintenance_type)){     
         $errorMessages["maintenance_type"] = "Please enter the type of maintenance.";
     }
 
@@ -34,16 +35,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $errorMessages["maintenance_details"] = "Please enter the details of maintenance.";
     }
 
-    if (empty($workshop_name)) {
+    if (empty($workshop_name) || !preg_match("/^[a-zA-Z]+(?:[ ]*[a-zA-Z]+)*$/", $workshop_name)){     // Matches full name with spaces
         $errorMessages["workshop_name"] = "Please enter the workshop name.";
     }
 
-    if (empty($workshop_phone)) {
+    if (empty($workshop_phone) || !preg_match("/^(02|07|05|06)\d{8}$/", $workshop_phone)){        // Matches 07xxxxxxxx or 05xxxxxxxx or 06xxxxxxxx or 02xxxxxxxx
         $errorMessages["workshop_phone"] = "Please enter the workshop phone number.";
     }
 
     if (empty($cost) || $cost <= 0) {
         $errorMessages["cost"] = "Please enter a valid cost for maintenance.";
+    }
+
+    if (empty($next_maintenance_date) || !preg_match('/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/', $next_maintenance_date)) {   // Matches yyyy-mm-dd
+        $errorMessages["next_maintenance_date"] = "Please enter the next scheduled maintenance date.";
     }
 
     // Process form data if no validation errors
@@ -121,6 +126,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <!-- Next Maintenance Date -->
             <label for="next_maintenance_date">Next Scheduled Maintenance:</label>
             <input type="date" id="next_maintenance_date" name="next_maintenance_date" value="<?php echo htmlspecialchars($next_maintenance_date); ?>">
+            <?php if(isset($errorMessages["next_maintenance_date"])) { ?>
+                <p style="color: red;"><?php echo $errorMessages["next_maintenance_date"]; ?></p>
+            <?php } ?>
 
             <!-- Form Buttons -->
             <input type="submit" value="submit">
