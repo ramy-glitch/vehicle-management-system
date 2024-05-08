@@ -1,6 +1,6 @@
 <?php
 // Initialize variables to store form data and error messages
-$driver_id = $vehicle_LP = $penalty_type = $penalty_date = $penalty_amount = '';
+$driver_l = $vehicle_LP = $penalty_type = $penalty_date = $penalty_amount = '';
 $errorMessages = [];
 
 // Process form submission
@@ -8,30 +8,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     if (isset($_POST["submit"])) {
     // Retrieve form data
-    $driver_id = $_POST["driver_id"];
+    $driver_l = $_POST["driver_l"];
     $vehicle_LP = $_POST["vehicle_LP"];
     $penalty_type = $_POST["penalty_type"];
     $penalty_date = $_POST["penalty_date"];
     $penalty_amount = $_POST["penalty_amount"];}
 
     // Validate input fields
-    if (empty($driver_id)) {
-        $errorMessages["driver_id"] = "Please enter the driver's license number.";
+    if (empty($driver_l) || !preg_match("~^\d{6}-[1-9]\d{2}-([1-4][0-9]|5[0-8])$~", $driver_l)) {     // Matches 123456-123-58
+        $errorMessages["driver_l"] = "Please enter the driver's license number.";
     }
 
-    if (empty($vehicle_LP)) {
+    if (empty($vehicle_LP) || !preg_match("~^\d{6}-[1-9]\d{2}-([1-4][0-9]|5[0-8])$~", $vehicle_LP)) {    // Matches 123456-123-58
         $errorMessages["vehicle_LP"] = "Please enter the vehicle license plate number.";
     }
 
-    if (empty($penalty_type)) {
+    if (empty($penalty_type) || !preg_match("/^[a-zA-Z]+(?:[ ]*[a-zA-Z]+)*$/", $penalty_type)){
         $errorMessages["penalty_type"] = "Please enter the penalty type.";
     }
 
-    if (empty($penalty_date)) {
+    if (empty($penalty_date) || !preg_match('/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/', $penalty_date)) {
         $errorMessages["penalty_date"] = "Please enter the penalty date.";
     }
 
-    if (empty($penalty_amount) || $penalty_amount < 0) {
+    if (empty($penalty_amount)|| !is_numeric($penalty_amount) || $penalty_amount < 0 ) {
         $errorMessages["penalty_amount"] = "Please enter a valid penalty amount.";
     }
 
@@ -59,15 +59,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
             
             <!-- Driver's License Number -->
-            <label for="driver_id">Driver's License Number:</label>
-            <input type="number" id="driver_id" name="driver_id" value="<?php echo htmlspecialchars($driver_id); ?>" required>
-            <?php if(isset($errorMessages["driver_id"])) { ?>
-                <p style="color: red;"><?php echo $errorMessages["driver_id"]; ?></p>
+            <label for="driver_l">Driver's License Number:</label>
+            <input type="number" id="driver_l" name="driver_l" value="<?php echo htmlspecialchars($driver_l); ?>" placeholder="xxxxxxxxx" required>
+            <?php if(isset($errorMessages["driver_l"])) { ?>
+                <p style="color: red;"><?php echo $errorMessages["driver_l"]; ?></p>
             <?php } ?>
             
             <!-- Vehicle License Plate Number -->
             <label for="vehicle_LP">Vehicle License Plate Number:</label>
-            <input type="text" id="vehicle_LP" name="vehicle_LP" value="<?php echo htmlspecialchars($vehicle_LP); ?>" required>
+            <input type="text" id="vehicle_LP" name="vehicle_LP" value="<?php echo htmlspecialchars($vehicle_LP); ?>" placeholder="xxxxxx-xxx-xx" required>
             <?php if(isset($errorMessages["vehicle_LP"])) { ?>
                 <p style="color: red;"><?php echo $errorMessages["vehicle_LP"]; ?></p>
             <?php } ?>

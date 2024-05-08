@@ -43,7 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $errorMessages["workshop_phone"] = "Please enter the workshop phone number.";
     }
 
-    if (empty($cost) || $cost <= 0) {
+    if (empty($cost) || !is_numeric($cost) || $cost <= 0 ) {
         $errorMessages["cost"] = "Please enter a valid cost for maintenance.";
     }
 

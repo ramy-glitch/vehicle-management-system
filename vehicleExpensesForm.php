@@ -12,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $amount = $_POST["amount"];
 
     // Validate input fields
-    if (empty($vehicle_LP)) {
+    if (empty($vehicle_LP) || !preg_match("~^\d{6}-[1-9]\d{2}-([1-4][0-9]|5[0-8])$~", $vehicle_LP)){   // Matches 123456-123-58
         $errorMessages["vehicle_LP"] = "Please enter the license plate number.";
     }
 
@@ -20,11 +20,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $errorMessages["type_of_expense"] = "Please enter the type of expense.";
     }
 
-    if (empty($fee_date)) {
+    if (empty($fee_date) || !preg_match('/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/', $fee_date)) {
         $errorMessages["fee_date"] = "Please enter the date of the expense.";
     }
 
-    if (empty($amount) || $amount <= 0) {
+    if (empty($amount) || !is_numeric($amount) || $amount <= 0 ) {
         $errorMessages["amount"] = "Please enter a valid amount.";
     }
 
@@ -53,7 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             
             <!-- License Plate Number -->
             <label for="vehicle_LP">License Plate Number:</label>
-            <input type="text" id="vehicle_LP" name="vehicle_LP" value="<?php echo htmlspecialchars($vehicle_LP); ?>" required>
+            <input type="text" id="vehicle_LP" name="vehicle_LP" value="<?php echo htmlspecialchars($vehicle_LP); ?>" placeholder="xxxxxx-xxx-xx" required>
             <?php if(isset($errorMessages["vehicle_LP"])) { ?>
                 <p style="color: red;"><?php echo $errorMessages["vehicle_LP"]; ?></p>
             <?php } ?>
