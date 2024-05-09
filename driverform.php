@@ -47,7 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-    if (empty($phone_number) || !preg_match("/^(07|05|06)\d{8}$/", $phone_number)) {  // Matches 07xxxxxxxx or 05xxxxxxxx or 06xxxxxxxx
+    if (empty($phone_number) || !preg_match("/^(02|07|05|06)\d{8}$/", $phone_number)) {  // Matches 07xxxxxxxx or 05xxxxxxxx or 06xxxxxxxx or 02xxxxxxxx
         $errorMessages["phone_number"] = "Please enter a valid phone number.";
     }
 

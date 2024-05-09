@@ -10,16 +10,16 @@
 
 <!-- Navbar -->
 <div class="navbar">
-    <div class="navbar-brand"><a href="driverHomePage.html">Driver Dashboard</a></div>
+    <div class="navbar-brand"><a href="driverHomePage.php">Driver Dashboard</a></div>
     <ul class="navbar-menu">
         <!-- Navbar items -->
-        <li class="navbar-item"><a href="driverHomePage.html" class="nav-link">Dashboard</a></li>
-        <li class="navbar-item"><a href="dmissionsList.html" class="nav-link">Missions</a></li>
-        <li class="navbar-item"><a href="dvehicleDetails.html" class="nav-link">Vehicle</a></li>
-        <li class="navbar-item"><a href="ddriverReports.html" class="nav-link">Reports</a></li>
-        <li class="navbar-item"><a href="dpenaltiesList.html" class="nav-link">Penalties & Fines</a></li>
+        <li class="navbar-item"><a href="driverHomePage.php" class="nav-link">Dashboard</a></li>
+        <li class="navbar-item"><a href="dmissionsList.php" class="nav-link">Missions</a></li>
+        <li class="navbar-item"><a href="dvehicleDetails.php" class="nav-link">Vehicle</a></li>
+        <li class="navbar-item"><a href="ddriverReports.php" class="nav-link">Reports</a></li>
+        <li class="navbar-item"><a href="dpenaltiesList.php" class="nav-link">Penalties & Fines</a></li>
         <li class="navbar-item"><a href="#" class="nav-link">Notifications</a></li>
-        <li class="navbar-item"><a href="driverAccount.html" class="nav-link">Account</a></li>
+        <li class="navbar-item"><a href="driverAccount.php" class="nav-link">Account</a></li>
     </ul>
 </div>
 
