@@ -65,44 +65,50 @@ else {
 
     <!-- Insert New Vehicle Button -->
     <a href="vehicleForm.php" class="btn btn-primary">Add New Vehicle</a>
+<?php
+    // SQL query to retrieve vehicle data
+$sql = "SELECT vehicle_id, vehicle_license_plate, vehicle_type, vehicle_status, vehicle_location FROM vehicle";
+$result = mysqli_query($link, $sql);
 
-    <!-- Vehicle List Table -->
-    <table>
-        <thead>
-            <tr>
-                <th>License Plate Number</th>
-                <th>Type</th>
-                <th>Status</th>
-                <th>Location</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>ABC123</td>
-                <td>Sedan</td>
-                <td>In Service</td>
-                <td>Location A</td>
-                <td class="action-buttons">
-                    <button class="btn btn-secondary">View</a></button>
-                    <button class="btn btn-secondary">Edit</a></button>
-                    <button class="btn btn-secondary">Delete</a></button>
-                </td>
-            </tr>
-            <tr>
-                <td>XYZ789</td>
-                <td>Truck</td>
-                <td>Out of Service</td>
-                <td>Location B</td>
-                <td class="action-buttons">
-                    <button class="btn btn-secondary">View</a></button>
-                    <button class="btn btn-secondary">Edit</a></button>
-                    <button class="btn btn-secondary">Delete</a></button>
-                </td>
-            </tr>
-            <!-- Add more rows as needed -->
-        </tbody>
-    </table>
+// Check if any rows are returned
+if ($result->num_rows > 0) {
+    echo '<!-- Vehicle List Table -->';
+    echo '<table>';
+    echo '<thead>';
+    echo '<tr>';
+    echo '<th>License Plate Number</th>';
+    echo '<th>Type</th>';
+    echo '<th>Status</th>';
+    echo '<th>Location</th>';
+    echo '<th>Actions</th>';
+    echo '</tr>';
+    echo '</thead>';
+    echo '<tbody>';
+
+    // Output data of each row
+    while ($row = $result->fetch_assoc()) {
+        echo '<tr>';
+        echo '<td>' . htmlspecialchars($row["vehicle_license_plate"]) . '</td>';
+        echo '<td>' . htmlspecialchars($row["vehicle_type"]) . '</td>';
+        echo '<td>' . htmlspecialchars($row["vehicle_status"]) . '</td>';
+        echo '<td>' . htmlspecialchars($row["vehicle_location"]) . '</td>';
+        echo '<td class="action-buttons">';
+        echo '<button class="btn btn-secondary">View</button>';
+        echo '<button class="btn btn-secondary">Edit</button>';
+        echo '<button class="btn btn-secondary">Delete</button>';
+        echo '</td>';
+        echo '</tr>';
+    }
+
+    echo '</tbody>';
+    echo '</table>';
+} else {
+    echo "No vehicles found.";
+}
+
+// Close database connection
+mysqli_close($link);
+?>
 </div>
 
 </body>
