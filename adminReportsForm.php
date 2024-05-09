@@ -1,4 +1,14 @@
 <?php
+if (file_exists('dblink.php')) 
+{
+	require 'dblink.php';
+}
+else {
+	die("File not found");
+}
+?>
+
+<?php
 // Initialize variables to store form data and error messages
 $report_title = $report_content = $report_date = '';
 $errorMessages = [];

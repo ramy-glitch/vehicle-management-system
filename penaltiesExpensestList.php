@@ -1,3 +1,13 @@
+<?php
+if (file_exists('dblink.php')) 
+{
+	require 'dblink.php';
+}
+else {
+	die("File not found");
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

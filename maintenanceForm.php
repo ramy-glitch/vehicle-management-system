@@ -1,4 +1,14 @@
 <?php
+if (file_exists('dblink.php')) 
+{
+	require 'dblink.php';
+}
+else {
+	die("File not found");
+}
+?>
+
+<?php
 // Initialize variables to store form data and error messages
 $vehicle_pn = $date_of_maintenance = $maintenance_type = $maintenance_details = $workshop_name = $workshop_phone = $cost = $next_maintenance_date = '';
 $errorMessages = [];

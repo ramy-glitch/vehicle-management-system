@@ -1,4 +1,14 @@
 <?php
+if (file_exists('dblink.php')) 
+{
+	require 'dblink.php';
+}
+else {
+	die("File not found");
+}
+?>
+
+<?php
 // Initialize variables to store form data and error messages
 $vehicle_type = $license_plate = $make_model = $year_manufacture = $color = $odometer_reading = $fuel_type = $insurance_info = $location = $current_status = '';
 $errorMessages = [];
