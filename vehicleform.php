@@ -16,7 +16,7 @@ $errorMessages = [];
 // Process form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
-    if (isset($_POST["submit"])) {
+
     // Retrieve form data
     $vehicle_type = $_POST["vehicle_type"];
     $license_plate = $_POST["license_plate"];
@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $fuel_type = $_POST["fuel_type"];
     $insurance_info = $_POST["insurance_info"];
     $location = $_POST["location"];
-    $current_status = $_POST["current_status"];}
+    $current_status = $_POST["current_status"];
 
     // Validate input fields
     if (empty($vehicle_type)) {
@@ -75,6 +75,42 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Process form data if no validation errors
     if (empty($errorMessages)) {
         // Process the form data (e.g., save to database)
+        
+        // Prepare SQL statement with placeholders
+        $sql = "INSERT INTO vehicle 
+        (vehicle_type, vehicle_license_plate, vehicle_model, vehicle_year, 
+        vehicle_color, odometer_reading, fuel_type, inssurance_info, 
+        vehicle_location, vehicle_status) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        // Prepare the SQL query
+        $stmt = mysqli_prepare($link, $sql);
+
+        // Bind parameters with types
+        $stmt->bind_param("sssisissss", 
+        $vehicle_type, 
+        $license_plate, 
+        $make_model, 
+        $year_manufacture, 
+        $color, 
+        $odometer_reading, 
+        $fuel_type, 
+        $insurance_info, 
+        $location, 
+        $current_status
+        );
+
+        // Execute the prepared statement
+        if (!$stmt->execute()) {
+        echo "Error inserting vehicle record: " . $stmt->error;
+        }
+
+        // Close the statement
+        $stmt->close();
+
+
+
+
         // Redirect after successful submission
         header("Location: vehiclesList.php");
         exit;
