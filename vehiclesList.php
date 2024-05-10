@@ -93,9 +93,12 @@ if ($result->num_rows > 0) {
         echo '<td>' . htmlspecialchars($row["vehicle_status"]) . '</td>';
         echo '<td>' . htmlspecialchars($row["vehicle_location"]) . '</td>';
         echo '<td class="action-buttons">';
-        echo '<button class="btn btn-secondary">View</button>';
-        echo '<button class="btn btn-secondary">Edit</button>';
-        echo '<button class="btn btn-secondary">Delete</button>';
+        // View button opens vehicleformview.php with specific vehicle ID
+        echo '<a class="btn btn-secondary" href="vehicleformview.php?id=' . $row["vehicle_id"] . '">View</a>';
+        // Edit button opens vehicleformedit.php with specific vehicle ID for editing
+        echo '<a class="btn btn-secondary" href="vehicleformedit.php?id=' . $row["vehicle_id"] . '">Edit</a>';
+        // Delete button triggers JavaScript confirmation and performs deletion via deletevehicle.php
+        echo '<button class="btn btn-secondary" onclick="deleteVehicle(' . $row["vehicle_id"] . ')">Delete</button>';
         echo '</td>';
         echo '</tr>';
     }
@@ -112,4 +115,16 @@ mysqli_close($link);
 </div>
 
 </body>
+
+<script>
+    // JavaScript function to confirm and delete vehicle
+    function deleteVehicle(vehicleId) {
+        if (confirm("Are you sure you want to delete this vehicle?")) {
+            // Redirect to deletevehicle.php with vehicle ID as parameter
+            window.location.href = 'deletevehicle.php?id=' + vehicleId;
+        }
+    }
+</script>
+
 </html>
+
