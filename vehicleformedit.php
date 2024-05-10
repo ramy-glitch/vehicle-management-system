@@ -8,9 +8,12 @@ else {
 }
 ?>
 <?php
+
+$vehicleId = $vehicle = null;
 // Retrieve vehicle ID from URL parameter
             if (isset($_GET['id'])) {
                 $vehicleId = $_GET['id'];
+
 
                 // SQL query to retrieve vehicle data by ID
                 $sql = "SELECT * FROM vehicle WHERE vehicle_id = ?";
@@ -27,11 +30,12 @@ else {
 
 <?php
 // Initialize variables to store form data and error messages
+
 $vehicle_type = $license_plate = $make_model = $year_manufacture = $color = $odometer_reading = $fuel_type = $insurance_info = $location = $current_status = '';
 $errorMessages = [];
 
 // Process form submission
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_SERVER["REQUEST_METHOD"] == "POST" ) {
     
 
     // Retrieve form data
@@ -46,56 +50,80 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $location = $_POST["location"];
     $current_status = $_POST["current_status"];
 
+
     // Validate input fields
     if (empty($vehicle_type)) {
+        $vehicle_type = $vehicle['vehicle_type'];
+    }else{
         $errorMessages["vehicle_type"] = "Please enter the type of vehicle.";
     }
 
     $pattern = '~^\d{6}-[1-9]\d{2}-([1-4][0-9]|5[0-8])$~';
 
-    if (!preg_match($pattern, $license_plate)) {                                     // Matches 123456-123-58
-        $errorMessages["license_plate"] = "Please enter the license plate number.";
-    }
+    if (empty($license_plate)) {                               
+        $license_plate = $vehicle['vehicle_license_plate'];
+    }else {if (!preg_match($pattern, $license_plate)) {                                     // Matches 123456-123-58
+        $errorMessages["license_plate"] = "Please enter the license plate number."; 
+    }}
 
     if (empty($make_model)) {
-        $errorMessages["make_model"] = "Please enter the make and model of the vehicle.";
-    }
+        $make_model = $vehicle['vehicle_model']; 
+    }else{$errorMessages["make_model"] = "Please enter the make and model of the vehicle.";}
 
-    if (!is_numeric($year_manufacture) || $year_manufacture < 1900 || $year_manufacture > 2100) {
-        $errorMessages["year_manufacture"] = "Please enter a valid year of manufacture.";
-    }
+    if (empty($year_manufacture)) { 
+        $year_manufacture = $vehicle['vehicle_year'];
+    }else{
+        if (!is_numeric($year_manufacture) || $year_manufacture < 1900 || $year_manufacture > 2100) {
+        $errorMessages["year_manufacture"] = "Please enter a valid year of manufacture.";     
+    }}
 
     if (empty($color)) {
+        $color = $vehicle['vehicle_color']; 
+    }else{
         $errorMessages["color"] = "Please enter the color of the vehicle.";
     }
 
-    if (empty($odometer_reading) || !is_numeric($odometer_reading)) {
-        $errorMessages["odometer_reading"] = "Please enter a valid odometer reading (in kilometers).";
-    }
+    if (empty($odometer_reading)) {
+        $odometer_reading = $vehicle['odometer_reading'];}
+    else{   if (!is_numeric($odometer_reading)) {
+        $errorMessages["odometer_reading"] = "Please enter a valid odometer reading (in kilometers).";    
+    }}
+
 
     if (empty($fuel_type)) {
-        $errorMessages["fuel_type"] = "Please enter the fuel type of the vehicle.";
-    }
+        $fuel_type = $vehicle['fuel_type']; 
+    }else{$errorMessages["fuel_type"] = "Please enter the fuel type of the vehicle."; }
+        
 
     if (empty($insurance_info)) {
-        $errorMessages["insurance_info"] = "Please enter insurance information for the vehicle.";
+        $insurance_info = $vehicle['inssurance_info']; 
+    }else{
+        $errorMessages["insurance_info"] = "Please enter insurance information for the vehicle."; 
     }
 
     if (empty($location)) {
-        $errorMessages["location"] = "Please enter the location of the vehicle.";
+        $location = $vehicle['vehicle_location'];   
+    }else{
+        $errorMessages["location"] = "Please enter the location of the vehicle."; 
     }
 
-    if (empty($current_status) || !in_array($current_status, ["in_service", "under_maintenance", "out_of_service"])) {
-        $errorMessages["current_status"] = "Please select the current status of the vehicle.";
-    }
+    if (empty($current_status)) {
+        $current_status = $vehicle['vehicle_status'];
+        }else{
+            if (!in_array($current_status, ["in_service", "under_maintenance", "out_of_service"])) {
+        $errorMessages["current_status"] = "Please select the current status of the vehicle.";}
+        }
 
     // Process form data if no validation errors
     if (empty($errorMessages)) {
         // Process the form data (e.g., save to database)
         
         // SQL query to update vehicle data
-
-
+        
+        $sql = "UPDATE vehicle SET vehicle_type = ?, vehicle_license_plate = ?, vehicle_model = ?, vehicle_year = ?, vehicle_color = ?, odometer_reading = ?, fuel_type = ?, inssurance_info = ?, vehicle_location = ?, vehicle_status = ? WHERE vehicle_id = ?";
+        $stmt = mysqli_prepare($link, $sql); 
+        $stmt->bind_param("sssiisssssi", $vehicle_type, $license_plate, $make_model, $year_manufacture, $color, $odometer_reading, $fuel_type, $insurance_info, $location, $current_status, $vehicleId);
+        $stmt->execute();
 
 
 
@@ -114,6 +142,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>Vehicle Information Form</title>
     <link rel="stylesheet" href="form.css">
 </head>
+
 <body>
     <div class="container">
         <h2>Vehicle Information</h2>
@@ -121,70 +150,70 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             
             <!-- Type of Vehicle -->
             <label for="vehicle_type">Type of Vehicle:</label>
-            <input type="text" id="vehicle_type" name="vehicle_type" value="<?php echo htmlspecialchars($vehicle['vehicle_type']); ?>" required>
+            <input type="text" id="vehicle_type" name="vehicle_type" value="<?php echo htmlspecialchars($vehicle_type);?>" placeholder="<?php echo htmlspecialchars($vehicle['vehicle_type']); ?>"  required>
             <?php if(isset($errorMessages["vehicle_type"])) { ?>
                 <p style="color: red;"><?php echo $errorMessages["vehicle_type"]; ?></p>
             <?php } ?>
             
             <!-- License Plate Number -->
             <label for="license_plate">License Plate Number:</label>
-            <input type="text" id="license_plate" name="license_plate" value="<?php echo htmlspecialchars($vehicle['vehicle_license_plate']); ?>" placeholder="xxxxxx-xxx-xx" required>
+            <input type="text" id="license_plate" name="license_plate" value="<?php echo htmlspecialchars($license_plate); ?>" placeholder="<?php echo htmlspecialchars($vehicle['vehicle_license_plate']); ?>" required>
             <?php if(isset($errorMessages["license_plate"])) { ?>
                 <p style="color: red;"><?php echo $errorMessages["license_plate"]; ?></p>
             <?php } ?>
             
             <!-- Make and Model -->
             <label for="make_model">Make and Model:</label>
-            <input type="text" id="make_model" name="make_model" value="<?php echo htmlspecialchars($make_model); ?>" required>
+            <input type="text" id="make_model" name="make_model" value="<?php echo htmlspecialchars($make_model); ?>" placeholder="<?php echo htmlspecialchars($vehicle['vehicle_model']); ?>" required>
             <?php if(isset($errorMessages["make_model"])) { ?>
                 <p style="color: red;"><?php echo $errorMessages["make_model"]; ?></p>
             <?php } ?>
             
             <!-- Year of Manufacture -->
             <label for="year_manufacture">Year of Manufacture:</label>
-            <input type="number" id="year_manufacture" name="year_manufacture" value="<?php echo htmlspecialchars($year_manufacture); ?>" min="1900" max="2100" required>
+            <input type="number" id="year_manufacture" name="year_manufacture" value="<?php echo htmlspecialchars($year_manufacture); ?>" placeholder="<?php echo htmlspecialchars($vehicle['vehicle_year']); ?>" min="1900" max="2100" required>
             <?php if(isset($errorMessages["year_manufacture"])) { ?>
                 <p style="color: red;"><?php echo $errorMessages["year_manufacture"]; ?></p>
             <?php } ?>
             
             <!-- Color -->
             <label for="color">Color:</label>
-            <input type="text" id="color" name="color" value="<?php echo htmlspecialchars($color); ?>" required>
+            <input type="text" id="color" name="color" value="<?php echo htmlspecialchars($color); ?>" placeholder="<?php echo htmlspecialchars($vehicle['vehicle_color']); ?>" required>
             <?php if(isset($errorMessages["color"])) { ?>
                 <p style="color: red;"><?php echo $errorMessages["color"]; ?></p>
             <?php } ?>
             
             <!-- Odometer Reading -->
             <label for="odometer_reading">Odometer Reading (Km):</label>
-            <input type="number" id="odometer_reading" name="odometer_reading" value="<?php echo htmlspecialchars($odometer_reading); ?>" required>
+            <input type="number" id="odometer_reading" name="odometer_reading" value="<?php echo htmlspecialchars($odometer_reading); ?>" placeholder="<?php echo htmlspecialchars($vehicle['odometer_reading']); ?>" required>
             <?php if(isset($errorMessages["odometer_reading"])) { ?>
                 <p style="color: red;"><?php echo $errorMessages["odometer_reading"]; ?></p>
             <?php } ?>
             
             <!-- Fuel Type -->
             <label for="fuel_type">Fuel Type:</label>
-            <input type="text" id="fuel_type" name="fuel_type" value="<?php echo htmlspecialchars($fuel_type); ?>" required>
+            <input type="text" id="fuel_type" name="fuel_type" value="<?php echo htmlspecialchars($fuel_type); ?>" placeholder="<?php echo htmlspecialchars($vehicle['fuel_type']); ?>" required>
             <?php if(isset($errorMessages["fuel_type"])) { ?>
                 <p style="color: red;"><?php echo $errorMessages["fuel_type"]; ?></p>
             <?php } ?>
             
             <!-- Insurance Information -->
             <label for="insurance_info">Insurance Information:</label>
-            <textarea id="insurance_info" name="insurance_info" rows="4" cols="50" required><?php echo htmlspecialchars($insurance_info); ?></textarea>
+            <textarea id="insurance_info" name="insurance_info" rows="4" cols="50" placeholder="<?php echo htmlspecialchars($vehicle['inssurance_info']); ?>" required><?php echo htmlspecialchars($insurance_info); ?></textarea>
             <?php if(isset($errorMessages["insurance_info"])) { ?>
                 <p style="color: red;"><?php echo $errorMessages["insurance_info"]; ?></p>
             <?php } ?>
             
             <!-- Location -->
             <label for="location">Location:</label>
-            <input type="text" id="location" name="location" value="<?php echo htmlspecialchars($location); ?>" required>
+            <input type="text" id="location" name="location" value="<?php echo htmlspecialchars($location); ?>" placeholder="<?php echo htmlspecialchars($vehicle['vehicle_location']); ?>" required>
             <?php if(isset($errorMessages["location"])) { ?>
                 <p style="color: red;"><?php echo $errorMessages["location"]; ?></p>
             <?php } ?>
             
             <!-- Current Status -->
             <label for="current_status">Current Status:</label>
-            <select id="current_status" name="current_status" required>
+            <select id="current_status" name="current_status" placeholder="<?php echo htmlspecialchars($vehicle['vehicle_status']); ?>" required>
                 <option value="in_service" <?php if($current_status == "in_service") echo "selected"; ?>>In Service</option>
                 <option value="under_maintenance" <?php if($current_status == "under_maintenance") echo "selected"; ?>>Under Maintenance</option>
                 <option value="out_of_service" <?php if($current_status == "out_of_service") echo "selected"; ?>>Out of Service</option>
@@ -200,3 +229,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
 </body>
 </html>
+
+<?php mysqli_close($link); ?>
