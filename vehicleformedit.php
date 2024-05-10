@@ -6,8 +6,29 @@ if (file_exists('dblink.php'))
 else {
 	die("File not found");
 }
-require 'vehicleformeditphp.php';
+
 ?>
+<?php
+
+$vehicleId = $vehicle = null;
+// Retrieve vehicle ID from URL parameter
+            if (isset($_GET['id'])) {
+                $vehicleId = $_GET['id'];
+
+
+                // SQL query to retrieve vehicle data by ID
+                $sql = "SELECT * FROM vehicle WHERE vehicle_id = ?";
+                $stmt = mysqli_prepare($link, $sql);
+                $stmt->bind_param("i", $vehicleId);
+                $stmt->execute();
+                $result = $stmt->get_result();
+
+                // Display vehicle information in editable input fields
+                if ($result->num_rows > 0) {
+                    $vehicle = $result->fetch_assoc();}
+            }
+?>
+
 <?php
 
 // Initialize variables to store form data and error messages
@@ -40,7 +61,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" ) {
 
     // Validate input fields
     if (empty($vehicle_type)) {
-        $vehicle_type = $vehicle['vehicle_type']; 
+        $vehicle_type = $vehicle['vehicle_type'];
+    }else{
+        $errorMessages["vehicle_type"] = "Please enter the type of vehicle.";
     }
 
     $pattern = '~^\d{6}-[1-9]\d{2}-([1-4][0-9]|5[0-8])$~';
@@ -48,12 +71,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" ) {
     if (empty($license_plate)) {                               
         $license_plate = $vehicle['vehicle_license_plate'];
     }else {if (!preg_match($pattern, $license_plate)) {                                     // Matches 123456-123-58
-        $errorMessages["license_plate"] = "Please enter the license plate number.";} 
-    }
+        $errorMessages["license_plate"] = "Please enter the license plate number."; 
+    }}
 
     if (empty($make_model)) {
         $make_model = $vehicle['vehicle_model']; 
-    }
+    }else{$errorMessages["make_model"] = "Please enter the make and model of the vehicle.";}
 
     if (empty($year_manufacture)) { 
         $year_manufacture = $vehicle['vehicle_year'];
@@ -64,6 +87,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" ) {
 
     if (empty($color)) {
         $color = $vehicle['vehicle_color']; 
+    }else{
+        $errorMessages["color"] = "Please enter the color of the vehicle.";
     }
 
     if (empty($odometer_reading)) {
@@ -75,15 +100,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" ) {
 
     if (empty($fuel_type)) {
         $fuel_type = $vehicle['fuel_type']; 
-    }
+    }else{$errorMessages["fuel_type"] = "Please enter the fuel type of the vehicle."; }
         
 
     if (empty($insurance_info)) {
         $insurance_info = $vehicle['inssurance_info']; 
+    }else{
+        $errorMessages["insurance_info"] = "Please enter insurance information for the vehicle."; 
     }
 
     if (empty($location)) {
         $location = $vehicle['vehicle_location'];   
+    }else{
+        $errorMessages["location"] = "Please enter the location of the vehicle."; 
     }
 
     if (empty($current_status)) {
@@ -107,8 +136,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" ) {
 
 
         // Redirect after successful submission
-        //header("Location: vehiclesList.php");
-        //exit;
+        header("Location: vehiclesList.php");
+        exit;
     }
 }
 ?>
