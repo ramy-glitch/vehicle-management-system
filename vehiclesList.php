@@ -96,7 +96,7 @@ if ($result->num_rows > 0) {
         // View button opens vehicleformview.php with specific vehicle ID
         echo '<a class="btn btn-secondary" href="vehicleformview.php?id=' . $row["vehicle_id"] . '">View</a>';
         // Edit button opens vehicleformedit.php with specific vehicle ID for editing
-        echo '<a class="btn btn-secondary" href="vehicleformedit.php?id=' . $row["vehicle_id"] . '">Edit</a>';
+        echo '<a class="btn btn-secondary" href="vehicleformeditphp.php?id=' . $row["vehicle_id"] . '">Edit</a>';
         // Delete button triggers JavaScript confirmation and performs deletion via deletevehicle.php
         echo '<button class="btn btn-secondary" onclick="deleteVehicle(' . $row["vehicle_id"] . ')">Delete</button>';
         echo '</td>';
