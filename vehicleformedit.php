@@ -150,70 +150,70 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" ) {
             
             <!-- Type of Vehicle -->
             <label for="vehicle_type">Type of Vehicle:</label>
-            <input type="text" id="vehicle_type" name="vehicle_type" value="<?php echo htmlspecialchars($vehicle_type);?>" placeholder="<?php echo htmlspecialchars($vehicle['vehicle_type']); ?>"  required>
+            <input type="text" id="vehicle_type" name="vehicle_type" value="<?php echo htmlspecialchars($vehicle_type);?>" placeholder="<?php echo htmlspecialchars($vehicle['vehicle_type']); ?>" >
             <?php if(isset($errorMessages["vehicle_type"])) { ?>
                 <p style="color: red;"><?php echo $errorMessages["vehicle_type"]; ?></p>
             <?php } ?>
             
             <!-- License Plate Number -->
             <label for="license_plate">License Plate Number:</label>
-            <input type="text" id="license_plate" name="license_plate" value="<?php echo htmlspecialchars($license_plate); ?>" placeholder="<?php echo htmlspecialchars($vehicle['vehicle_license_plate']); ?>" required>
+            <input type="text" id="license_plate" name="license_plate" value="<?php echo htmlspecialchars($license_plate); ?>" placeholder="<?php echo htmlspecialchars($vehicle['vehicle_license_plate']); ?>" >
             <?php if(isset($errorMessages["license_plate"])) { ?>
                 <p style="color: red;"><?php echo $errorMessages["license_plate"]; ?></p>
             <?php } ?>
             
             <!-- Make and Model -->
             <label for="make_model">Make and Model:</label>
-            <input type="text" id="make_model" name="make_model" value="<?php echo htmlspecialchars($make_model); ?>" placeholder="<?php echo htmlspecialchars($vehicle['vehicle_model']); ?>" required>
+            <input type="text" id="make_model" name="make_model" value="<?php echo htmlspecialchars($make_model); ?>" placeholder="<?php echo htmlspecialchars($vehicle['vehicle_model']); ?>">
             <?php if(isset($errorMessages["make_model"])) { ?>
                 <p style="color: red;"><?php echo $errorMessages["make_model"]; ?></p>
             <?php } ?>
             
             <!-- Year of Manufacture -->
             <label for="year_manufacture">Year of Manufacture:</label>
-            <input type="number" id="year_manufacture" name="year_manufacture" value="<?php echo htmlspecialchars($year_manufacture); ?>" placeholder="<?php echo htmlspecialchars($vehicle['vehicle_year']); ?>" min="1900" max="2100" required>
+            <input type="number" id="year_manufacture" name="year_manufacture" value="<?php echo htmlspecialchars($year_manufacture); ?>" placeholder="<?php echo htmlspecialchars($vehicle['vehicle_year']); ?>" min="1900" max="2100" >
             <?php if(isset($errorMessages["year_manufacture"])) { ?>
                 <p style="color: red;"><?php echo $errorMessages["year_manufacture"]; ?></p>
             <?php } ?>
             
             <!-- Color -->
             <label for="color">Color:</label>
-            <input type="text" id="color" name="color" value="<?php echo htmlspecialchars($color); ?>" placeholder="<?php echo htmlspecialchars($vehicle['vehicle_color']); ?>" required>
+            <input type="text" id="color" name="color" value="<?php echo htmlspecialchars($color); ?>" placeholder="<?php echo htmlspecialchars($vehicle['vehicle_color']); ?>" >
             <?php if(isset($errorMessages["color"])) { ?>
                 <p style="color: red;"><?php echo $errorMessages["color"]; ?></p>
             <?php } ?>
             
             <!-- Odometer Reading -->
             <label for="odometer_reading">Odometer Reading (Km):</label>
-            <input type="number" id="odometer_reading" name="odometer_reading" value="<?php echo htmlspecialchars($odometer_reading); ?>" placeholder="<?php echo htmlspecialchars($vehicle['odometer_reading']); ?>" required>
+            <input type="number" id="odometer_reading" name="odometer_reading" value="<?php echo htmlspecialchars($odometer_reading); ?>" placeholder="<?php echo htmlspecialchars($vehicle['odometer_reading']); ?>" >
             <?php if(isset($errorMessages["odometer_reading"])) { ?>
                 <p style="color: red;"><?php echo $errorMessages["odometer_reading"]; ?></p>
             <?php } ?>
             
             <!-- Fuel Type -->
             <label for="fuel_type">Fuel Type:</label>
-            <input type="text" id="fuel_type" name="fuel_type" value="<?php echo htmlspecialchars($fuel_type); ?>" placeholder="<?php echo htmlspecialchars($vehicle['fuel_type']); ?>" required>
+            <input type="text" id="fuel_type" name="fuel_type" value="<?php echo htmlspecialchars($fuel_type); ?>" placeholder="<?php echo htmlspecialchars($vehicle['fuel_type']); ?>" >
             <?php if(isset($errorMessages["fuel_type"])) { ?>
                 <p style="color: red;"><?php echo $errorMessages["fuel_type"]; ?></p>
             <?php } ?>
             
             <!-- Insurance Information -->
             <label for="insurance_info">Insurance Information:</label>
-            <textarea id="insurance_info" name="insurance_info" rows="4" cols="50" placeholder="<?php echo htmlspecialchars($vehicle['inssurance_info']); ?>" required><?php echo htmlspecialchars($insurance_info); ?></textarea>
+            <textarea id="insurance_info" name="insurance_info" rows="4" cols="50" placeholder="<?php echo htmlspecialchars($vehicle['inssurance_info']); ?>" ><?php echo htmlspecialchars($insurance_info); ?></textarea>
             <?php if(isset($errorMessages["insurance_info"])) { ?>
                 <p style="color: red;"><?php echo $errorMessages["insurance_info"]; ?></p>
             <?php } ?>
             
             <!-- Location -->
             <label for="location">Location:</label>
-            <input type="text" id="location" name="location" value="<?php echo htmlspecialchars($location); ?>" placeholder="<?php echo htmlspecialchars($vehicle['vehicle_location']); ?>" required>
+            <input type="text" id="location" name="location" value="<?php echo htmlspecialchars($location); ?>" placeholder="<?php echo htmlspecialchars($vehicle['vehicle_location']); ?>" >
             <?php if(isset($errorMessages["location"])) { ?>
                 <p style="color: red;"><?php echo $errorMessages["location"]; ?></p>
             <?php } ?>
             
             <!-- Current Status -->
             <label for="current_status">Current Status:</label>
-            <select id="current_status" name="current_status" placeholder="<?php echo htmlspecialchars($vehicle['vehicle_status']); ?>" required>
+            <select id="current_status" name="current_status" placeholder="<?php echo htmlspecialchars($vehicle['vehicle_status']); ?>" >
                 <option value="in_service" <?php if($current_status == "in_service") echo "selected"; ?>>In Service</option>
                 <option value="under_maintenance" <?php if($current_status == "under_maintenance") echo "selected"; ?>>Under Maintenance</option>
                 <option value="out_of_service" <?php if($current_status == "out_of_service") echo "selected"; ?>>Out of Service</option>
