@@ -25,7 +25,9 @@ $vehicleId = $vehicle = null;
 
                 // Display vehicle information in editable input fields
                 if ($result->num_rows > 0) {
-                    $vehicle = $result->fetch_assoc();}
+                    $vehicle = $result->fetch_assoc();
+                    //print_r($vehicle);
+                }
             }
 ?>
 
@@ -37,6 +39,7 @@ $vehicle_type = $license_plate = $make_model = $year_manufacture = $color = $odo
 $errorMessages = [];
 
 
+//die();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" ) {
 
@@ -67,6 +70,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" ) {
     }
 
     $pattern = '~^\d{6}-[1-9]\d{2}-([1-4][0-9]|5[0-8])$~';
+
+
 
     if (empty($license_plate)) {                               
         $license_plate = $vehicle['vehicle_license_plate'];
@@ -154,7 +159,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" ) {
 <body>
     <div class="container">
         <h2>Vehicle Information</h2>
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"])."?id=".$vehicleId; ?>" method="post">
             
             <!-- Type of Vehicle -->
             <label for="vehicle_type">Type of Vehicle:</label>
