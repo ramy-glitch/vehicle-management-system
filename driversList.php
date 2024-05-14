@@ -1,13 +1,34 @@
 <?php
-if (file_exists('dblink.php')) 
-{
-	require 'dblink.php';
+if (file_exists('dblink.php')) {
+    require 'dblink.php';
+} else {
+    die("File not found");
 }
-else {
-	die("File not found");
-}
-?>
 
+// Query to fetch driver information
+$sql = "SELECT driver_name, driver_phone, driver_status, vehicle_license_plate 
+        FROM driver 
+        LEFT JOIN vehicle ON driver.vehicle_id = vehicle.vehicle_id";
+
+// Search functionality
+$search = '';
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST["search_button"])) {
+        $search = $_POST["search"];
+        $sql .= " WHERE driver_name LIKE '%$search%' OR driver_phone LIKE '%$search%'";
+    }
+    if (isset($_POST["reload_button"])) {
+        $search = '';
+        $sql = "SELECT driver_name, driver_phone, driver_status, vehicle_license_plate 
+                FROM driver 
+                LEFT JOIN vehicle ON driver.vehicle_id = vehicle.vehicle_id";
+    }
+}
+
+
+$result = mysqli_query($link, $sql);
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -15,7 +36,7 @@ else {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>List of Drivers</title>
-    <link  rel="stylesheet" href="style.css"/>
+    <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
 
@@ -53,16 +74,15 @@ else {
 <div class="container">
     <h1>List of Drivers</h1>
 
+
     <!-- Search and Filter -->
     <div class="search-container">
-        <input type="text" class="search-input" placeholder="Search drivers...">
-        <select class="filter-select">
-            <option value="all">All</option>
-            <option value="active">Active</option>
-            <option value="inactive">Inactive</option>
-        </select>
-        <button class="btn btn-primary">Search</button>
-    </div>
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+            <input type="text" name="search" placeholder="Search Driver.." value="<?php echo htmlspecialchars($search); ?>">
+            <button class="btn btn-primary" name="search_button">Search</button>
+            <button class="btn btn-primary" name="reload_button">Reload All Drivers</button>
+        </form>
+    </div><br><br>
 
     <!-- Insert New Driver Button -->
     <a href="driverForm.php" class="btn btn-primary">Add New Driver</a>
@@ -79,32 +99,30 @@ else {
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>John Doe</td>
-                <td>123-456-7890</td>
-                <td>Active</td>
-                <td>ABC123</td>
-                <td>
-                    <button class="btn btn-secondary">View</a></button>
-                    <button class="btn btn-secondary">Edit</button>
-                    <button class="btn btn-secondary">Delete</a></button>
-                </td>
-            </tr>
-            <tr>
-                <td>Jane Smith</td>
-                <td>987-654-3210</td>
-                <td>Inactive</td>
-                <td>XYZ789</td>
-                <td>
-                    <button class="btn btn-secondary">View</a></button>
-                    <button class="btn btn-secondary">Edit</a></button>
-                    <button class="btn btn-secondary">Delete</a></button>
-                </td>
-            </tr>
-            <!-- Add more rows as needed -->
+            <?php
+            // Loop through the query result and display each row in the table
+            while ($row = mysqli_fetch_assoc($result)) {
+                echo "<tr>";
+                echo "<td>" . htmlspecialchars($row['driver_name']) . "</td>";
+                echo "<td>" . htmlspecialchars($row['driver_phone']) . "</td>";
+                echo "<td>" . htmlspecialchars($row['driver_status']) . "</td>";
+                echo "<td>" . htmlspecialchars($row['vehicle_license_plate']) . "</td>";
+                echo "<td>";
+                echo '<button class="btn btn-secondary">View</button>';
+                echo '<button class="btn btn-secondary">Edit</button>';
+                echo '<button class="btn btn-secondary">Delete</button>';
+                echo "</td>";
+                echo "</tr>";
+            }
+            ?>
         </tbody>
     </table>
 </div>
 
 </body>
 </html>
+
+<?php
+// Close the database connection
+mysqli_close($link);
+?>
