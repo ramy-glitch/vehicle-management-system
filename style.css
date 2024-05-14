@@ -137,3 +137,11 @@ th, td {
 .logo{
     mix-blend-mode: multiply;
 }
+
+input[type="text"]{
+    padding: 8px;
+    margin-bottom: 12px;
+    border-radius: 4px;
+    border: 2px solid #ddd;
+    box-sizing: border-box; /* Include padding in element width */
+}

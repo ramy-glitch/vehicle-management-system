@@ -54,13 +54,11 @@ else {
 
     <!-- Search and Filter -->
     <div class="search-container">
-        <label>Search Vehicle :</label>
-        <select class="filter-select">
-            <option value="all">All</option>
-            <option value="assigned">Assigned</option>
-            <option value="unassigned">Unassigned</option>
-        </select>
-        <button class="btn btn-primary">Search</button>
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+        <input type="text" name="search" placeholder="Search Vehicle..">
+        <button class="btn btn-primary" name="search_button">Search</button> 
+        <button class="btn btn-primary" name="reload_button">Reload All Vehicles</button>
+        </form>
     </div><br><br>
 
     <!-- Insert New Vehicle Button -->
@@ -68,6 +66,21 @@ else {
 <?php
     // SQL query to retrieve vehicle data
 $sql = "SELECT vehicle_id, vehicle_license_plate, vehicle_type, vehicle_status, vehicle_location FROM vehicle";
+
+// implement the search feature
+
+if ($_SERVER["REQUEST_METHOD"] == "POST"){
+    $search = $_POST['search'];
+    $sql .= " WHERE vehicle_license_plate LIKE '%$search%' OR vehicle_type LIKE '%$search%' OR vehicle_status LIKE '%$search%' OR vehicle_location LIKE '%$search%'";
+}
+else{
+    $search = "";
+}
+
+if (isset($_POST['reload_button'])){
+    $sql = "SELECT vehicle_id, vehicle_license_plate, vehicle_type, vehicle_status, vehicle_location FROM vehicle";
+}
+
 $result = mysqli_query($link, $sql);
 
 // Check if any rows are returned
