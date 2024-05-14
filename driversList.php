@@ -72,7 +72,7 @@ $result = mysqli_query($link, $sql);
 </div>
 
 <div class="container">
-    <h1>List of Drivers</h1>
+    <h1>List of Drivers</h1><br><br>
 
 
     <!-- Search and Filter -->
@@ -85,7 +85,7 @@ $result = mysqli_query($link, $sql);
     </div><br><br>
 
     <!-- Insert New Driver Button -->
-    <a href="driverForm.php" class="btn btn-primary">Add New Driver</a>
+    <a href="driverForm.php" class="btn btn-primary">Add New Driver</a><br><br>
 
     <!-- Driver List Table -->
     <table>

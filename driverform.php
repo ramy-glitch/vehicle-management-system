@@ -126,6 +126,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Process form data if no validation errors
     if (empty($errorMessages)) {
         // Process the form data (e.g., save to database)
+
+        $password = password_hash($password, PASSWORD_DEFAULT); // Hash the password before saving to the database
+
+        // SQL query to insert data into the database
+
+        $sql = "INSERT INTO driver (driver_name, driver_birthdate, driver_phone, driver_address, username, pwd, employment_date, monthly_salary, driver_history, driver_status, vehicle_id) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        $stmt = mysqli_prepare($link, $sql);
+        $stmt->bind_param("sssssssdsss", $full_name, $date_of_birth, $phone_number, $address, $username, $password, $employment_date, $monthly_salary, $driving_history, $driver_status, $vehicle_assignment);
+        $stmt->execute();
         // Redirect after successful submission
         header("Location: driversList.php");
         exit;
@@ -258,3 +269,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
 </body>
 </html>
+<?php mysqli_close($link); ?>
