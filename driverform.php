@@ -43,19 +43,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     $pattern = '/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/';       // Matches yyyy-mm-dd
 
+
+    $month = $day = $year = 0; 
+    
     if (!preg_match($pattern, $date_of_birth)) {
-
         $errorMessages["date_of_birth"] = "Please enter a valid date of birth.";
-    } else {
-        // Further validation to ensure it's a valid date
-        $date_parts = explode('-', $date_of_birth);
-        $month = (int) $date_parts[1];
-        $day = (int) $date_parts[2];
-        $year = (int) $date_parts[0];
+    }
 
-        if (!checkdate($month, $day, $year)) {
-            $errorMessages["date_of_birth"] = "Please enter a valid date of birth.";
-        }
+    // Further validation to ensure it's a valid date
+    $date_parts = explode('-', $date_of_birth);
+    $month = (int) $date_parts[1];
+    $day = (int) $date_parts[2];
+    $year = (int) $date_parts[0]; 
+
+    
+    if (!checkdate($month, $day, $year)) { 
+        $errorMessages["date_of_birth"] = "Please enter a valid date of birth.";
+    }
+
+    date_default_timezone_set('Africa/Algiers');
+    $currentDate = date('Y-m-d');
+    $date_parts = explode('-', $currentDate);
+    $currentyear = (int) $date_parts[0];
+    $currentmonth = (int) $date_parts[1];
+    $currentday = (int) $date_parts[2];
+
+    if (($currentyear - $year) < 19) {
+        $errorMessages["date_of_birth"] = "Driver must be at least 19 years old.";
     }
 
     if (empty($phone_number) || !preg_match("/^(02|07|05|06)\d{8}$/", $phone_number)) {  // Matches 07xxxxxxxx or 05xxxxxxxx or 06xxxxxxxx or 02xxxxxxxx
@@ -76,17 +90,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (!preg_match($pattern, $employment_date)) {                                 // Matches yyyy-mm-dd           
         $errorMessages["employment_date"] = "Please enter a valid employment date.";
-    }else {
-        // Further validation to ensure it's a valid date
-        $date_parts = explode('-', $employment_date);
-        $month = (int) $date_parts[1];
-        $day = (int) $date_parts[2];
-        $year = (int) $date_parts[0];
+    }
 
-        if (!checkdate($month, $day, $year)) {
-            $errorMessages["employment_date"] = "Please enter a valid employment date.";
-        }
-    }  
+    // Further validation to ensure it's a valid date
+    $date_parts = explode('-', $employment_date);
+    $month = (int) $date_parts[1];
+    $day = (int) $date_parts[2];
+    $year = (int) $date_parts[0];
+
+    if (!checkdate($month, $day, $year)) {
+        $errorMessages["employment_date"] = "Please enter a valid employment date.";
+    }
+
+    if ($currentyear < $year || ($currentyear == $year && $currentmonth < $month) || ($currentyear == $year && $currentmonth == $month && $currentday < $day)){
+        $errorMessages["employment_date"] = "Employment date cannot be in the future.";
+    }
+    
 
     if (empty($monthly_salary) || !is_numeric($monthly_salary) || $monthly_salary < 0){
         $errorMessages["monthly_salary"] = "Please enter a valid monthly salary.";
