@@ -10,7 +10,7 @@ else {
 
 <?php
 // Initialize variables to store form data and error messages
-$row =null;
+
 $license_number = $full_name = $date_of_birth = $phone_number = $address = $username = $password = $employment_date = $monthly_salary = $driving_history = $vehicle_assignment = $status = '';
 $errorMessages = [];
 
@@ -115,7 +115,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $errorMessages["driving_history"] = "Please enter a valid driving history.";
     }
 
-    if (empty($vehicle_assignment) || !in_array($vehicle_assignment, ["none", $row["vehicle_id"] ])) { // Matches one of the two values
+    if (!in_array($vehicle_assignment, ["none", ])) { // check if the selected vehicle is in the list of available vehicles
         $errorMessages["vehicle_assignment"] = "Please select a valid vehicle assignment.";
     }
 
