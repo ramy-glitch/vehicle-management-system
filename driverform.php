@@ -10,6 +10,7 @@ else {
 
 <?php
 // Initialize variables to store form data and error messages
+$row =null;
 $license_number = $full_name = $date_of_birth = $phone_number = $address = $username = $password = $employment_date = $monthly_salary = $driving_history = $vehicle_assignment = $status = '';
 $errorMessages = [];
 
@@ -89,6 +90,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (empty($monthly_salary) || !is_numeric($monthly_salary) || $monthly_salary < 0){
         $errorMessages["monthly_salary"] = "Please enter a valid monthly salary.";
+    }
+
+    if (empty($driving_history)) {
+        $errorMessages["driving_history"] = "Please enter a valid driving history.";
+    }
+
+    if (empty($vehicle_assignment) || !in_array($vehicle_assignment, ["none", $row["vehicle_id"] ])) { // Matches one of the two values
+        $errorMessages["vehicle_assignment"] = "Please select a valid vehicle assignment.";
     }
 
     if (empty($status) || !in_array($status, ["active", "inactive", "on_leave"])) {   // Matches one of the three values
@@ -194,7 +203,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             
             <label for="vehicle_assignment">Vehicle Assignment:</label>
-            <input type="text" id="vehicle_assignment" name="vehicle_assignment" value="<?php echo htmlspecialchars($vehicle_assignment); ?>">
+            <select id="vehicle_assignment" name="vehicle_assignment">
+            <option value="none" <?php echo "selected"; ?>>None</option>
+            <?php
+                        // SQL query to retrieve vehicle data
+                    $sql = "SELECT vehicle_id, vehicle_type,vehicle_model FROM vehicle where vehicle_status = 'out_of_service'";
+                    $result = mysqli_query($link, $sql);
+
+                    // Check if any rows are returned
+                    if ($result->num_rows > 0) {
+
+                        // Output data of each row
+                        while ($row = $result->fetch_assoc()) {
+                            echo '<option value="'. $row["vehicle_id"].'" <?php echo "selected"; ?>' . htmlspecialchars($row["vehicle_type"]). ' ' . htmlspecialchars($row["vehicle_model"]) .'</option>';
+                        }
+                    }
+            ?>
+            </select>
 
             
             <label for="status">Status:</label>
