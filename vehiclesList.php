@@ -50,21 +50,21 @@ else {
 </div>
 
 <div class="container">
-    <h1>List of Vehicles</h1>
+    <h1>List of Vehicles</h1><br><br>
 
     <!-- Search and Filter -->
     <div class="search-container">
-        <input type="text" class="search-input" placeholder="Search vehicles...">
+        <label>Search Vehicle :</label>
         <select class="filter-select">
             <option value="all">All</option>
             <option value="assigned">Assigned</option>
             <option value="unassigned">Unassigned</option>
         </select>
         <button class="btn btn-primary">Search</button>
-    </div>
+    </div><br><br>
 
     <!-- Insert New Vehicle Button -->
-    <a href="vehicleForm.php" class="btn btn-primary">Add New Vehicle</a>
+    <a href="vehicleForm.php" class="btn btn-primary">Add New Vehicle</a><br><br>
 <?php
     // SQL query to retrieve vehicle data
 $sql = "SELECT vehicle_id, vehicle_license_plate, vehicle_type, vehicle_status, vehicle_location FROM vehicle";
@@ -97,7 +97,7 @@ if ($result->num_rows > 0) {
         echo '<a class="btn btn-secondary" href="vehicleformview.php?id=' . $row["vehicle_id"] . '">View</a>';
         // Edit button opens vehicleformedit.php with specific vehicle ID for editing
         echo '<a class="btn btn-secondary" href="vehicleformedit.php?id=' . $row["vehicle_id"] . '">Edit</a>';
-        // Delete button triggers JavaScript confirmation and performs deletion via deletevehicle.php
+        // Delete button triggers JavaScript confirmation and performs deletion via vehicleformdelete.php
         echo '<button class="btn btn-secondary" onclick="deleteVehicle(' . $row["vehicle_id"] . ')">Delete</button>';
         echo '</td>';
         echo '</tr>';
@@ -121,8 +121,8 @@ mysqli_close($link);
     function deleteVehicle(vehicleId) {
         if (confirm("Are you sure you want to delete this vehicle?")) {
             // Redirect to deletevehicle.php with vehicle ID as parameter
-            window.location.href = 'deletevehicle.php?id=' + vehicleId;
-        }
+            window.location.href = 'vehicleformdelete.php?id=' + vehicleId;
+        }   
     }
 </script>
 

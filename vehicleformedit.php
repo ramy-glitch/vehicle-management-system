@@ -26,7 +26,6 @@ $vehicleId = $vehicle = null;
                 // Display vehicle information in editable input fields
                 if ($result->num_rows > 0) {
                     $vehicle = $result->fetch_assoc();
-                    //print_r($vehicle);
                 }
             }
 ?>
@@ -39,7 +38,7 @@ $vehicle_type = $license_plate = $make_model = $year_manufacture = $color = $odo
 $errorMessages = [];
 
 
-//die();
+// Process form submission
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" ) {
 
