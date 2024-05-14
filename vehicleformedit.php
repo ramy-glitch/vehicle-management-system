@@ -66,13 +66,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" ) {
         $vehicle_type = $vehicle['vehicle_type'];
     }
 
-    $pattern = '~^\d{6}-[1-9]\d{2}-([1-4][0-9]|5[0-8])$~';
+    $pattern = '~^\d{5,6}-[1-9]\d{2}-([1-4][0-9]|5[0-8])$~';
 
 
 
     if (empty($license_plate)) {                               
         $license_plate = $vehicle['vehicle_license_plate'];
-    }else {if (!preg_match($pattern, $license_plate)) {                                     // Matches 123456-123-58
+    }else {if (!preg_match($pattern, $license_plate)) {                                     // Matches 123456-123-58 or 12345-123-58
         $errorMessages["license_plate"] = "Please enter the license plate number."; 
     }}
 

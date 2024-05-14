@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $penalty_amount = $_POST["penalty_amount"];}
 
     // Validate input fields
-    if (empty($driver_l) || !preg_match("~^\d{6}-[1-9]\d{2}-([1-4][0-9]|5[0-8])$~", $driver_l)) {     // Matches 123456-123-58
+    if (empty($driver_l) || !preg_match("~^\d{5,6}-[1-9]\d{2}-([1-4][0-9]|5[0-8])$~", $driver_l)) {     // Matches 123456-123-58 or 12345-123-58
         $errorMessages["driver_l"] = "Please enter the driver's license number.";
     }
 

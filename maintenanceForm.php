@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $next_maintenance_date = $_POST["next_maintenance_date"];}
 
     // Validate input fields
-    $pattern = '~^\d{6}-[1-9]\d{2}-([1-4][0-9]|5[0-8])$~';
+    $pattern = '~^\d{5,6}-[1-9]\d{2}-([1-4][0-9]|5[0-8])$~';
     if (empty($vehicle_pn) || !preg_match($pattern, $vehicle_pn)) {
         $errorMessages["vehicle_pn"] = "Please enter the vehicle plate number.";
     }

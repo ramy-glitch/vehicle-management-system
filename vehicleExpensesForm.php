@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $amount = $_POST["amount"];
 
     // Validate input fields
-    if (empty($vehicle_LP) || !preg_match("~^\d{6}-[1-9]\d{2}-([1-4][0-9]|5[0-8])$~", $vehicle_LP)){   // Matches 123456-123-58
+    if (empty($vehicle_LP) || !preg_match("~^\d{5,6}-[1-9]\d{2}-([1-4][0-9]|5[0-8])$~", $vehicle_LP)){   // Matches 123456-123-58 or 12345-123-58
         $errorMessages["vehicle_LP"] = "Please enter the license plate number.";
     }
 
