@@ -65,8 +65,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" ) {
     // Validate input fields
     if (empty($vehicle_type)) {
         $vehicle_type = $vehicle['vehicle_type'];
-    }else{
-        $errorMessages["vehicle_type"] = "Please enter the type of vehicle.";
     }
 
     $pattern = '~^\d{6}-[1-9]\d{2}-([1-4][0-9]|5[0-8])$~';
@@ -81,7 +79,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" ) {
 
     if (empty($make_model)) {
         $make_model = $vehicle['vehicle_model']; 
-    }else{$errorMessages["make_model"] = "Please enter the make and model of the vehicle.";}
+    }
 
     if (empty($year_manufacture)) { 
         $year_manufacture = $vehicle['vehicle_year'];
@@ -93,8 +91,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" ) {
     if (empty($color)) {
         $color = $vehicle['vehicle_color']; 
     }else{
-        $errorMessages["color"] = "Please enter the color of the vehicle.";
-    }
+        if (!preg_match("/^[a-zA-Z]+$/", $color)) {
+        $errorMessages["color"] = "Please enter a valid color.";    
+    }}
 
     if (empty($odometer_reading)) {
         $odometer_reading = $vehicle['odometer_reading'];}
@@ -105,19 +104,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" ) {
 
     if (empty($fuel_type)) {
         $fuel_type = $vehicle['fuel_type']; 
-    }else{$errorMessages["fuel_type"] = "Please enter the fuel type of the vehicle."; }
+    }else{
+        if (!preg_match("/^[a-zA-Z]+$/", $fuel_type)) {
+        $errorMessages["fuel_type"] = "Please enter a valid fuel type.";    
+    }}
         
 
     if (empty($insurance_info)) {
         $insurance_info = $vehicle['inssurance_info']; 
-    }else{
-        $errorMessages["insurance_info"] = "Please enter insurance information for the vehicle."; 
     }
 
     if (empty($location)) {
         $location = $vehicle['vehicle_location'];   
-    }else{
-        $errorMessages["location"] = "Please enter the location of the vehicle."; 
     }
 
     if (empty($current_status)) {
