@@ -15,7 +15,7 @@ $search = '';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST["search_button"])) {
         $search = $_POST["search"];
-        $sql .= " WHERE driver_name LIKE '%$search%' OR driver_phone LIKE '%$search%'";
+        $sql .= " WHERE driver_name LIKE '%$search%' OR driver_phone LIKE '%$search%' OR driver_status LIKE '%$search%' OR vehicle_license_plate LIKE '%$search%'";
     }
     if (isset($_POST["reload_button"])) {
         $search = '';

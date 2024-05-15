@@ -106,13 +106,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Further validation to ensure it's a valid date
     if (isset($employment_date) ) {
-        echo $employment_date;
+        
         if ( $employment_date == '0000-00-00' || !preg_match($pattern, $employment_date)) {                                 // Matches yyyy-mm-dd           
             $errorMessages["employment_date"] = "Please enter a valid employment date.";
         }
 
         $date_parts = explode('-', $employment_date);
-        $month = (int) $date_parts[1]; echo $month;
+        $month = (int) $date_parts[1];
         $day = (int) $date_parts[2];
         $year = (int) $date_parts[0];
     
@@ -296,11 +296,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             
             <label for="status">Status:</label>
             <select id="status" name="status" required>
-                <option value="active" <?php if($status == "active") echo "selected"; ?>>Active</option>
-                <option value="inactive" <?php if($status == "inactive") echo "selected"; ?>>Inactive</option>
-                <option value="on_leave" <?php if($status == "on_leave") echo "selected"; ?>>On Leave</option>
+                <option value="active" <?php echo ($status == "active") ? "selected" : ""; ?>>Active</option>
+                <option value="inactive" <?php echo ($status == "inactive") ? "selected" : ""; ?>>Inactive</option>
+                <option value="on_leave" <?php echo ($status == "on_leave") ? "selected" : ""; ?>>On Leave</option>
             </select>
-            
+
             <?php if(isset($errorMessages["status"])) { ?>
                 <p style="color: red;"><?php echo $errorMessages["status"]; ?></p>
             <?php } ?>
