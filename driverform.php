@@ -28,13 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $employment_date = $_POST["employment_date"];
     $monthly_salary = $_POST["monthly_salary"];
     $driving_history = $_POST["driving_history"];
-
-    if ($_POST["vehicle_assignment"] === 'none') {
-        $_POST["vehicle_assignment"] = 0;
-    }
-
-    $vehicle_assignment = $_POST["vehicle_assignment"];
-    $status = $_POST["status"];
+    $status = "inactive";
 
     // Validate each input field
     if (empty($license_number) || !preg_match("/^[a-zA-Z0-9]{9}$/", $license_number)){ // Matches 9 characters of letters and numbers
@@ -141,12 +135,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
 
-    if (empty($status)) {   // Matches one of the three values
-        $errorMessages["status"] = "Please select a valid status.";
-    }
-    if(!in_array($status, ["active", "inactive", "on_leave"])){
-        $errorMessages["status"] = "Please select a valid status 2.";
-    }
 
     // Process form data if no validation errors
     if (empty($errorMessages)) {
@@ -157,23 +145,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // SQL query to insert data into the database  
         
 
-        $sql = "INSERT INTO driver (driver_name, driver_birthdate, driver_phone, driver_address, username, pwd, employment_date, monthly_salary, driver_history, driver_status, vehicle_id) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO driver (driver_name, driver_birthdate, driver_phone, driver_address, username, pwd, employment_date, monthly_salary, driver_history, driver_status) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         $stmt = mysqli_prepare($link, $sql);     
 
         // Use "s" for string types and "d" for double/float types
         // Use "s" for date types as well (assuming date values are passed as strings)
-        mysqli_stmt_bind_param($stmt, "ssssssdsssi", $full_name, $date_of_birth, $phone_number, $address, $username, $passwordh, $employment_date, $monthly_salary, $driving_history, $status, $vehicle_assignment);
+        mysqli_stmt_bind_param($stmt, "ssssssdsss", $full_name, $date_of_birth, $phone_number, $address, $username, $passwordh, $employment_date, $monthly_salary, $driving_history, $status);
         
         // Execute the prepared statement
         mysqli_stmt_execute($stmt);
         
-        // update vehicle status
-        $sql = "UPDATE vehicle SET vehicle_status = 'in_service' WHERE vehicle_id = ?";
-        $stmt2 = mysqli_prepare($link, $sql);
-        mysqli_stmt_bind_param($stmt2, "i", $vehicle_assignment);
-        mysqli_stmt_execute($stmt2);
+
 
 
 
@@ -272,38 +256,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <?php } ?>
 
             
-            <label for="vehicle_assignment">Vehicle Assignment:</label>
-            <select id="vehicle_assignment" name="vehicle_assignment">
-            <option value="none" <?php if ($vehicle_assignment === 'none') echo "selected"; ?>>None</option>
-            <?php
-                        // SQL query to retrieve vehicle data
-                    $sql = "SELECT vehicle_id, vehicle_type,vehicle_model FROM vehicle where vehicle_status = 'out_of_service'";
-                    $result = mysqli_query($link, $sql);
-
-                    // Check if any rows are returned
-                    if ($result->num_rows > 0) {
-
-                        // Output data of each row
-                        while ($row = $result->fetch_assoc()) {
-                            
-                            $selected = ($vehicle_assignment == $row["vehicle_id"]) ? "selected" : "";
-                            echo '<option value="' . $row["vehicle_id"] . '" ' . $selected . '>' . htmlspecialchars($row["vehicle_type"]) . ' ' . htmlspecialchars($row["vehicle_model"]) . '</option>';
-                        }
-                    }
-            ?>
-            </select>
-
-            
-            <label for="status">Status:</label>
-            <select id="status" name="status" required>
-                <option value="active" <?php echo ($status == "active") ? "selected" : ""; ?>>Active</option>
-                <option value="inactive" <?php echo ($status == "inactive") ? "selected" : ""; ?>>Inactive</option>
-                <option value="on_leave" <?php echo ($status == "on_leave") ? "selected" : ""; ?>>On Leave</option>
-            </select>
-
-            <?php if(isset($errorMessages["status"])) { ?>
-                <p style="color: red;"><?php echo $errorMessages["status"]; ?></p>
-            <?php } ?>
 
             <input type="submit" name="submit" value="Submit">
             <input type="button" value="Back" onclick="window.location.href='driversList.php'">
