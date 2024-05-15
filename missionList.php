@@ -50,66 +50,84 @@ else {
 </div>
 
 <div class="container">
-    <h1>List of Missions</h1>
+    <h1>List of Missions</h1><br><br>
 
     <!-- Search and Filter -->
     <div class="search-container">
-        <input type="text" class="search-input" placeholder="Search missions...">
-        <select class="filter-select">
-            <option value="all">All</option>
-            <option value="in_progress">In Progress</option>
-            <option value="completed">Completed</option>
-            <option value="cancelled">Cancelled</option>
-        </select>
-        <button class="btn btn-primary">Search</button>
-    </div>
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+            <input type="text" name="search" placeholder="Search Mission..">
+            <button class="btn btn-primary" name="search_button">Search</button> 
+            <button class="btn btn-primary" name="reload_button">Reload All Missions</button>
+        </form>
+    </div><br><br>
 
     <!-- Insert New Mission Button -->
-    <a href="missionForm.php" class="btn btn-primary">Schedule New Mission</a>
+    <a href="missionForm.php" class="btn btn-primary">Add New Mission</a><br><br>
 
-    <!-- Mission List Table -->
-    <table>
-        <thead>
-            <tr>
-                <th>Driver Name</th>
-                <th>Driver Phone</th>
-                <th>Licence Plate Number</th>
-                <th>Status</th>
-                <th>Destination</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>1</td>
-                <td>John Doe</td>
-                <td>123-456-7890</td>
-                <td>123456789</td>
-                <td>In Progress</td>
-                <td>Destination A</td>
-                <td>
-                    <button class="btn btn-secondary">View</a></button>
-                    <button class="btn btn-secondary">Edit</a></button>
-                    <button class="btn btn-secondary">Delete</a></button>
-                </td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>Jane Doe</td>
-                <td>987-654-3210</td>
-                <td>987654321</td>
-                <td>Completed</td>
-                <td>Destination B</td>
-                <td>
-                    <button class="btn btn-secondary">View</a></button>
-                    <button class="btn btn-secondary">Edit</a></button>
-                    <button class="btn btn-secondary">Delete</a></button>
-                </td>
-            </tr>
-            <!-- Add more rows as needed -->
-        </tbody>
-    </table>
+    <?php
+    // SQL query to retrieve mission data
+    $sql = "SELECT m.mission_id, d.driver_name, d.driver_phone, v.vehicle_license_plate, m.end_date_time, m.end_location, m.mission_status
+            FROM mission m
+            INNER JOIN driver d ON m.driver_id = d.driver_id
+            INNER JOIN vehicle v ON m.vehicle_id = v.vehicle_id";
+
+    // Implement the search feature
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $search = $_POST['search'];
+        $sql .= " WHERE d.driver_name LIKE '%$search%' OR d.driver_phone LIKE '%$search%' OR v.vehicle_license_plate LIKE '%$search%' OR m.end_location LIKE '%$search%' OR m.mission_status LIKE '%$search%'";
+    } else {
+        $search = "";
+    }
+
+    if (isset($_POST['reload_button'])) {
+        $sql = "SELECT m.mission_id, d.driver_name, d.driver_phone, v.vehicle_license_plate, m.end_date_time, m.end_location, m.mission_status
+                FROM mission m
+                INNER JOIN driver d ON m.driver_id = d.driver_id
+                INNER JOIN vehicle v ON m.vehicle_id = v.vehicle_id";
+    }
+
+    $result = mysqli_query($link, $sql);
+
+    if ($result->num_rows > 0) {
+        echo '<table>';
+        echo '<thead>';
+        echo '<tr>';
+        echo '<th>Driver Name</th>';
+        echo '<th>Driver Phone</th>';
+        echo '<th>Vehicle Plate</th>';
+        echo '<th>End Date Time</th>';
+        echo '<th>Destination</th>';
+        echo '<th>Status</th>';
+        echo '<th>Actions</th>';
+        echo '</tr>';
+        echo '</thead>';
+        echo '<tbody>';
+
+        while ($row = $result->fetch_assoc()) {
+            echo '<tr>';
+            echo '<td>' . htmlspecialchars($row["driver_name"]) . '</td>';
+            echo '<td>' . htmlspecialchars($row["driver_phone"]) . '</td>';
+            echo '<td>' . htmlspecialchars($row["vehicle_license_plate"]) . '</td>';
+            echo '<td>' . htmlspecialchars($row["end_date_time"]) . '</td>';
+            echo '<td>' . htmlspecialchars($row["end_location"]) . '</td>';
+            echo '<td>' . htmlspecialchars($row["mission_status"]) . '</td>';
+            echo '<td>';
+            echo '<button class="btn btn-secondary">View</button>';
+            echo '<button class="btn btn-secondary">Edit</button>';
+            echo '<button class="btn btn-secondary">Delete</button>';
+            echo '</td>';
+            echo '</tr>';
+        }
+
+        echo '</tbody>';
+        echo '</table>';
+    } else {
+        echo "No missions found.";
+    }
+    ?>
 </div>
+
 
 </body>
 </html>
+<?php mysqli_close($link); ?>
