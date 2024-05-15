@@ -46,9 +46,7 @@
                     <label for="make_model">Make and Model:</label>
                     <input type="text" id="make_model" name="make_model" value="<?php echo htmlspecialchars($vehicle['vehicle_model']); ?>" readonly>
                     <br>
-                    <label for="year_manufacture">Year of Manufacture:</label>
-                    <input type="number" id="year_manufacture" name="year_manufacture" value="<?php echo htmlspecialchars($vehicle['vehicle_year']); ?>" readonly>
-                    <br>
+
                     <label for="color">Color:</label>
                     <input type="text" id="color" name="color" value="<?php echo htmlspecialchars($vehicle['vehicle_color']); ?>" readonly>
                     <br>

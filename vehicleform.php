@@ -10,7 +10,7 @@ else {
 
 <?php
 // Initialize variables to store form data and error messages
-$vehicle_type = $license_plate = $make_model = $year_manufacture = $color = $odometer_reading = $fuel_type = $insurance_info = $location = $current_status = '';
+$vehicle_type = $license_plate = $make_model = $color = $odometer_reading = $fuel_type = $insurance_info = $location = $current_status = '';
 $errorMessages = [];
 
 // Process form submission
@@ -21,7 +21,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $vehicle_type = $_POST["vehicle_type"];
     $license_plate = $_POST["license_plate"];
     $make_model = $_POST["make_model"];
-    $year_manufacture = $_POST["year_manufacture"];
     $color = $_POST["color"];
     $odometer_reading = $_POST["odometer_reading"];
     $fuel_type = $_POST["fuel_type"];
@@ -44,9 +43,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $errorMessages["make_model"] = "Please enter the make and model of the vehicle.";
     }
 
-    if (!is_numeric($year_manufacture) || $year_manufacture < 1900 || $year_manufacture > 2100) {
-        $errorMessages["year_manufacture"] = "Please enter a valid year of manufacture.";
-    }
 
     if (empty($color)) {
         $errorMessages["color"] = "Please enter the color of the vehicle.";
@@ -78,20 +74,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
         // Prepare SQL statement with placeholders
         $sql = "INSERT INTO vehicle 
-        (vehicle_type, vehicle_license_plate, vehicle_model, vehicle_year, 
+        (vehicle_type, vehicle_license_plate, vehicle_model, 
         vehicle_color, odometer_reading, fuel_type, inssurance_info, 
         vehicle_location, vehicle_status) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         // Prepare the SQL query
         $stmt = mysqli_prepare($link, $sql);
 
         // Bind parameters with types
-        $stmt->bind_param("sssisissss", 
+        $stmt->bind_param("ssssissss", 
         $vehicle_type, 
         $license_plate, 
         $make_model, 
-        $year_manufacture, 
         $color, 
         $odometer_reading, 
         $fuel_type, 
@@ -152,12 +147,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <p style="color: red;"><?php echo $errorMessages["make_model"]; ?></p>
             <?php } ?>
             
-            <!-- Year of Manufacture -->
-            <label for="year_manufacture">Year of Manufacture:</label>
-            <input type="number" id="year_manufacture" name="year_manufacture" value="<?php echo htmlspecialchars($year_manufacture); ?>" min="1900" max="2100" required>
-            <?php if(isset($errorMessages["year_manufacture"])) { ?>
-                <p style="color: red;"><?php echo $errorMessages["year_manufacture"]; ?></p>
-            <?php } ?>
             
             <!-- Color -->
             <label for="color">Color:</label>

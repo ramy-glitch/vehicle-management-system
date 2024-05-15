@@ -34,7 +34,7 @@ $vehicleId = $vehicle = null;
 
 // Initialize variables to store form data and error messages
 
-$vehicle_type = $license_plate = $make_model = $year_manufacture = $color = $odometer_reading = $fuel_type = $insurance_info = $location = $current_status = '';
+$vehicle_type = $license_plate = $make_model = $color = $odometer_reading = $fuel_type = $insurance_info = $location = $current_status = '';
 $errorMessages = [];
 
 
@@ -52,7 +52,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" ) {
     $vehicle_type = $_POST["vehicle_type"];
     $license_plate = $_POST["license_plate"];
     $make_model = $_POST["make_model"];
-    $year_manufacture = $_POST["year_manufacture"];
     $color = $_POST["color"];
     $odometer_reading = $_POST["odometer_reading"];
     $fuel_type = $_POST["fuel_type"];
@@ -80,12 +79,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" ) {
         $make_model = $vehicle['vehicle_model']; 
     }
 
-    if (empty($year_manufacture)) { 
-        $year_manufacture = $vehicle['vehicle_year'];
-    }else{
-        if (!is_numeric($year_manufacture) || $year_manufacture < 1900 || $year_manufacture > 2100) {
-        $errorMessages["year_manufacture"] = "Please enter a valid year of manufacture.";     
-    }}
 
     if (empty($color)) {
         $color = $vehicle['vehicle_color']; 
@@ -130,9 +123,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" ) {
         
         // SQL query to update vehicle data
         
-        $sql = "UPDATE vehicle SET vehicle_type = ?, vehicle_license_plate = ?, vehicle_model = ?, vehicle_year = ?, vehicle_color = ?, odometer_reading = ?, fuel_type = ?, inssurance_info = ?, vehicle_location = ?, vehicle_status = ? WHERE vehicle_id = ?";
+        $sql = "UPDATE vehicle SET vehicle_type = ?, vehicle_license_plate = ?, vehicle_model = ?, vehicle_color = ?, odometer_reading = ?, fuel_type = ?, inssurance_info = ?, vehicle_location = ?, vehicle_status = ? WHERE vehicle_id = ?";
         $stmt = mysqli_prepare($link, $sql); 
-        $stmt->bind_param("sssiisssssi", $vehicle_type, $license_plate, $make_model, $year_manufacture, $color, $odometer_reading, $fuel_type, $insurance_info, $location, $current_status, $vehicleId);
+        $stmt->bind_param("ssssissssi", $vehicle_type, $license_plate, $make_model, $color, $odometer_reading, $fuel_type, $insurance_info, $location, $current_status, $vehicleId);
         $stmt->execute();
 
 
@@ -177,13 +170,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" ) {
             <input type="text" id="make_model" name="make_model" value="<?php echo htmlspecialchars($make_model); ?>" placeholder="<?php echo $vehicle['vehicle_model']; ?>">
             <?php if(isset($errorMessages["make_model"])) { ?>
                 <p style="color: red;"><?php echo $errorMessages["make_model"]; ?></p>
-            <?php } ?>
-            
-            <!-- Year of Manufacture -->
-            <label for="year_manufacture">Year of Manufacture:</label>
-            <input type="number" id="year_manufacture" name="year_manufacture" value="<?php echo htmlspecialchars($year_manufacture); ?>" placeholder="<?php echo $vehicle['vehicle_year']; ?>" min="1900" max="2100" >
-            <?php if(isset($errorMessages["year_manufacture"])) { ?>
-                <p style="color: red;"><?php echo $errorMessages["year_manufacture"]; ?></p>
             <?php } ?>
             
             <!-- Color -->
