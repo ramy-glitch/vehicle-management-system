@@ -16,7 +16,7 @@ $errorMessages = [];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
-    if (isset($_POST["submit"])) {
+    
     // Retrieve form data
     $license_number = $_POST["license_number"];
     $full_name = $_POST["full_name"];
@@ -28,8 +28,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $employment_date = $_POST["employment_date"];
     $monthly_salary = $_POST["monthly_salary"];
     $driving_history = $_POST["driving_history"];
+
+    if ($_POST["vehicle_assignment"] === 'none') {
+        $_POST["vehicle_assignment"] = 0;
+    }
+
     $vehicle_assignment = $_POST["vehicle_assignment"];
-    $status = $_POST["status"];}
+    $status = $_POST["status"];
 
     // Validate each input field
     if (empty($license_number) || !preg_match("/^[a-zA-Z0-9]{9}$/", $license_number)){ // Matches 9 characters of letters and numbers
@@ -46,32 +51,39 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $month = $day = $year = 0; 
     
-    if (!preg_match($pattern, $date_of_birth)) {
-        $errorMessages["date_of_birth"] = "Please enter a valid date of birth.";
-    }
-
-    // Further validation to ensure it's a valid date
-    $date_parts = explode('-', $date_of_birth);
-    $month = (int) $date_parts[1];
-    $day = (int) $date_parts[2];
-    $year = (int) $date_parts[0]; 
 
     
-    if (!checkdate($month, $day, $year)) { 
+    if (isset($date_of_birth)) {
+        
+        if (!preg_match($pattern, $date_of_birth)) {
+        $errorMessages["date_of_birth"] = "Please enter a valid date of birth.";
+        }
+        
+        $date_parts = explode('-', $date_of_birth);
+        $month = (int) $date_parts[1];
+        $day = (int) $date_parts[2];
+        $year = (int) $date_parts[0];
+    
+    
+        if (!checkdate($month, $day, $year)) { 
+            $errorMessages["date_of_birth"] = "Please enter a valid date of birth.";
+        }
+
+        date_default_timezone_set('Africa/Algiers');
+        $currentDate = date('Y-m-d');
+        $date_parts = explode('-', $currentDate);
+        $currentyear = (int) $date_parts[0];
+        $currentmonth = (int) $date_parts[1];
+        $currentday = (int) $date_parts[2];
+
+        if (($currentyear - $year) < 19) {
+            $errorMessages["date_of_birth"] = "Driver must be at least 19 years old.";
+        }
+    
+    }else{
         $errorMessages["date_of_birth"] = "Please enter a valid date of birth.";
     }
-
-    date_default_timezone_set('Africa/Algiers');
-    $currentDate = date('Y-m-d');
-    $date_parts = explode('-', $currentDate);
-    $currentyear = (int) $date_parts[0];
-    $currentmonth = (int) $date_parts[1];
-    $currentday = (int) $date_parts[2];
-
-    if (($currentyear - $year) < 19) {
-        $errorMessages["date_of_birth"] = "Driver must be at least 19 years old.";
-    }
-
+    
     if (empty($phone_number) || !preg_match("/^(02|07|05|06)\d{8}$/", $phone_number)) {  // Matches 07xxxxxxxx or 05xxxxxxxx or 06xxxxxxxx or 02xxxxxxxx
         $errorMessages["phone_number"] = "Please enter a valid phone number.";
     }
@@ -88,24 +100,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $errorMessages["password"] = "Please enter a valid password.";
     }
 
-    if (!preg_match($pattern, $employment_date)) {                                 // Matches yyyy-mm-dd           
-        $errorMessages["employment_date"] = "Please enter a valid employment date.";
+    if (strlen($password) < 8) {
+        $errorMessages["password"] = "Password must be at least 8 characters long.";
     }
 
     // Further validation to ensure it's a valid date
-    $date_parts = explode('-', $employment_date);
-    $month = (int) $date_parts[1];
-    $day = (int) $date_parts[2];
-    $year = (int) $date_parts[0];
+    if (isset($employment_date) ) {
+        echo $employment_date;
+        if ( $employment_date == '0000-00-00' || !preg_match($pattern, $employment_date)) {                                 // Matches yyyy-mm-dd           
+            $errorMessages["employment_date"] = "Please enter a valid employment date.";
+        }
 
-    if (!checkdate($month, $day, $year)) {
+        $date_parts = explode('-', $employment_date);
+        $month = (int) $date_parts[1]; echo $month;
+        $day = (int) $date_parts[2];
+        $year = (int) $date_parts[0];
+    
+
+        if (!checkdate($month, $day, $year)) {
+            $errorMessages["employment_date"] = "Please enter a valid employment date.";
+        }
+
+        if ($currentyear < $year || ($currentyear == $year && $currentmonth < $month) || ($currentyear == $year && $currentmonth == $month && $currentday < $day)){
+            $errorMessages["employment_date"] = "Employment date cannot be in the future.";
+        }
+
+        if (2010> $year){
+            $errorMessages["employment_date"] = "Employment date cannot be before business creation(2010).";
+        }
+    }else{
         $errorMessages["employment_date"] = "Please enter a valid employment date.";
     }
-
-    if ($currentyear < $year || ($currentyear == $year && $currentmonth < $month) || ($currentyear == $year && $currentmonth == $month && $currentday < $day)){
-        $errorMessages["employment_date"] = "Employment date cannot be in the future.";
-    }
-    
 
     if (empty($monthly_salary) || !is_numeric($monthly_salary) || $monthly_salary < 0){
         $errorMessages["monthly_salary"] = "Please enter a valid monthly salary.";
@@ -115,28 +140,43 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $errorMessages["driving_history"] = "Please enter a valid driving history.";
     }
 
-    if (!in_array($vehicle_assignment, ["none", ])) { // check if the selected vehicle is in the list of available vehicles
-        $errorMessages["vehicle_assignment"] = "Please select a valid vehicle assignment.";
-    }
 
-    if (empty($status) || !in_array($status, ["active", "inactive", "on_leave"])) {   // Matches one of the three values
+    if (empty($status)) {   // Matches one of the three values
         $errorMessages["status"] = "Please select a valid status.";
+    }
+    if(!in_array($status, ["active", "inactive", "on_leave"])){
+        $errorMessages["status"] = "Please select a valid status 2.";
     }
 
     // Process form data if no validation errors
     if (empty($errorMessages)) {
         // Process the form data (e.g., save to database)
 
-        $password = password_hash($password, PASSWORD_DEFAULT); // Hash the password before saving to the database
+        $passwordh = password_hash($password, PASSWORD_DEFAULT); // Hash the password before saving to the database
 
-        // SQL query to insert data into the database
+        // SQL query to insert data into the database  
+        
 
         $sql = "INSERT INTO driver (driver_name, driver_birthdate, driver_phone, driver_address, username, pwd, employment_date, monthly_salary, driver_history, driver_status, vehicle_id) 
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        $stmt = mysqli_prepare($link, $sql);
-        $stmt->bind_param("sssssssdsss", $full_name, $date_of_birth, $phone_number, $address, $username, $password, $employment_date, $monthly_salary, $driving_history, $driver_status, $vehicle_assignment);
-        $stmt->execute();
+        $stmt = mysqli_prepare($link, $sql);     
+
+        // Use "s" for string types and "d" for double/float types
+        // Use "s" for date types as well (assuming date values are passed as strings)
+        mysqli_stmt_bind_param($stmt, "ssssssdsssi", $full_name, $date_of_birth, $phone_number, $address, $username, $passwordh, $employment_date, $monthly_salary, $driving_history, $status, $vehicle_assignment);
+        
+        // Execute the prepared statement
+        mysqli_stmt_execute($stmt);
+        
+        // update vehicle status
+        $sql = "UPDATE vehicle SET vehicle_status = 'in_service' WHERE vehicle_id = ?";
+        $stmt2 = mysqli_prepare($link, $sql);
+        mysqli_stmt_bind_param($stmt2, "i", $vehicle_assignment);
+        mysqli_stmt_execute($stmt2);
+
+
+
         // Redirect after successful submission
         header("Location: driversList.php");
         exit;
@@ -234,7 +274,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             
             <label for="vehicle_assignment">Vehicle Assignment:</label>
             <select id="vehicle_assignment" name="vehicle_assignment">
-            <option value="none" <?php echo "selected"; ?>>None</option>
+            <option value="none" <?php if ($vehicle_assignment === 'none') echo "selected"; ?>>None</option>
             <?php
                         // SQL query to retrieve vehicle data
                     $sql = "SELECT vehicle_id, vehicle_type,vehicle_model FROM vehicle where vehicle_status = 'out_of_service'";
@@ -245,7 +285,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                         // Output data of each row
                         while ($row = $result->fetch_assoc()) {
-                            echo '<option value="'. $row["vehicle_id"].'" <?php echo "selected"; ?>' . htmlspecialchars($row["vehicle_type"]). ' ' . htmlspecialchars($row["vehicle_model"]) .'</option>';
+                            
+                            $selected = ($vehicle_assignment == $row["vehicle_id"]) ? "selected" : "";
+                            echo '<option value="' . $row["vehicle_id"] . '" ' . $selected . '>' . htmlspecialchars($row["vehicle_type"]) . ' ' . htmlspecialchars($row["vehicle_model"]) . '</option>';
                         }
                     }
             ?>

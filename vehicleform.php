@@ -64,7 +64,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $errorMessages["location"] = "Please enter the location of the vehicle.";
     }
 
-    if (empty($current_status) || !in_array($current_status, ["in_service", "under_maintenance", "out_of_service"])) {
+    if (empty($current_status) || !in_array($current_status, ["out_of_service","under_maintenance"])) {
         $errorMessages["current_status"] = "Please select the current status of the vehicle.";
     }
 
@@ -186,9 +186,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <!-- Current Status -->
             <label for="current_status">Current Status:</label>
             <select id="current_status" name="current_status" required>
-                <option value="in_service" <?php if($current_status == "in_service") echo "selected"; ?>>In Service</option>
-                <option value="under_maintenance" <?php if($current_status == "under_maintenance") echo "selected"; ?>>Under Maintenance</option>
+                <option value="">Select Status</option>
                 <option value="out_of_service" <?php if($current_status == "out_of_service") echo "selected"; ?>>Out of Service</option>
+                <option value="under_maintenance" <?php if($current_status == "under_maintenance") echo "selected"; ?>>Under Maintenance</option>
             </select>
             <?php if(isset($errorMessages["current_status"])) { ?>
                 <p style="color: red;"><?php echo $errorMessages["current_status"]; ?></p>
