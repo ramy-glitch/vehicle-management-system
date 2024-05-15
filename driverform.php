@@ -11,7 +11,7 @@ else {
 <?php
 // Initialize variables to store form data and error messages
 
-$license_number = $full_name = $date_of_birth = $phone_number = $address = $username = $password = $employment_date = $monthly_salary = $driving_history = $vehicle_assignment = $status = '';
+$license_number = $full_name = $date_of_birth = $phone_number = $address = $username = $password = $employment_date = $monthly_salary = $driving_history = $status = '';
 $errorMessages = [];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

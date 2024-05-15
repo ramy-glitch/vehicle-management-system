@@ -6,22 +6,40 @@ if (file_exists('dblink.php')) {
 }
 
 // Query to fetch driver information
-$sql = "SELECT driver_name, driver_phone, driver_status, vehicle_license_plate 
-        FROM driver 
-        LEFT JOIN vehicle ON driver.vehicle_id = vehicle.vehicle_id";
+$sql = "SELECT 
+d.driver_name,
+d.driver_phone,
+d.driver_status,
+v.vehicle_license_plate
+FROM 
+driver d
+LEFT JOIN 
+mission m ON d.driver_id = m.driver_id
+LEFT JOIN 
+vehicle v ON m.vehicle_id = v.vehicle_id
+";
 
 // Search functionality
 $search = '';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST["search_button"])) {
         $search = $_POST["search"];
-        $sql .= " WHERE driver_name LIKE '%$search%' OR driver_phone LIKE '%$search%' OR driver_status LIKE '%$search%' OR vehicle_license_plate LIKE '%$search%'";
+        $sql .= " WHERE driver_name LIKE '%$search%' OR driver_phone LIKE '%$search%' OR driver_status LIKE '$search%' OR vehicle_license_plate LIKE '%$search%'";
     }
     if (isset($_POST["reload_button"])) {
         $search = '';
-        $sql = "SELECT driver_name, driver_phone, driver_status, vehicle_license_plate 
-                FROM driver 
-                LEFT JOIN vehicle ON driver.vehicle_id = vehicle.vehicle_id";
+        $sql = "SELECT 
+                d.driver_name,
+                d.driver_phone,
+                d.driver_status,
+                v.vehicle_license_plate
+                FROM 
+                driver d
+                LEFT JOIN 
+                mission m ON d.driver_id = m.driver_id
+                LEFT JOIN 
+                vehicle v ON m.vehicle_id = v.vehicle_id
+                ";
     }
 }
 
