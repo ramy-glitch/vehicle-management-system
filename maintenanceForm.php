@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     
     // Retrieve form data
-    $vehicle_assignment = $_POST["vehicle_pn"];
+    $vehicle_assignment = $_POST["vehicle_assignment"];
     $date_of_maintenance = $_POST["date_of_maintenance"];
     $maintenance_type = $_POST["maintenance_type"];
     $maintenance_details = $_POST["maintenance_details"];
@@ -68,7 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // SQL query to insert maintenance data
         
-        $sql = "INSERT INTO maintenance (vehicle_id, maintenance_date, maintenance_type, maintenance_description, workshop_name, workshop_phone, cost, next_maintenance_date, maintenance_status) VALUES ('$vehicle_assignment', '$date_of_maintenance', '$maintenance_type', '$maintenance_details', '$workshop_name', '$workshop_phone', '$cost', '$next_maintenance_date', '$maintenance_status')";
+        $sql = "INSERT INTO vehicle_maintenance (vehicle_id, maintenance_date, maintenance_type, maintenance_description, workshop_name, workshop_phone, cost, next_maintenance_date, maintenance_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = mysqli_prepare($link, $sql);
         $stmt->bind_param("isssssdss", $vehicle_assignment, $date_of_maintenance, $maintenance_type, $maintenance_details, $workshop_name, $workshop_phone, $cost, $next_maintenance_date, $maintenance_status);
         $stmt->execute();

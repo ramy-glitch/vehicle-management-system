@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $fuel_type = $_POST["fuel_type"];
     $insurance_info = $_POST["insurance_info"];
     $location = $_POST["location"];
-    $current_status = $_POST["current_status"];
+    $current_status = "out_of_service"; // Default value for vehicle status is "out_of_service
 
     // Validate input fields
     if (empty($vehicle_type)) {
@@ -62,10 +62,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (empty($location)) {
         $errorMessages["location"] = "Please enter the location of the vehicle.";
-    }
-
-    if (empty($current_status) || !in_array($current_status, ["out_of_service","under_maintenance"])) {
-        $errorMessages["current_status"] = "Please select the current status of the vehicle.";
     }
 
     // Process form data if no validation errors
@@ -181,17 +177,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <input type="text" id="location" name="location" value="<?php echo htmlspecialchars($location); ?>" required>
             <?php if(isset($errorMessages["location"])) { ?>
                 <p style="color: red;"><?php echo $errorMessages["location"]; ?></p>
-            <?php } ?>
-            
-            <!-- Current Status -->
-            <label for="current_status">Current Status:</label>
-            <select id="current_status" name="current_status" required>
-                <option value="">Select Status</option>
-                <option value="out_of_service" <?php if($current_status == "out_of_service") echo "selected"; ?>>Out of Service</option>
-                <option value="under_maintenance" <?php if($current_status == "under_maintenance") echo "selected"; ?>>Under Maintenance</option>
-            </select>
-            <?php if(isset($errorMessages["current_status"])) { ?>
-                <p style="color: red;"><?php echo $errorMessages["current_status"]; ?></p>
             <?php } ?>
             
             <!-- Form Buttons -->

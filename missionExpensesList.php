@@ -1,11 +1,26 @@
 <?php
-if (file_exists('dblink.php')) 
-{
-	require 'dblink.php';
+if (file_exists('dblink.php')) {
+    require 'dblink.php';
+} else {
+    die("File not found");
 }
-else {
-	die("File not found");
+
+$sql = "SELECT m.end_location, m.start_date_time, m.end_date_time, m.cost
+        FROM mission m";
+
+// Implement the search feature and reload button
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $search = $_POST['search'];
+    $sql .= " WHERE m.end_location LIKE '%$search%'
+            OR CONCAT(m.start_date_time, ' to ', m.end_date_time) LIKE '%$search%'";
+
+    if (isset($_POST['reload_btn'])) {
+        $sql = "SELECT m.end_location, m.start_date_time, m.end_date_time, m.cost
+        FROM mission m";
+    }
 }
+
+$result = mysqli_query($link, $sql);
 ?>
 
 <!DOCTYPE html>
@@ -14,7 +29,7 @@ else {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>List of Mission Expenses</title>
-    <link  rel="stylesheet" href="style.css"/>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -29,10 +44,10 @@ else {
         <li class="navbar-item"><a href="#" class="nav-link">Notifications</a></li>
         
         <li class="navbar-item"><a href="#" class="nav-link">Reports</a>
-        <ul class="dropdown">
-            <li><a href="driverReportList.php">Driver Reports</a></li>
-            <li><a href="adminReportList.php">Admin Reports</a></li>
-        </ul>
+            <ul class="dropdown">
+                <li><a href="driverReportList.php">Driver Reports</a></li>
+                <li><a href="adminReportList.php">Admin Reports</a></li>
+            </ul>
         </li>
         
         <li class="navbar-item"><a href="#" class="nav-link">Expenses Up-to-date</a>
@@ -41,7 +56,7 @@ else {
                 <li><a href="maintenanceExpensesList.php">Maintenance Expenses</a></li>
                 <li><a href="missionExpensesList.php">Missions Expenses</a></li>
                 <li><a href="vehicleExpensesList.php">Vehicle Expenses</a></li>
-                <li><a href="penaltiesExpensestList.php">Penalties and Fines</a></li>
+                <li><a href="penaltiesExpensesList.php">Penalties and Fines</a></li>
             </ul>
         </li>
         <li class="navbar-item"><a href="statisticPage.php" class="nav-link">Statistics</a></li>
@@ -54,53 +69,48 @@ else {
 
     <!-- Search and Filter -->
     <div class="search-container">
-        <input type="text" class="search-input" placeholder="Search expenses...">
-        <select class="filter-select">
-            <option value="all">All</option>
-            <option value="fuel">Fuel</option>
-            <option value="maintenance">Maintenance</option>
-            <option value="insurance">Insurance</option>
-            <option value="other">Other</option>
-        </select>
-        <button class="btn btn-primary">Search</button>
+        <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+            <input type="text" class="search-input" placeholder="Search expenses..." name="search">
+            <button type="submit" class="btn btn-primary" name="search_btn">Search</button>
+            <button type="submit" class="btn btn-primary" name="reload_btn">Reload All</button>
+        </form>
     </div>
 
     <!-- Mission Expenses List Table -->
     <table>
         <thead>
             <tr>
-                <th>Mission destination:</th>
-                <th>Period:</th>
-                <th>Date of payment:</th>
-                <th>Amount:</th>
+                <th>Mission destination</th>
+                <th>Period</th>
+                <th>Date of payment</th>
+                <th>Amount</th>
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>Paris</td>
-                <td>2024-04-14 to 2024-04-15</td>
-                <td>2024-04-14</td>
-                <td>20000da</td>
-                <td>
-                    <button class="btn btn-secondary">View</a></button>
-                    <button class="btn btn-secondary">Edit</a></button>
-                </td>
-            </tr>
-            <tr>
-                <td>London</td>
-                <td>2024-04-15 to 2024-04-16</td>
-                <td>2024-04-15</td>
-                <td>15000da</td>
-                <td>
-                    <button class="btn btn-secondary">View</a></button>
-                    <button class="btn btn-secondary">Edit</a></button>
-                </td>
-            </tr>
-            <!-- Add more rows as needed -->
+            <?php
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    echo '<tr>';
+                    echo '<td>' . htmlspecialchars($row["end_location"]) . '</td>'; 
+                    echo '<td>' . htmlspecialchars($row["start_date_time"]) .' to ' .htmlspecialchars($row["end_date_time"]) . '</td>';
+                    echo '<td>' . htmlspecialchars($row["start_date_time"]) . '</td>';
+                    echo '<td>' . htmlspecialchars($row["cost"]) . '</td>';
+                    echo '<td>
+                            <button class="btn btn-secondary">View</button>
+                            <button class="btn btn-secondary">Edit</button>
+                        </td>';
+                    echo '</tr>';
+                }
+            } else {
+                echo '<tr><td colspan="5">No mission expenses found.</td></tr>';
+            }
+            ?>
         </tbody>
     </table>
 </div>
 
 </body>
 </html>
+
+<?php mysqli_close($link); ?>
