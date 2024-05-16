@@ -126,11 +126,11 @@ $result = mysqli_query($link, $sql);
                 echo "<td>" . htmlspecialchars($row['driver_status']) . "</td>";
                 echo "<td>" . htmlspecialchars($row['vehicle_license_plate']) . "</td>";
                 echo "<td>";
-                echo '<a class="btn btn-secondary" href="driverformview.php?id=' . $row["driver_id"] . '">View</a>';
+                echo '<a class="btn btn-secondary" href="driverformview.php?id=' . $row["driver_id"] . '">View</a>&nbsp;&nbsp;';
                 // Edit button opens driverformedit.php with specific driver ID for editing
-                echo '<a class="btn btn-secondary" href="driverformedit.php?id=' . $row["driver_id"] . '">Edit</a>';
+                echo '<a class="btn btn-secondary" href="driverformedit.php?id=' . $row["driver_id"] . '">Edit</a>&nbsp;&nbsp;';
                 // Delete button 
-                echo '<a class="btn btn-secondary" href="driverformdelete.php?id=' . $row["driver_id"] . '">Delete</a>';
+                echo '<a class="btn btn-secondary" href="driverformdelete.php?id=' . $row["driver_id"] . '">Delete</a>&nbsp;&nbsp;';
                 echo "</td>";
                 echo "</tr>";
             }
