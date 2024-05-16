@@ -53,41 +53,58 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Validate each input field
     if ($vehicle_assignment === "none") {
-        $errorMessages["vehicle_assignment"] = "Please select a vehicle assignment.";
+        $vehicle_assignment = $mission['vehicle_id'];
     }
 
     if ($driver_assignment === "none") {
-        $errorMessages["driver_assignment"] = "Please select a driver assignment.";
+        $driver_assignment = $mission['driver_id'];
     }
 
 
-    if (empty($start_datetime) || !preg_match('/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/', $start_datetime)) {  // Matches yyyy-mm-ddThh:mm
+    if (empty($start_datetime) || $start_datetime == "0000-00-00 00:00:00") {  
+        $start_datetime = $mission['start_date_time'];
+    }elseif(!preg_match('/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/', $start_datetime)){
         $errorMessages["start_datetime"] = "Please enter a valid start date and time.";
     }
 
-    if (empty($end_datetime) || !preg_match('/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/', $end_datetime)) {       // Matches yyyy-mm-ddThh:mm
+    if (empty($end_datetime) || $end_datetime="0000-00-00 00:00:00") {       // Matches yyyy-mm-ddThh:mm
+        $end_datetime = $mission['end_date_time'];
+    }elseif(!preg_match('/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/', $end_datetime)){
         $errorMessages["end_datetime"] = "Please enter a valid end date and time.";
     }
 
-    if (empty($origin) || !preg_match("/^[a-zA-Z]+(?:[ ]*[a-zA-Z]+)*$/", $origin)){
+    if (empty($origin)){
+        $origin = $mission['start_location'];
+    }elseif(!preg_match("/^[a-zA-Z]+(?:[ ]*[a-zA-Z]+)*$/", $origin)){
         $errorMessages["origin"] = "Please enter a valid origin location.";
+    }elseif($origin == $destination){
+        $errorMessages["origin"] = "Origin and destination cannot be the same.";
     }
 
     if (empty($destination) || !preg_match("/^[a-zA-Z]+(?:[ ]*[a-zA-Z]+)*$/", $destination)){
+        $destination = $mission['end_location'];
+    }elseif( !preg_match("/^[a-zA-Z]+(?:[ ]*[a-zA-Z]+)*$/", $destination)){
         $errorMessages["destination"] = "Please enter a valid destination location.";
+    }elseif($origin == $destination){
+        $errorMessages["destination"] = "Origin and destination cannot be the same.";
     }
 
-    if (empty($purpose) || !preg_match("/^[a-zA-Z]+(?:[ ]*[a-zA-Z]+)*$/", $purpose)){
+    if (empty($purpose)){
+        $purpose = $mission['purpose'];
+    }elseif(!preg_match("/^[a-zA-Z]+(?:[ ]*[a-zA-Z]+)*$/", $purpose)){
         $errorMessages["purpose"] = "Please enter a valid purpose.";
     }
 
-    if (empty($cost) || !is_numeric($cost) || $cost < 0) {
-        $errorMessages["cost"] = "Please enter a valid non-negative cost.";
+    if (empty($cost) ) {
+        $cost = $mission['cost'];
+    }elseif($cost == 0|| !is_numeric($cost) || $cost < 0){
+        $errorMessages["cost"] = "Please enter a valid psitive cost.";
     }
 
-    if(empty($status)){
-        $errorMessages["status"] = "Please select a status.";
-    }
+    if ($status === "none") {
+        $status = $mission['mission_status'];
+    }else{
+
     if(!in_array($status, ["scheduled", "in_progress", "completed", "cancelled"])){
         $errorMessages["status"] = "Please select a valid status.";
     }
@@ -108,29 +125,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if($status == "scheduled" && $start_datetime < date("Y-m-d\TH:i")){
         $errorMessages["status"] = "Mission cannot be scheduled after the start date and time.";
     }
-
+    
+    }
     // Process form data if no validation errors
     if (empty($errorMessages)) {
         // Process the form data (e.g., save to database)
-        $sql = "UPDATE mission 
-        SET vehicle_id = ?, 
-            driver_id = ?, 
-            start_date_time = ?, 
-            end_date_time = ?, 
-            start_location = ?, 
-            end_location = ?, 
-            purpose = ?, 
-            mission_status = ?, 
-            cost = ?
-        WHERE mission_id = ?";  // Assuming 'mission_id' is the primary key of your mission table
+        $sql = "UPDATE mission SET vehicle_id = ?, driver_id = ?, start_date_time = ?, end_date_time = ?, start_location = ?, end_location = ?, purpose = ?, mission_status = ?, cost = ? WHERE mission_id = ?";  // Assuming 'mission_id' is the primary key of your mission table
 
-$stmt = mysqli_prepare($link, $sql);
+        $stmt = mysqli_prepare($link, $sql);
 
-// Assuming $mission_id is the ID of the mission you want to update
-$stmt->bind_param("iissssssii",$vehicle_assignment,$driver_assignment,$start_datetime,$end_datetime,$origin,$destination,$purpose,$status,$cost,$mission_id);
+        // Assuming $mission_id is the ID of the mission you want to update
+        $stmt->bind_param("iissssssii",$vehicle_assignment,$driver_assignment,$start_datetime,$end_datetime,$origin,$destination,$purpose,$status,$cost,$mission_id);
 
-$stmt->execute();
-$stmt->close();
+        $stmt->execute();
+        $stmt->close();
 
 
         if($status == "in_progress"){
@@ -252,28 +260,28 @@ $stmt->close();
 
 
             <label for="start_datetime">Start Date and Time:</label>
-            <input type="datetime-local" id="start_datetime" name="start_datetime" value="<?php echo htmlspecialchars($start_datetime); ?>" required>
+            <input type="datetime-local" id="start_datetime" name="start_datetime" value="<?php echo htmlspecialchars($start_datetime); ?>" >
             
             <?php if(isset($errorMessages["start_datetime"])) { ?>
                 <p style="color: red;"><?php echo $errorMessages["start_datetime"]; ?></p>
             <?php } ?>
 
             <label for="end_datetime">End Date and Time:</label>
-            <input type="datetime-local" id="end_datetime" name="end_datetime" value="<?php echo htmlspecialchars($end_datetime); ?>" required>
+            <input type="datetime-local" id="end_datetime" name="end_datetime" value="<?php echo htmlspecialchars($end_datetime); ?>" >
             
             <?php if(isset($errorMessages["end_datetime"])) { ?>
                 <p style="color: red;"><?php echo $errorMessages["end_datetime"]; ?></p>
             <?php } ?>
 
             <label for="origin">Origin Location:</label>
-            <input type="text" id="origin" name="origin" value="<?php echo htmlspecialchars($origin); ?>" required>
+            <input type="text" id="origin" name="origin" value="<?php echo htmlspecialchars($origin); ?>" placeholder="<?php echo htmlspecialchars($mission['start_location']); ?>" required>
             
             <?php if(isset($errorMessages["origin"])) { ?>
                 <p style="color: red;"><?php echo $errorMessages["origin"]; ?></p>
             <?php } ?>
 
             <label for="destination">Destination Location:</label>
-            <input type="text" id="destination" name="destination" value="<?php echo htmlspecialchars($destination); ?>" required>
+            <input type="text" id="destination" name="destination" value="<?php echo htmlspecialchars($destination); ?>" placeholder="<?php echo htmlspecialchars($mission['end_location']); ?>">
             
             <?php if(isset($errorMessages["destination"])) { ?>
                 <p style="color: red;"><?php echo $errorMessages["destination"]; ?></p>
@@ -281,13 +289,14 @@ $stmt->close();
 
             <label for="purpose">Purpose:</label>
             
-            <textarea id="purpose" name="purpose" rows="4" cols="50" required><?php echo htmlspecialchars($purpose); ?></textarea>
+            <textarea id="purpose" name="purpose" rows="4" cols="50" placeholder="<?php echo htmlspecialchars($mission['purpose']); ?>"><?php echo htmlspecialchars($purpose); ?></textarea>
             <?php if(isset($errorMessages["purpose"])) { ?>
                 <p style="color: red;"><?php echo $errorMessages["purpose"]; ?></p>
             <?php } ?>
 
             <label for="status">Status:</label>
             <select id="status" name="status" required>
+                <option value="none" <?php if ($status === 'none') echo "selected"; ?>>None</option>
                 <option value="scheduled" <?php if($status == "scheduled") echo "selected"; ?>>Scheduled</option>
                 <option value="in_progress" <?php if($status == "in_progress") echo "selected"; ?>>In Progress</option>
                 <option value="completed" <?php if($status == "completed") echo "selected"; ?>>Completed</option>
@@ -295,7 +304,7 @@ $stmt->close();
             </select>
 
             <label for="cost">Cost:</label>
-            <input type="number" id="cost" name="cost" value="<?php echo htmlspecialchars($cost); ?>" min="0" required>
+            <input type="number" id="cost" name="cost" value="<?php echo htmlspecialchars($cost); ?>" min="0" placeholder="<?php echo htmlspecialchars($mission['cost']); ?>">
             <?php if(isset($errorMessages["cost"])) { ?>
                 <p style="color: red;"><?php echo $errorMessages["cost"]; ?></p>
             <?php } ?>

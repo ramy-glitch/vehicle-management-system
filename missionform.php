@@ -63,7 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $errorMessages["cost"] = "Please enter a valid non-negative cost.";
     }
 
-    if(empty($status)){
+    if ($status === "none") {
         $errorMessages["status"] = "Please select a status.";
     }
     if(!in_array($status, ["scheduled", "in_progress", "completed", "cancelled"])){
@@ -251,10 +251,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <label for="status">Status:</label>
             <select id="status" name="status" required>
-                <option value="scheduled" <?php if($status == "scheduled") echo "selected"; ?>>Scheduled</option>
-                <option value="in_progress" <?php if($status == "in_progress") echo "selected"; ?>>In Progress</option>
-                <option value="completed" <?php if($status == "completed") echo "selected"; ?>>Completed</option>
-                <option value="cancelled" <?php if($status == "cancelled") echo "selected"; ?>>Cancelled</option>
+            <option value="none" <?php if ($status === 'none') echo "selected"; ?>>None</option>    
+            <option value="scheduled" <?php if($status == "scheduled") echo "selected"; ?>>Scheduled</option>
+            <option value="in_progress" <?php if($status == "in_progress") echo "selected"; ?>>In Progress</option>
+            <option value="completed" <?php if($status == "completed") echo "selected"; ?>>Completed</option>
+            <option value="cancelled" <?php if($status == "cancelled") echo "selected"; ?>>Cancelled</option>
             </select>
 
             <label for="cost">Cost:</label>
