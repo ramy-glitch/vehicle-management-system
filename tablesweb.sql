@@ -52,6 +52,7 @@ CREATE TABLE driver (
     monthly_salary float NOT NULL,
     driver_history text NOT NULL,
     driver_status varchar(50) NOT NULL,
+    driver_licence_number varchar(50) NOT NULL,
     PRIMARY KEY (driver_id)
 );
 

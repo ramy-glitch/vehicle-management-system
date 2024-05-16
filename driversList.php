@@ -6,7 +6,7 @@ if (file_exists('dblink.php')) {
 }
 
 // Query to fetch driver information
-$sql = "SELECT 
+$sql = "SELECT d.driver_id,
 d.driver_name,
 d.driver_phone,
 d.driver_status,
@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     if (isset($_POST["reload_button"])) {
         $search = '';
-        $sql = "SELECT 
+        $sql = "SELECT d.driver_id,
                 d.driver_name,
                 d.driver_phone,
                 d.driver_status,
@@ -126,9 +126,11 @@ $result = mysqli_query($link, $sql);
                 echo "<td>" . htmlspecialchars($row['driver_status']) . "</td>";
                 echo "<td>" . htmlspecialchars($row['vehicle_license_plate']) . "</td>";
                 echo "<td>";
-                echo '<button class="btn btn-secondary">View</button>';
-                echo '<button class="btn btn-secondary">Edit</button>';
-                echo '<button class="btn btn-secondary">Delete</button>';
+                echo '<a class="btn btn-secondary" href="vehicleformview.php?id=' . $row["driver_id"] . '">View</a>';
+                // Edit button opens driverformedit.php with specific driver ID for editing
+                echo '<a class="btn btn-secondary" href="driverformedit.php?id=' . $row["driver_id"] . '">Edit</a>';
+                // Delete button 
+                echo '<a class="btn btn-secondary" href="driverformdelete.php?id=' . $row["driver_id"] . '">Delete</a>';
                 echo "</td>";
                 echo "</tr>";
             }

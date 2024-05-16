@@ -114,6 +114,7 @@ if ($result->num_rows > 0) {
         echo '<a class="btn btn-secondary" href="vehicleformdelete.php?id=' . $row["vehicle_id"] . '">Delete</a>';
         echo '</td>';
         echo '</tr>';
+        
     }
 
     echo '</tbody>';
