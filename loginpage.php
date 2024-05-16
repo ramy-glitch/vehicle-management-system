@@ -1,57 +1,66 @@
 <?php
-if (file_exists('dblink.php')) 
-{
-	require 'dblink.php';
+// Check if the database connection file exists
+if (file_exists('dblink.php')) {
+    require 'dblink.php';
+} else {
+    die("File not found");
 }
-else {
-	die("File not found");
-}
+
+// Start a session
+session_start();
 
 $message = "";
 
-if (isset($_POST["username"]) && isset($_POST["password"]) && !empty($_POST["username"]) && !empty($_POST["password"])){
+if (isset($_POST["username"]) && isset($_POST["password"]) && !empty($_POST["username"]) && !empty($_POST["password"])) {
     $username = $_POST["username"];
     $password = $_POST["password"];
 
     if (isset($_POST["sbt"])) {
-    
-    $query = "SELECT username,adminpwd FROM adminlist WHERE username = '$username'";
-    $query1= "SELECT username,pwd FROM driver WHERE username = '$username'";
-    $result = mysqli_query($link, $query);
-    $result1 = mysqli_query($link, $query1);
-    
+        // Prepare and execute query for admin login
+        $query = "SELECT username, adminpwd FROM adminlist WHERE username = '$username'";
+        $result = mysqli_query($link, $query);
+
         if (mysqli_num_rows($result) > 0) {
             $row = mysqli_fetch_assoc($result);
             $hash = $row['adminpwd'];
-        
+
             if (password_verify($password, $hash)) {
-            header("Location: adminHomePage.php"); // Redirect to the admin's page
-            exit;
-            } else {$message = "Invalid password.";}
-                                                
-        }elseif(mysqli_num_rows($result1) > 0){
-            $row1 = mysqli_fetch_assoc($result1);
-            $hash1 = $row1['pwd'];
-        
-            if (password_verify($password, $hash1)) {
-            header("Location: driverHomePage.php"); // Redirect to the driver's page
-            exit;
-            } else {$message = "Invalid password.";}
-        } 
-        else{$message = "Invalid username.";}
-            
-        
+                // Set session variable for admin
+                $_SESSION['admin_username'] = $row['username'];
+                header("Location: adminHomePage.php"); // Redirect to the admin's page
+                exit;
+            } else {
+                $message = "Invalid password.";
+            }
+        } else {
+            // Prepare and execute query for driver login
+            $query1 = "SELECT driver_id, username, pwd FROM driver WHERE username = '$username'";
+            $result1 = mysqli_query($link, $query1);
+
+            if (mysqli_num_rows($result1) > 0) {
+                $row1 = mysqli_fetch_assoc($result1);
+                $hash1 = $row1['pwd'];
+
+                if (password_verify($password, $hash1)) {
+                    // Set session variable for driver
+                    $_SESSION['driver_id'] = $row1['driver_id'];
+                    $_SESSION['driver_username'] = $row1['username'];
+                    header("Location: driverHomePage.php"); // Redirect to the driver's page
+                    exit;
+                } else {
+                    $message = "Invalid password.";
+                }
+            } else {
+                $message = "Invalid username.";
+            }
+        }
     }
-}else{
-    $message = "both username and password are required";
+} else {
+    $message = "Both username and password are required.";
 }
 
 mysqli_close($link);
-
 ?>
-
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -84,7 +93,7 @@ mysqli_close($link);
             <div class="input-group">
                 <label for="password">Password:</label>
                 <input type="password" id="password" name="password" required><br>
-                <?php  echo "<br>$message";?>
+                <?php echo "<br>$message"; ?>
             </div>
             <button type="submit" name="sbt">Login</button>
         </form>

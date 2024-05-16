@@ -1,10 +1,11 @@
 <?php
-if (file_exists('dblink.php')) 
-{
-	require 'dblink.php';
-}
-else {
-	die("File not found");
+session_start();
+
+// Check if the database connection file exists
+if (file_exists('dblink.php')) {
+    require 'dblink.php';
+} else {
+    die("File not found");
 }
 
 ?>
@@ -51,27 +52,50 @@ else {
 
 <div class="container">
 
-<?php
+    <?php
+    // Retrieve admin username based on session
+    if (isset($_SESSION['admin_id'])) {
+        $admin_id = $_SESSION['admin_id'];
+        $sql = "SELECT username FROM adminlist WHERE adminid = ?";
+        $stmt = mysqli_prepare($link, $sql);
 
-$sql = "SELECT username FROM adminlist WHERE adminid = ?";
-$stmt = mysqli_prepare($link, $sql);
-$x = 1;
-$stmt->bind_param("i", $x);
-$stmt->execute();
-$result = $stmt->get_result();
-$row = $result->fetch_assoc();
-$stmt->close();
-?>
+        if ($stmt) {
+            $stmt->bind_param("i", $admin_id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $row = $result->fetch_assoc();
+            $stmt->close();
+
+            echo "<div class='section'>";
+            echo "<h1>Welcome, " . $row['username'] . "!</h1>";
+            echo "</div>";
+        }
+    }
+    ?>
 
     <div class="section">
-        <?php echo "<h1>Welcome, " . $row['username'] . "!</h1>";?>
+        <h2>Logout:</h2>
+        <form action="" method="post">
+            <input type="submit" value="Log Out" name="logout_btn">
+        </form>
     </div>
-    <div class="section">
-        <h2>Logout : </h2>
-        <input type="button" value="LogOut" onclick="window.location.href='index.html'">
-
 
 </div>
 </body>
 </html>
-<?php mysqli_close($link); ?>
+
+<?php
+// Handle logout logic
+if (isset($_POST['logout_btn'])) {
+    // Redirect to index.html upon logout
+    header("Location: index.html");
+    // Destroy session data
+    session_unset();
+    session_destroy();
+    exit();
+}
+
+// Close the database connection
+mysqli_close($link);
+?>
+

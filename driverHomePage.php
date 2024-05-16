@@ -1,4 +1,5 @@
 <?php
+session_start();
 if (file_exists('dblink.php')) 
 {
 	require 'dblink.php';
@@ -37,8 +38,25 @@ else {
 
     <!-- Section: Welcome Message -->
     <div class="section">
-        <h1>Welcome, Driver!</h1>
-        <p>You are logged in as John Doe.</p>
+        <?php
+            
+            if (isset($_SESSION['driver_id'])) {
+
+                $sql = "SELECT driver_name,username FROM driver WHERE driver_id = ?";
+                $stmt = mysqli_prepare($link, $sql);
+                
+                if ($stmt) {
+                    $stmt->bind_param("i", $_SESSION['driver_id']);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
+                    $row = $result->fetch_assoc();
+                    $stmt->close();
+
+                    echo "<h1>Welcome, ". $row['driver_name'] ."!</h1>";
+                    echo "<p>You are logged in as ".$row['username'].".</p>";
+                }
+            }
+        ?>
     </div>
 
     <!-- Section: Current Mission -->
