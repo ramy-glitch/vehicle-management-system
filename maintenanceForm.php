@@ -69,10 +69,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // SQL query to insert maintenance data
         
         $sql = "INSERT INTO maintenance (vehicle_id, maintenance_date, maintenance_type, maintenance_description, workshop_name, workshop_phone, cost, next_maintenance_date, maintenance_status) VALUES ('$vehicle_assignment', '$date_of_maintenance', '$maintenance_type', '$maintenance_details', '$workshop_name', '$workshop_phone', '$cost', '$next_maintenance_date', '$maintenance_status')";
-        stmt = mysqli_prepare($link, $sql);
-        stmt->bind_param("isssssdss", $vehicle_assignment, $date_of_maintenance, $maintenance_type, $maintenance_details, $workshop_name, $workshop_phone, $cost, $next_maintenance_date, $maintenance_status);
-        stmt->execute();
-        stmt->close();
+        $stmt = mysqli_prepare($link, $sql);
+        $stmt->bind_param("isssssdss", $vehicle_assignment, $date_of_maintenance, $maintenance_type, $maintenance_details, $workshop_name, $workshop_phone, $cost, $next_maintenance_date, $maintenance_status);
+        $stmt->execute();
+        $stmt->close();
 
         // Redirect after successful submission
         header("Location: maintenanceList.php");
