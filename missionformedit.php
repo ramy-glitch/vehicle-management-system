@@ -227,7 +227,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             $selected = ($vehicle_assignment == $vehicleId) ? "selected" : "";
 
                             // Output the option with the appropriate value and selected attribute
-                            echo '<option value="' . $vehicleId . '" ' . $selected . '>' . $vehicleType . ' ' . $vehicleModel . ' ' . $vehicle_pln '</option>';
+                            echo '<option value="' . $vehicleId . '" ' . $selected . '>' . $vehicleType . ' ' . $vehicleModel . ' ' . $vehicle_pln . '</option>';
                         }
                     }
                     ?>
