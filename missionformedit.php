@@ -9,6 +9,28 @@ else {
 ?>
 
 <?php
+
+$missionId = $mission = null;
+// Retrieve vehicle ID from URL parameter
+            if (isset($_GET['id'])) {
+                $missionId = $_GET['id'];
+
+
+                // SQL query to retrieve mission data by ID
+                $sql = "SELECT * FROM mission WHERE mission_id = ?";
+                $stmt = mysqli_prepare($link, $sql);
+                $stmt->bind_param("i", $missionId);
+                $stmt->execute();
+                $result = $stmt->get_result();
+
+                // Display vehicle information in editable input fields
+                if ($result->num_rows > 0) {
+                    $mission = $result->fetch_assoc();
+                }
+            }
+?>
+
+<?php
 // Initialize variables to store form data and error messages
 $vehicle_assignment = $driver_assignment = $start_datetime = $end_datetime = $origin = $destination = $purpose = $status = $cost = '';
 $errorMessages = [];
@@ -90,11 +112,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Process form data if no validation errors
     if (empty($errorMessages)) {
         // Process the form data (e.g., save to database)
-        $sql = "INSERT INTO mission (vehicle_id, driver_id, start_date_time, end_date_time, start_location, end_location, purpose, mission_status, cost) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        $stmt = mysqli_prepare($link, $sql);
-        $stmt->bind_param("iissssssi", $vehicle_assignment, $driver_assignment, $start_datetime, $end_datetime, $origin, $destination, $purpose, $status, $cost);
-        $stmt->execute();
-        $stmt->close();
+        $sql = "UPDATE mission 
+        SET vehicle_id = ?, 
+            driver_id = ?, 
+            start_date_time = ?, 
+            end_date_time = ?, 
+            start_location = ?, 
+            end_location = ?, 
+            purpose = ?, 
+            mission_status = ?, 
+            cost = ?
+        WHERE mission_id = ?";  // Assuming 'mission_id' is the primary key of your mission table
+
+$stmt = mysqli_prepare($link, $sql);
+
+// Assuming $mission_id is the ID of the mission you want to update
+$stmt->bind_param("iissssssii",$vehicle_assignment,$driver_assignment,$start_datetime,$end_datetime,$origin,$destination,$purpose,$status,$cost,$mission_id);
+
+$stmt->execute();
+$stmt->close();
+
 
         if($status == "in_progress"){
             $sql = "UPDATE vehicle SET vehicle_status = 'in_service' WHERE vehicle_id = ?";

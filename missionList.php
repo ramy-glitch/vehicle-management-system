@@ -112,9 +112,12 @@ else {
             echo '<td>' . htmlspecialchars($row["end_location"]) . '</td>';
             echo '<td>' . htmlspecialchars($row["mission_status"]) . '</td>';
             echo '<td>';
-            echo '<button class="btn btn-secondary">View</button>';
-            echo '<button class="btn btn-secondary">Edit</button>';
-            echo '<button class="btn btn-secondary">Delete</button>';
+        // View button opens missionformview.php with specific mission ID
+        echo '<a class="btn btn-secondary" href="missionformview.php?id=' . $row["mission_id"] . '">View</a>&nbsp;&nbsp;';
+        // Edit button opens missionformedit.php with specific vehicle ID for editing
+        echo '<a class="btn btn-secondary" href="missionformedit.php?id=' . $row["mission_id"] . '">Edit</a>&nbsp;&nbsp;';
+        // Delete button 
+        echo '<a class="btn btn-secondary" href="missionformdelete.php?id=' . $row["mission_id"] . '">Delete</a>&nbsp;&nbsp;';
             echo '</td>';
             echo '</tr>';
         }
