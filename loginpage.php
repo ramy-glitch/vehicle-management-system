@@ -16,19 +16,29 @@ if (isset($_POST["username"]) && isset($_POST["password"]) && !empty($_POST["use
     if (isset($_POST["sbt"])) {
     
     $query = "SELECT username,adminpwd FROM adminlist WHERE username = '$username'";
-    
+    $query1= "SELECT username,pwd FROM driver WHERE username = '$username'";
     $result = mysqli_query($link, $query);
+    $result1 = mysqli_query($link, $query1);
     
         if (mysqli_num_rows($result) > 0) {
-        $row = mysqli_fetch_assoc($result);
-        $hash = $row['adminpwd'];
+            $row = mysqli_fetch_assoc($result);
+            $hash = $row['adminpwd'];
         
             if (password_verify($password, $hash)) {
-            header("Location: adminHomePage.php"); // Redirect to the user's page
+            header("Location: adminHomePage.php"); // Redirect to the admin's page
             exit;
             } else {$message = "Invalid password.";}
                                                 
-        }else {$message = "Invalid username.";}
+        }elseif(mysqli_num_rows($result1) > 0){
+            $row1 = mysqli_fetch_assoc($result1);
+            $hash1 = $row1['pwd'];
+        
+            if (password_verify($password, $hash1)) {
+            header("Location: driverHomePage.php"); // Redirect to the driver's page
+            exit;
+            } else {$message = "Invalid password.";}
+        } 
+        else{$message = "Invalid username.";}
             
         
     }

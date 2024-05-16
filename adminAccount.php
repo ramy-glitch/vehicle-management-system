@@ -53,9 +53,10 @@ else {
 
 <?php
 
-$sql = "SELECT username FROM admin WHERE admin_id = ?";
+$sql = "SELECT username FROM adminlist WHERE adminid = ?";
 $stmt = mysqli_prepare($link, $sql);
-$stmt->bind_param('i', 1);
+$x = 1;
+$stmt->bind_param("i", $x);
 $stmt->execute();
 $result = $stmt->get_result();
 $row = $result->fetch_assoc();

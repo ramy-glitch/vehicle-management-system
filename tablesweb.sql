@@ -47,7 +47,7 @@ CREATE TABLE driver (
     driver_phone varchar(50) NOT NULL,
     driver_address varchar(255) NOT NULL,
     username varchar(50) NOT NULL,
-    password varchar(255) NOT NULL,
+    pwd varchar(255) NOT NULL,
     employment_date date NOT NULL,
     monthly_salary float NOT NULL,
     driver_history text NOT NULL,
