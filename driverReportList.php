@@ -53,13 +53,11 @@ else {
 
     <!-- Search and Filter -->
     <div class="search-container">
-        <input type="text" class="search-input" placeholder="Search reports...">
-        <select class="filter-select">
-            <option value="all">All</option>
-            <option value="pending">Pending</option>
-            <option value="resolved">Resolved</option>
-        </select>
-        <button class="btn btn-primary">Search</button>
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+            <input type="text" class="search-input" name="search" placeholder="Search reports...">
+            <button type="submit" class="btn btn-primary" name="search_btn">Search</button>
+            <button type="submit" class="btn btn-primary" name="reload_btn">Reload All</button>
+        </form>
     </div>
 
     <!-- Driver Reports List Table -->
@@ -75,34 +73,64 @@ else {
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>Flat tier</td>
-                <td>123</td>
-                <td>123-456-7890</td>
-                <td>123456789</td>
-                <td>Location A</td>
-                <td>
-                    <button class="btn btn-secondary">View</a></button>
-                    <button class="btn btn-secondary">Response</a></button>
-                    <button class="btn btn-secondary">Delete</a></button>
-                </td>
-            </tr>
-            <tr>
-                <td>Battery died</td>
-                <td>456</td>
-                <td>987-654-3210</td>
-                <td>987654321</td>
-                <td>Location B</td>
-                <td>
-                    <button class="btn btn-secondary">View</a></button>
-                    <button class="btn btn-secondary">Response</a></button>
-                    <button class="btn btn-secondary">Delete</a></button>
-                </td>
-            </tr>
-            <!-- Add more rows as needed -->
+            <?php
+
+
+            // Initial SQL query
+
+            // Assuming $link is your database connection
+            $sql = "SELECT dr.report_issue, d.driver_license_number, d.driver_phone, v.vehicle_license_plate, v.vehicle_location
+                    FROM driver_report dr
+                    INNER JOIN driver d ON dr.driver_id = d.driver_id
+                    LEFT JOIN mission m ON dr.driver_id = m.driver_id
+                    LEFT JOIN vehicle v ON m.vehicle_id = v.vehicle_id";
+                    
+            // Implement the search feature and reload button
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                $search = $_POST['search'];
+                $sql .= " WHERE dr.report_issue LIKE '%$search%'
+                        OR d.driver_license_number LIKE '%$search%'
+                        OR d.driver_phone LIKE '%$search%'
+                        OR v.vehicle_license_plate LIKE '%$search%'
+                        OR v.vehicle_location LIKE '%$search%'";
+            
+            if (isset($_POST['reload_btn'])) {
+                $sql = "SELECT dr.report_issue, d.driver_license_number, d.driver_phone, v.vehicle_license_plate, v.vehicle_location
+                        FROM driver_report dr
+                        INNER JOIN driver d ON dr.driver_id = d.driver_id
+                        LEFT JOIN mission m ON dr.driver_id = m.driver_id
+                        LEFT JOIN vehicle v ON m.vehicle_id = v.vehicle_id";
+                }
+            }
+            
+            $result = mysqli_query($link, $sql);
+            
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    echo '<tr>';
+                    echo '<td>' . htmlspecialchars($row["report_issue"]) . '</td>';
+                    echo '<td>' . htmlspecialchars($row["driver_license_number"]) . '</td>';
+                    echo '<td>' . htmlspecialchars($row["driver_phone"]) . '</td>';
+                    echo '<td>' . htmlspecialchars($row["vehicle_license_plate"]) . '</td>';
+                    echo '<td>' . htmlspecialchars($row["vehicle_location"]) . '</td>';
+                    echo '<td>
+                            <button class="btn btn-secondary">View</button>
+                            <button class="btn btn-secondary">Response</button>
+                            <button class="btn btn-secondary">Delete</button>
+                        </td>';
+                    echo '</tr>';
+                }
+            } else {
+                echo '<tr><td colspan="6">No driver reports found.</td></tr>';
+            }
+            ?>
+            
         </tbody>
     </table>
 </div>
 
 </body>
 </html>
+
+<?php mysqli_close($link); ?>
+

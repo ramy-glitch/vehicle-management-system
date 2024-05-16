@@ -1,11 +1,31 @@
 <?php
-if (file_exists('dblink.php')) 
-{
-	require 'dblink.php';
+if (file_exists('dblink.php')) {
+    require 'dblink.php';
+} else {
+    die("File not found");
 }
-else {
-	die("File not found");
+
+$sql = "SELECT v.vehicle_license_plate, v.vehicle_model, ve.expense_type, ve.expense_date, ve.expense_cost
+        FROM vehicle_expense ve
+        INNER JOIN vehicle v ON ve.vehicle_id = v.vehicle_id";
+
+// Implement the search feature and reload button
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $search = $_POST['search'];
+    $sql .= " WHERE v.vehicle_license_plate LIKE '%$search%'
+            OR v.vehicle_model LIKE '%$search%'
+            OR ve.expense_type LIKE '%$search%'
+            OR ve.expense_date LIKE '%$search%'
+            OR ve.expense_cost LIKE '$search%'";
+
+    if (isset($_POST['reload_btn'])) {
+        $sql = "SELECT v.vehicle_license_plate, v.vehicle_model, ve.expense_type, ve.expense_date, ve.expense_cost
+                FROM vehicle_expense ve
+                INNER JOIN vehicle v ON ve.vehicle_id = v.vehicle_id";
+    }
 }
+
+$result = mysqli_query($link, $sql);
 ?>
 
 <!DOCTYPE html>
@@ -14,7 +34,7 @@ else {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>List of Vehicle Expenses</title>
-    <link  rel="stylesheet" href="style.css"/>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -29,10 +49,10 @@ else {
         <li class="navbar-item"><a href="#" class="nav-link">Notifications</a></li>
         
         <li class="navbar-item"><a href="#" class="nav-link">Reports</a>
-        <ul class="dropdown">
-            <li><a href="driverReportList.php">Driver Reports</a></li>
-            <li><a href="adminReportList.php">Admin Reports</a></li>
-        </ul>
+            <ul class="dropdown">
+                <li><a href="driverReportList.php">Driver Reports</a></li>
+                <li><a href="adminReportList.php">Admin Reports</a></li>
+            </ul>
         </li>
         
         <li class="navbar-item"><a href="#" class="nav-link">Expenses Up-to-date</a>
@@ -41,7 +61,7 @@ else {
                 <li><a href="maintenanceExpensesList.php">Maintenance Expenses</a></li>
                 <li><a href="missionExpensesList.php">Missions Expenses</a></li>
                 <li><a href="vehicleExpensesList.php">Vehicle Expenses</a></li>
-                <li><a href="penaltiesExpensestList.php">Penalties and Fines</a></li>
+                <li><a href="penaltiesExpensesList.php">Penalties and Fines</a></li>
             </ul>
         </li>
         <li class="navbar-item"><a href="statisticPage.php" class="nav-link">Statistics</a></li>
@@ -54,47 +74,53 @@ else {
 
     <!-- Search and Filter -->
     <div class="search-container">
-        <input type="text" class="search-input" placeholder="Search expenses...">
-        <select class="filter-select">
-            <option value="all">All</option>
-            <option value="fuel">Fuel</option>
-            <option value="insurance">Insurance</option>
-            <option value="maintenance">Maintenance</option>
-            <option value="other">Other</option>
-        </select>
-        <button class="btn btn-primary">Search</button>
+        <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+            <input type="text" class="search-input" placeholder="Search expenses..." name="search">
+            <button type="submit" class="btn btn-primary" name="search_btn">Search</button>
+            <button type="submit" class="btn btn-primary" name="reload_btn">Reload All</button>
+        </form>
     </div>
+
     <a href="vehicleExpensesForm.php" class="btn btn-primary">Add New Expense</a>
 
     <!-- Vehicle Expenses List Table -->
     <table>
         <thead>
             <tr>
-                <th>Vehicle license plate number:</th>
-                <th>Vehicle model:</th>
-                <th>Type of expense:</th>
-                <th>Date:</th>
-                <th>Amount:</th>
+                <th>Vehicle license plate number</th>
+                <th>Vehicle model</th>
+                <th>Type of expense</th>
+                <th>Date</th>
+                <th>Amount</th>
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>123</td>
-                <td>toyota</td>
-                <td>accessories</td>
-                <td>2024-04-15</td>
-                <td>200da</td>
-                <td>
-                    <button class="btn btn-secondary">View</a></button>
-                    <button class="btn btn-secondary">Edit</a></button>
-                    <button class="btn btn-secondary">Delete</a></button>
-                </td>
-            </tr>
-            <!-- Add more rows as needed -->
+            <?php
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    echo '<tr>';
+                    echo '<td>' . htmlspecialchars($row["vehicle_license_plate"]) . '</td>';
+                    echo '<td>' . htmlspecialchars($row["vehicle_model"]) . '</td>';
+                    echo '<td>' . htmlspecialchars($row["expense_type"]) . '</td>';
+                    echo '<td>' . htmlspecialchars($row["expense_date"]) . '</td>';
+                    echo '<td>' . htmlspecialchars($row["expense_cost"]) . '</td>';
+                    echo '<td>
+                            <button class="btn btn-secondary">View</button>
+                            <button class="btn btn-secondary">Edit</button>
+                            <button class="btn btn-secondary">Delete</button>
+                        </td>';
+                    echo '</tr>';
+                }
+            } else {
+                echo '<tr><td colspan="6">No vehicle expenses found.</td></tr>';
+            }
+            ?>
         </tbody>
     </table>
 </div>
 
 </body>
 </html>
+
+<?php mysqli_close($link); ?>
