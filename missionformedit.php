@@ -125,7 +125,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if($status == "scheduled" && $start_datetime < date("Y-m-d\TH:i")){
         $errorMessages["status"] = "Mission cannot be scheduled after the start date and time.";
     }
-    
+
     }
     // Process form data if no validation errors
     if (empty($errorMessages)) {
@@ -207,7 +207,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
         <label for="vehicle_assignment">Vehicle Assignment:</label>
                 <select id="vehicle_assignment" name="vehicle_assignment">
-                    <option value="none" <?php if ($vehicle_assignment === 'none') echo "selected"; ?>>None</option>
+                    <option value="none" <?php if ($vehicle_assignment === 'none') echo "selected"; ?>>Actual</option>
                     <?php
                     // SQL query to retrieve vehicle data
                     $sql = "SELECT vehicle_id, vehicle_type, vehicle_model FROM vehicle WHERE vehicle_status = 'out_of_service'";
@@ -234,7 +234,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <label for="driver_assignment">Driver Assignment:</label>
                 <select id="driver_assignment" name="driver_assignment">
-                    <option value="none" <?php if ($driver_assignment === 'none') echo "selected"; ?>>None</option>
+                    <option value="none" <?php if ($driver_assignment === 'none') echo "selected"; ?>>Actual</option>
                     <?php
                     // SQL query to retrieve inactive driver data
                     $sql = "SELECT driver_id, driver_name, driver_phone FROM driver WHERE driver_status = 'inactive'";
@@ -274,7 +274,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <?php } ?>
 
             <label for="origin">Origin Location:</label>
-            <input type="text" id="origin" name="origin" value="<?php echo htmlspecialchars($origin); ?>" placeholder="<?php echo htmlspecialchars($mission['start_location']); ?>" required>
+            <input type="text" id="origin" name="origin" value="<?php echo htmlspecialchars($origin); ?>" placeholder="<?php echo htmlspecialchars($mission['start_location']); ?>" >
             
             <?php if(isset($errorMessages["origin"])) { ?>
                 <p style="color: red;"><?php echo $errorMessages["origin"]; ?></p>
