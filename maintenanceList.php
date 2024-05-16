@@ -78,7 +78,7 @@ else {
         <tbody>
             <?php
             // Assuming $link is your database connection
-            $sql = "SELECT vehicle_license_plate, maintenance_status, workshop_name, workshop_phone
+            $sql = "SELECT maintenance_id,vehicle_license_plate, maintenance_status, workshop_name, workshop_phone
                     FROM vehicle_maintenance
                     INNER JOIN vehicle ON vehicle_maintenance.vehicle_id = vehicle.vehicle_id";
 
@@ -92,7 +92,7 @@ else {
                 }
 
                 if (isset($_POST['reload_btn'])){
-                    $sql = "SELECT vehicle_license_plate, maintenance_status, workshop_name, workshop_phone
+                    $sql = "SELECT maintenance_id, vehicle_license_plate, maintenance_status, workshop_name, workshop_phone
                     FROM vehicle_maintenance
                     INNER JOIN vehicle ON vehicle_maintenance.vehicle_id = vehicle.vehicle_id";
                 } 
@@ -110,11 +110,11 @@ else {
                     echo '<td>' . htmlspecialchars($row["workshop_phone"]) . '</td>';
                     echo '<td>';
                     // View button opens maintenanceformview.php with specific maintenance ID
-                    echo '<a class="btn btn-secondary" href="maintenanceformview.php?id=' . $row["maintenance_id"] . '">View</a>&nbsp;&nbsp;';
+                    echo '<a class="btn btn-secondary" href="maintenanceformview.php?id=' . $row['maintenance_id'] . '">View</a>&nbsp;&nbsp;';
                     // Edit button opens maintenanceformedit.php with specific maintenance ID for editing
-                    echo '<a class="btn btn-secondary" href="maintenanceformedit.php?id=' . $row["maintenance_id"] . '">Edit</a>&nbsp;&nbsp;';
+                    echo '<a class="btn btn-secondary" href="maintenanceformedit.php?id=' . $row['maintenance_id'] . '">Edit</a>&nbsp;&nbsp;';
                     // Delete button 
-                    echo '<a class="btn btn-secondary" href="maintenanceformdelete.php?id=' . $row["maintenance_id"] . '">Delete</a>&nbsp;&nbsp;';
+                    echo '<a class="btn btn-secondary" href="maintenanceformdelete.php?id=' . $row['maintenance_id'] . '">Delete</a>&nbsp;&nbsp;';
                     echo '</td>';
                     echo '</tr>';
                 }

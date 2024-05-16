@@ -82,7 +82,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
     }elseif(!preg_match("/^(02|07|05|06)\d{8}$/", $workshop_phone)){$errorMessages["workshop_phone"] = "Please enter a valid workshop phone number.";}
 
-    if (empty($cost) ||) {
+    if (empty($cost)) {
         $cost = $maintenance['cost'];
     }elseif( !is_numeric($cost) || $cost <= 0 ){
         $errorMessages["cost"] = "Please enter a valid cost for maintenance.";}
@@ -154,7 +154,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             
         <label for="vehicle_assignment">Vehicle Assignment:</label>
                 <select id="vehicle_assignment" name="vehicle_assignment">
-                    <option value="none" <?php if ($vehicle_assignment === 'none') echo "selected"; ?>>None</option>
+                    <option value="none" <?php if ($vehicle_assignment === 'none') echo "selected"; ?>>Actual</option>
                     <?php
                     // SQL query to retrieve vehicle data
                     $sql = "SELECT vehicle_id, vehicle_license_plate, vehicle_type, vehicle_model FROM vehicle WHERE vehicle_status = 'out_of_service'";
@@ -181,50 +181,50 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             
             <!-- Date of Maintenance -->
             <label for="date_of_maintenance">Date of Maintenance:</label>
-            <input type="date" id="date_of_maintenance" name="date_of_maintenance" value="<?php echo htmlspecialchars($date_of_maintenance); ?>" required>
+            <input type="date" id="date_of_maintenance" name="date_of_maintenance" value="<?php echo htmlspecialchars($date_of_maintenance); ?>" >
             <?php if(isset($errorMessages["date_of_maintenance"])) { ?>
                 <p style="color: red;"><?php echo $errorMessages["date_of_maintenance"]; ?></p>
             <?php } ?>
             
             <!-- Type of Maintenance -->
             <label for="maintenance_type">Type of Maintenance:</label>
-            <input type="text" id="maintenance_type" name="maintenance_type" value="<?php echo htmlspecialchars($maintenance_type); ?>" required>
+            <input type="text" id="maintenance_type" name="maintenance_type" value="<?php echo htmlspecialchars($maintenance_type); ?>" placeholder="<?php echo htmlspecialchars($maintenance['maintenance_type']); ?>">
             <?php if(isset($errorMessages["maintenance_type"])) { ?>
                 <p style="color: red;"><?php echo $errorMessages["maintenance_type"]; ?></p>
             <?php } ?>
             
             <!-- Details of Maintenance -->
             <label for="maintenance_details">Details of Maintenance:</label>
-            <textarea id="maintenance_details" name="maintenance_details" rows="4" required><?php echo htmlspecialchars($maintenance_details); ?></textarea>
+            <textarea id="maintenance_details" name="maintenance_details" rows="4" placeholder="<?php echo htmlspecialchars($maintenance['maintenance_description']); ?>" ><?php echo htmlspecialchars($maintenance_details); ?></textarea>
             <?php if(isset($errorMessages["maintenance_details"])) { ?>
                 <p style="color: red;"><?php echo $errorMessages["maintenance_details"]; ?></p>
             <?php } ?>
 
             <!-- Workshop Name -->
             <label for="workshop_name">Workshop Name:</label>
-            <input type="text" id="workshop_name" name="workshop_name" value="<?php echo htmlspecialchars($workshop_name); ?>" required>
+            <input type="text" id="workshop_name" name="workshop_name" value="<?php echo htmlspecialchars($workshop_name); ?>" placeholder="<?php echo htmlspecialchars($maintenance['workshop_name']); ?>">
             <?php if(isset($errorMessages["workshop_name"])) { ?>
                 <p style="color: red;"><?php echo $errorMessages["workshop_name"]; ?></p>
             <?php } ?>
 
             <!-- Workshop Phone -->
             <label for="workshop_phone">Workshop Phone:</label>
-            <input type="tel" id="workshop_phone" name="workshop_phone" value="<?php echo htmlspecialchars($workshop_phone); ?>" required>
+            <input type="tel" id="workshop_phone" name="workshop_phone" value="<?php echo htmlspecialchars($workshop_phone); ?>" placeholder="<?php echo htmlspecialchars($maintenance['workshop_phone']); ?>" >
             <?php if(isset($errorMessages["workshop_phone"])) { ?>
                 <p style="color: red;"><?php echo $errorMessages["workshop_phone"]; ?></p>
             <?php } ?>
 
             <!-- Cost -->
             <label for="cost">Cost (Da):</label>
-            <input type="number" id="cost" name="cost" value="<?php echo htmlspecialchars($cost); ?>" min="0" required>
+            <input type="number" id="cost" name="cost" value="<?php echo htmlspecialchars($cost); ?>" min="0" placeholder="<?php echo htmlspecialchars($maintenance['cost']); ?>" >
             <?php if(isset($errorMessages["cost"])) { ?>
                 <p style="color: red;"><?php echo $errorMessages["cost"]; ?></p>
             <?php } ?>
 
             <!-- Status -->
             <label for="status">Status:</label>
-            <select id="status" name="status" required>
-            <option value="none" <?php if ($maintenance_status === 'none') echo "selected"; ?>>None</option>    
+            <select id="status" name="status" >
+            <option value="none" <?php if ($maintenance_status === 'none') echo "selected"; ?>>Actual</option>    
             <option value="scheduled" <?php if($maintenance_status == "scheduled") echo "selected"; ?>>Scheduled</option>
             <option value="pending" <?php if($maintenance_status == "pending") echo "selected"; ?>>Pending</option>
             <option value="completed" <?php if($maintenance_status == "completed") echo "selected"; ?>>Completed</option>
