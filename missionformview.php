@@ -52,7 +52,8 @@ $missionId = $mission = null;
         <label for="vehicle_assignment">Vehicle Assignment:</label>
                     <?php
                     // SQL query to retrieve vehicle data
-                    $sql = "SELECT vehicle_license_plate, vehicle_type, vehicle_model FROM vehicle WHERE vehicle_id = $mission['vehicle_id']";
+                    $sql = "SELECT vehicle_license_plate, vehicle_type, vehicle_model FROM vehicle WHERE vehicle_id = $mission[vehicle_id]";
+                    
                     $result = mysqli_query($link, $sql);
 
                     // Check if any rows are returned
@@ -64,7 +65,7 @@ $missionId = $mission = null;
                             $vehicle_pln = htmlspecialchars($row["vehicle_license_plate"]);
 
                             // Output the option with the appropriate value and selected attribute
-                            echo '<input type="text" value="'. $vehicleType . ' ' . $vehicleModel . ' ' . $vehicle_pln . '>';
+                            echo '<input type="text" value="'. $vehicleType . ' ' . $vehicleModel . ' ' . $vehicle_pln . '">';
                         }
                     }
                     ?>
@@ -74,7 +75,7 @@ $missionId = $mission = null;
         <label for="driver_assignment">Driver Assignment:</label>
                     <?php
                     // SQL query to retrieve inactive driver data
-                    $sql = "SELECT driver_name, driver_phone FROM driver WHERE driver_id = $mission['driver_id']";
+                    $sql = "SELECT driver_name, driver_phone FROM driver WHERE driver_id = $mission[driver_id]";
                     $result = mysqli_query($link, $sql);
 
                     // Check if any rows are returned

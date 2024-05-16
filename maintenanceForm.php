@@ -94,12 +94,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <h2>Maintenance Information Form</h2>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
             
-            <label for="vehicle_assignment">Vehicle Assignment:</label>
+        <label for="vehicle_assignment">Vehicle Assignment:</label>
                 <select id="vehicle_assignment" name="vehicle_assignment">
                     <option value="none" <?php if ($vehicle_assignment === 'none') echo "selected"; ?>>None</option>
                     <?php
                     // SQL query to retrieve vehicle data
-                    $sql = "SELECT vehicle_id, vehicle_type, vehicle_model FROM vehicle WHERE vehicle_status = 'out_of_service'";
+                    $sql = "SELECT vehicle_id, vehicle_license_plate, vehicle_type, vehicle_model FROM vehicle WHERE vehicle_status = 'out_of_service'";
                     $result = mysqli_query($link, $sql);
 
                     // Check if any rows are returned
@@ -109,12 +109,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             $vehicleId = $row["vehicle_id"];
                             $vehicleType = htmlspecialchars($row["vehicle_type"]);
                             $vehicleModel = htmlspecialchars($row["vehicle_model"]);
+                            $vehicle_pln = htmlspecialchars($row["vehicle_license_plate"]);
 
                             // Determine if this option should be selected
                             $selected = ($vehicle_assignment == $vehicleId) ? "selected" : "";
 
                             // Output the option with the appropriate value and selected attribute
-                            echo '<option value="' . $vehicleId . '" ' . $selected . '>' . $vehicleType . ' ' . $vehicleModel . '</option>';
+                            echo '<option value="' . $vehicleId . '" ' . $selected . '>' . $vehicleType . ' ' . $vehicleModel . ' ' . $vehicle_pln . '</option>';
                         }
                     }
                     ?>
