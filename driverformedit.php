@@ -50,11 +50,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $employment_date = $_POST["employment_date"];
     $monthly_salary = $_POST["monthly_salary"];
     $driving_history = $_POST["driving_history"];
-    $status = "inactive";
 
     // Validate each input field
     if (empty($license_number)){ 
-        $license_number = $driver['driver_licence_number'];
+        $license_number = $driver['driver_license_number'];
     }else{
         if(!preg_match("/^[a-zA-Z0-9]{9}$/", $license_number)){$errorMessages["license_number"] = "Please enter a valid driver's license number.";}
     }
@@ -182,12 +181,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
 
         // SQL query to update driver information
-        $sql = "UPDATE driver SET driver_name = ?, driver_birthdate = ?, driver_phone = ?, driver_address = ?, username = ?, pwd = ?, employment_date = ?, monthly_salary = ?, driver_history = ?, driver_status = ?, driver_licence_number = ? WHERE driver_id = ?";
+        $sql = "UPDATE driver SET driver_name = ?, driver_birthdate = ?, driver_phone = ?, driver_address = ?, username = ?, pwd = ?, employment_date = ?, monthly_salary = ?, driver_history = ?, driver_license_number = ? WHERE driver_id = ?";
         $stmt = mysqli_prepare($link, $sql);     
 
         // Use "s" for string types and "d" for double/float types
         // Use "s" for date types as well (assuming date values are passed as strings)
-        mysqli_stmt_bind_param($stmt, "sssssssdsssi", $full_name, $date_of_birth, $phone_number, $address, $username, $passwordh, $employment_date, $monthly_salary, $driving_history, $status, $license_number, $driverId);
+        mysqli_stmt_bind_param($stmt, "sssssssdssi", $full_name, $date_of_birth, $phone_number, $address, $username, $passwordh, $employment_date, $monthly_salary, $driving_history, $license_number, $driverId);
         
         // Execute the prepared statement
         mysqli_stmt_execute($stmt);
@@ -219,7 +218,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"])."?id=".$driverId; ?>" method="post">
             
         <label for="license_number">Driver’s License Number:</label>
-            <input type="text" id="license_number" name="license_number" value="<?php echo htmlspecialchars($license_number); ?>" placeholder="<?php echo htmlspecialchars($driver['driver_licence_number']); ?>" >
+            <input type="text" id="license_number" name="license_number" value="<?php echo htmlspecialchars($license_number); ?>" placeholder="<?php echo htmlspecialchars($driver['driver_license_number']); ?>" >
             
             <?php if(isset($errorMessages["license_number"])) { ?>
                 <p style="color: red;"><?php echo $errorMessages["license_number"]; ?></p>
