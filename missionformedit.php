@@ -101,7 +101,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $errorMessages["cost"] = "Please enter a valid psitive cost.";
     }
 
-    if ($status === "none") {
+    if ($status == "none") {
         $status = $mission['mission_status'];
     }else{
 
@@ -127,15 +127,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     }
+
     // Process form data if no validation errors
     if (empty($errorMessages)) {
         // Process the form data (e.g., save to database)
-        $sql = "UPDATE mission SET vehicle_id = ?, driver_id = ?, start_date_time = ?, end_date_time = ?, start_location = ?, end_location = ?, purpose = ?, mission_status = ?, cost = ? WHERE mission_id = ?";  // Assuming 'mission_id' is the primary key of your mission table
+        $sql = "UPDATE mission SET vehicle_id = ?, driver_id = ?, start_date_time = ?, end_date_time = ?, start_location = ?, end_location = ?, purpose = ?, mission_status = ?, cost = ? WHERE mission_id = ?";  // 'mission_id' is the primary key of your mission table
 
         $stmt = mysqli_prepare($link, $sql);
 
-        // Assuming $mission_id is the ID of the mission you want to update
-        $stmt->bind_param("iissssssii",$vehicle_assignment,$driver_assignment,$start_datetime,$end_datetime,$origin,$destination,$purpose,$status,$cost,$mission_id);
+        // mission_id is the ID of the mission you want to update
+        $stmt->bind_param("iissssssdi",$vehicle_assignment,$driver_assignment,$start_datetime,$end_datetime,$origin,$destination,$purpose,$status,$cost,$missionId);
 
         $stmt->execute();
         $stmt->close();
@@ -296,7 +297,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <label for="status">Status:</label>
             <select id="status" name="status" required>
-                <option value="none" <?php if ($status === 'none') echo "selected"; ?>>None</option>
+                <option value="none" <?php if ($status == "none") echo "selected"; ?>>None</option>
                 <option value="scheduled" <?php if($status == "scheduled") echo "selected"; ?>>Scheduled</option>
                 <option value="in_progress" <?php if($status == "in_progress") echo "selected"; ?>>In Progress</option>
                 <option value="completed" <?php if($status == "completed") echo "selected"; ?>>Completed</option>

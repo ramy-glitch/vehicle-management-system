@@ -92,7 +92,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Process the form data (e.g., save to database)
         $sql = "INSERT INTO mission (vehicle_id, driver_id, start_date_time, end_date_time, start_location, end_location, purpose, mission_status, cost) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = mysqli_prepare($link, $sql);
-        $stmt->bind_param("iissssssi", $vehicle_assignment, $driver_assignment, $start_datetime, $end_datetime, $origin, $destination, $purpose, $status, $cost);
+        $stmt->bind_param("iissssssd", $vehicle_assignment, $driver_assignment, $start_datetime, $end_datetime, $origin, $destination, $purpose, $status, $cost);
         $stmt->execute();
         $stmt->close();
 
