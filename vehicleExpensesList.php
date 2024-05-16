@@ -61,7 +61,7 @@ $result = mysqli_query($link, $sql);
                 <li><a href="maintenanceExpensesList.php">Maintenance Expenses</a></li>
                 <li><a href="missionExpensesList.php">Missions Expenses</a></li>
                 <li><a href="vehicleExpensesList.php">Vehicle Expenses</a></li>
-                <li><a href="penaltiesExpensesList.php">Penalties and Fines</a></li>
+                <li><a href="penaltiesExpensestList.php">Penalties and Fines</a></li>
             </ul>
         </li>
         <li class="navbar-item"><a href="statisticPage.php" class="nav-link">Statistics</a></li>

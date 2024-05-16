@@ -101,7 +101,7 @@ else {
                     echo '<td>' . htmlspecialchars($row["workshop_phone"]) . '</td>';
                     echo '<td>' . htmlspecialchars($row["maintenance_type"]) . '</td>';
                     echo '<td>' . htmlspecialchars($row["maintenance_date"]) . '</td>';
-                    echo '<td>$' . htmlspecialchars($row["cost"]) . '</td>';
+                    echo '<td>' . htmlspecialchars($row["cost"]) . '</td>';
                     echo '<td>';
                     echo '<button class="btn btn-secondary">View</button>';
                     echo '<button class="btn btn-secondary">Edit</button>';
