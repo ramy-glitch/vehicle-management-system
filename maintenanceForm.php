@@ -10,27 +10,28 @@ else {
 
 <?php
 // Initialize variables to store form data and error messages
-$vehicle_pn = $date_of_maintenance = $maintenance_type = $maintenance_details = $workshop_name = $workshop_phone = $cost = $next_maintenance_date = '';
+$vehicle_assignment = $date_of_maintenance = $maintenance_type = $maintenance_details = $workshop_name = $workshop_phone = $cost = $next_maintenance_date = $maintenance_status = '';
 $errorMessages = [];
 
 // Process form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
-    if (isset($_POST["submit"])) {
+    
     // Retrieve form data
-    $vehicle_pn = $_POST["vehicle_pn"];
+    $vehicle_assignment = $_POST["vehicle_pn"];
     $date_of_maintenance = $_POST["date_of_maintenance"];
     $maintenance_type = $_POST["maintenance_type"];
     $maintenance_details = $_POST["maintenance_details"];
     $workshop_name = $_POST["workshop_name"];
     $workshop_phone = $_POST["workshop_phone"];
     $cost = $_POST["cost"];
-    $next_maintenance_date = $_POST["next_maintenance_date"];}
+    $next_maintenance_date = $_POST["next_maintenance_date"];
+    $maintenance_status = "scheduled"; // Default value for maintenance status is "scheduled
 
     // Validate input fields
-    $pattern = '~^\d{5,6}-[1-9]\d{2}-([1-4][0-9]|5[0-8])$~';
-    if (empty($vehicle_pn) || !preg_match($pattern, $vehicle_pn)) {
-        $errorMessages["vehicle_pn"] = "Please enter the vehicle plate number.";
+    
+    if ($vehicle_assignment === "none") {
+        $errorMessages["vehicle_assignment"] = "Please select a vehicle assignment.";
     }
 
     if (empty($date_of_maintenance) || !preg_match('/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/', $date_of_maintenance)) {   // Matches yyyy-mm-dd
@@ -64,6 +65,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Process form data if no validation errors
     if (empty($errorMessages)) {
         // Process the form data (e.g., save to database)
+
+        // SQL query to insert maintenance data
+        
+        $sql = "INSERT INTO maintenance (vehicle_id, maintenance_date, maintenance_type, maintenance_description, workshop_name, workshop_phone, cost, next_maintenance_date, maintenance_status) VALUES ('$vehicle_assignment', '$date_of_maintenance', '$maintenance_type', '$maintenance_details', '$workshop_name', '$workshop_phone', '$cost', '$next_maintenance_date', '$maintenance_status')";
+        stmt = mysqli_prepare($link, $sql);
+        stmt->bind_param("isssssdss", $vehicle_assignment, $date_of_maintenance, $maintenance_type, $maintenance_details, $workshop_name, $workshop_phone, $cost, $next_maintenance_date, $maintenance_status);
+        stmt->execute();
+        stmt->close();
+
         // Redirect after successful submission
         header("Location: maintenanceList.php");
         exit;
@@ -84,12 +94,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <h2>Maintenance Information Form</h2>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
             
-            <!-- Vehicle Plate Number -->
-            <label for="vehicle_pn">Vehicle Plate Number:</label>
-            <input type="text" id="vehicle_pn" name="vehicle_pn" value="<?php echo htmlspecialchars($vehicle_pn); ?>" required>
-            <?php if(isset($errorMessages["vehicle_pn"])) { ?>
-                <p style="color: red;"><?php echo $errorMessages["vehicle_pn"]; ?></p>
-            <?php } ?>
+            <label for="vehicle_assignment">Vehicle Assignment:</label>
+                <select id="vehicle_assignment" name="vehicle_assignment">
+                    <option value="none" <?php if ($vehicle_assignment === 'none') echo "selected"; ?>>None</option>
+                    <?php
+                    // SQL query to retrieve vehicle data
+                    $sql = "SELECT vehicle_id, vehicle_type, vehicle_model FROM vehicle WHERE vehicle_status = 'out_of_service'";
+                    $result = mysqli_query($link, $sql);
+
+                    // Check if any rows are returned
+                    if ($result->num_rows > 0) {
+                        // Output data of each row
+                        while ($row = $result->fetch_assoc()) {
+                            $vehicleId = $row["vehicle_id"];
+                            $vehicleType = htmlspecialchars($row["vehicle_type"]);
+                            $vehicleModel = htmlspecialchars($row["vehicle_model"]);
+
+                            // Determine if this option should be selected
+                            $selected = ($vehicle_assignment == $vehicleId) ? "selected" : "";
+
+                            // Output the option with the appropriate value and selected attribute
+                            echo '<option value="' . $vehicleId . '" ' . $selected . '>' . $vehicleType . ' ' . $vehicleModel . '</option>';
+                        }
+                    }
+                    ?>
+                </select>
             
             <!-- Date of Maintenance -->
             <label for="date_of_maintenance">Date of Maintenance:</label>
@@ -147,3 +176,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
 </body>
 </html>
+<?php mysqli_close($link); ?>

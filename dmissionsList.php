@@ -15,7 +15,6 @@ else {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>List of Missions</title>
     <link rel="stylesheet" href="style.css">
-
 </head>
 <body>
 
@@ -39,45 +38,55 @@ else {
 
     <!-- Search and Filter -->
     <div class="search-container">
-        <input type="text" class="search-input" placeholder="Search missions...">
-        <select class="filter-select">
-            <option value="all">All</option>
-            <option value="in_progress">In Progress</option>
-            <option value="completed">Completed</option>
-            <option value="cancelled">Cancelled</option>
-        </select>
-        <button class="btn btn-primary">Search</button>
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+            <input type="text" name="search" class="search-input" placeholder="Search missions...">
+            <button type="submit" class="btn btn-primary" name="search_btn">Search</button>
+            <button type="submit" class="btn btn-primary" name="reload_btn">Reload All</button>
+        </form>
     </div>
-
 
     <!-- Mission List Table -->
     <table>
         <thead>
             <tr>
-                <th>Mission ID</th>
                 <th>Status</th>
                 <th>Destination</th>
+                <th>End Date Time</th>
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>1</td>
-                <td>In Progress</td>
-                <td>Destination A</td>
-                <td>
-                    <button class="btn btn-secondary" ><a href="dmissionDetails.php">View</a></button>
-                </td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>Completed</td>
-                <td>Destination B</td>
-                <td>
-                    <button class="btn btn-secondary"><a href="dmissionDetails.php">View</a></button>
-                </td>
-            </tr>
-            <!-- Add more rows for additional missions -->
+            <?php
+            // Assuming $link is your database connection
+            $sql = "SELECT mission_id, mission_status, end_location, end_date_time FROM mission";
+
+            // Implement the search feature and reload button
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                $search = $_POST['search'];
+                $sql .= " WHERE end_location LIKE '%$search%'";
+
+                if (isset($_POST['reload_btn'])) {
+                    $sql = "SELECT mission_id, mission_status, end_location, end_date_time FROM mission";
+                }
+            }
+
+            $result = mysqli_query($link, $sql);
+
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    echo '<tr>';
+                    echo '<td>' . htmlspecialchars($row["mission_status"]) . '</td>';
+                    echo '<td>' . htmlspecialchars($row["end_location"]) . '</td>';
+                    echo '<td>' . htmlspecialchars($row["end_date_time"]) . '</td>';
+                    echo '<td>';
+                    echo '<button class="btn btn-secondary"><a href="dmissionDetails.php?mission_id=' . $row["mission_id"] . '">View</a></button>';
+                    echo '</td>';
+                    echo '</tr>';
+                }
+            } else {
+                echo '<tr><td colspan="4">No missions found.</td></tr>';
+            }
+            ?>
         </tbody>
     </table>
 </div>

@@ -14,9 +14,11 @@ else {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>List of Maintenance Expenses</title>
-    <link  rel="stylesheet" href="style.css"/>
+    <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
+
+<!-- Navbar -->
 <div class="navbar">
     <div class="navbar-brand"><a href="adminHomePage.php">Admin Dashboard</a></div>
     <ul class="navbar-menu">
@@ -48,62 +50,74 @@ else {
     </ul>
 </div>
 
-    <div class="container">
+<!-- Main Content Container -->
+<div class="container">
     <h1>List of Maintenance Expenses</h1>
 
     <!-- Search and Filter -->
     <div class="search-container">
-        <input type="text" class="search-input" placeholder="Search expenses...">
-        <select class="filter-select">
-            <option value="all">All</option>
-            <option value="oil_change">Oil Change</option>
-            <option value="tire_rotation">Tire Rotation</option>
-            <option value="brake_inspection">Brake Inspection</option>
-            <option value="repairs">Repairs</option>
-        </select>
-        <button class="btn btn-primary">Search</button>
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+            <input type="text" name="search" class="search-input" placeholder="Search expenses...">
+            <button type="submit" class="btn btn-primary" name="search_btn">Search</button>
+            <button type="submit" class="btn btn-primary" name="reload_btn">Reload All</button>
+        </form>
     </div>
-
 
     <!-- Maintenance Expenses List Table -->
     <table>
         <thead>
             <tr>
-                <th>Workshop name:</th>
-                <th>Workshop Phone:</th>
-                <th>Type of maintenance:</th>
-                <th>Date:</th>
-                <th>Amount:</th>
+                <th>Workshop Name</th>
+                <th>Workshop Phone</th>
+                <th>Type of Maintenance</th>
+                <th>Date</th>
+                <th>Amount</th>
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>Auto Shop</td>
-                <td>Oil Change</td>
-                <td>123</td>
-                <td>2024-04-15</td>
-                <td>$100</td>
-                <td>
-                    <button class="btn btn-secondary">View</a></button>
-                    <button class="btn btn-secondary">Edit</a></button>
-                </td>
-            </tr>
-            <tr>
-                <td>Auto Shop</td>
-                <td>Tire Rotation</td>
-                <td>456</td>
-                <td>2024-04-16</td>
-                <td>$50</td>
-                <td>
-                    <button class="btn btn-secondary">View</a></button>
-                    <button class="btn btn-secondary">Edit</a></button>
-                </td>
-            </tr>
-            <!-- Add more rows as needed -->
+            <?php
+            // Assuming $link is your database connection
+            $sql = "SELECT workshop_name, workshop_phone, maintenance_type, maintenance_date, cost
+                    FROM vehicle_maintenance";
+
+            // Implement the search feature and reload button
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                $search = $_POST['search'];
+                $sql .= " WHERE workshop_name LIKE '%$search%' OR maintenance_type LIKE '%$search%'";
+
+                if (isset($_POST['reload_btn'])) {
+                    $sql = "SELECT workshop_name, workshop_phone, maintenance_type, maintenance_date, cost
+                            FROM vehicle_maintenance";
+                }
+            }
+
+            $result = mysqli_query($link, $sql);
+
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    echo '<tr>';
+                    echo '<td>' . htmlspecialchars($row["workshop_name"]) . '</td>';
+                    echo '<td>' . htmlspecialchars($row["workshop_phone"]) . '</td>';
+                    echo '<td>' . htmlspecialchars($row["maintenance_type"]) . '</td>';
+                    echo '<td>' . htmlspecialchars($row["maintenance_date"]) . '</td>';
+                    echo '<td>$' . htmlspecialchars($row["cost"]) . '</td>';
+                    echo '<td>';
+                    echo '<button class="btn btn-secondary">View</button>';
+                    echo '<button class="btn btn-secondary">Edit</button>';
+                    echo '</td>';
+                    echo '</tr>';
+                }
+            } else {
+                echo '<tr><td colspan="6">No maintenance expenses found.</td></tr>';
+            }
+            ?>
         </tbody>
     </table>
 </div>
 
 </body>
 </html>
+
+
+<?php mysqli_close($link); ?>

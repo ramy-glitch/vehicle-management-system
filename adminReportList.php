@@ -18,7 +18,7 @@ else {
 </head>
 <body>
 
-
+<!-- Navbar -->
 <div class="navbar">
     <div class="navbar-brand"><a href="adminHomePage.php">Admin Dashboard</a></div>
     <ul class="navbar-menu">
@@ -30,10 +30,10 @@ else {
         <li class="navbar-item"><a href="#" class="nav-link">Notifications</a></li>
         
         <li class="navbar-item"><a href="#" class="nav-link">Reports</a>
-        <ul class="dropdown">
-            <li><a href="driverReportList.php">Driver Reports</a></li>
-            <li><a href="adminReportList.php">Admin Reports</a></li>
-        </ul>
+            <ul class="dropdown">
+                <li><a href="driverReportList.php">Driver Reports</a></li>
+                <li><a href="adminReportList.php">Admin Reports</a></li>
+            </ul>
         </li>
         
         <li class="navbar-item"><a href="#" class="nav-link">Expenses Up-to-date</a>
@@ -55,17 +55,15 @@ else {
 
     <!-- Search and Filter -->
     <div class="search-container">
-        <input type="text" class="search-input" placeholder="Search reports...">
-        <select class="filter-select">
-            <option value="all">All</option>
-            <option value="pending">Pending</option>
-            <option value="resolved">Resolved</option>
-        </select>
-        <button class="btn btn-primary">Search</button>
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+            <input type="text" name="search" class="search-input" placeholder="Search reports...">
+            <button type="submit" class="btn btn-primary" name="search_btn">Search</button>
+            <button type="submit" class="btn btn-primary" name="reload_btn">Reload All</button>
+        </form>
     </div>
 
-        <!-- Write a new report Button -->
-        <a href="adminReportsForm.php" class="btn btn-primary" style="width: fit-content;">Write a Report</a>
+    <!-- Write a new report Button -->
+    <a href="adminReportsForm.php" class="btn btn-primary" style="width: fit-content;">Write a Report</a>
 
     <!-- Admin Reports List Table -->
     <table>
@@ -77,26 +75,42 @@ else {
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>System Error</td>
-                <td>2024-04-16</td>
-                <td>
-                    <button class="btn btn-secondary">View</a></button>
-                    <button class="btn btn-secondary">Delete</a></button>
-                </td>
-            </tr>
-            <tr>
-                <td>User Access Issue</td>
-                <td>2024-04-17</td>
-                <td>
-                    <button class="btn btn-secondary">View</a></button>
-                    <button class="btn btn-secondary">Delete</a></button>
-                </td>
-            </tr>
-            <!-- Add more rows as needed -->
+            <?php
+            // Assuming $link is your database connection
+            $sql = "SELECT report_id, report_issue, report_date FROM admin_report";
+
+            // Implement the search feature and reload button
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                $search = $_POST['search'];
+                $sql .= " WHERE report_issue LIKE '%$search%'";
+
+                if (isset($_POST['reload_btn'])) {
+                    $sql = "SELECT report_id, report_issue, report_date FROM admin_report";
+                }
+            }
+
+            $result = mysqli_query($link, $sql);
+
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    echo '<tr>';
+                    echo '<td>' . htmlspecialchars($row["report_issue"]) . '</td>';
+                    echo '<td>' . htmlspecialchars($row["report_date"]) . '</td>';
+                    echo '<td>';
+                    echo '<button class="btn btn-secondary">View</button>';
+                    echo '<button class="btn btn-secondary">Delete</button>';
+                    echo '</td>';
+                    echo '</tr>';
+                }
+            } else {
+                echo '<tr><td colspan="3">No admin reports found.</td></tr>';
+            }
+            ?>
         </tbody>
     </table>
 </div>
 
 </body>
 </html>
+
+<?php mysqli_close($link); ?>

@@ -31,6 +31,7 @@ create table vehicle_maintenance (
     workshop_phone varchar(50) not null,
     cost float not null,
     next_maintenance_date date not null,
+    maintenance_status varchar(30) not null,
 
     constraint pk_maintenance_id primary key (maintenance_id),
     constraint fk_vehicle_id foreign key (vehicle_id) references vehicle(vehicle_id)
