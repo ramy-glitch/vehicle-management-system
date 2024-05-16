@@ -44,7 +44,7 @@ else {
             </ul>
         </li>
         <li class="navbar-item"><a href="statisticPage.php" class="nav-link">Statistics</a></li>
-        <li class="navbar-item"><a href="#" class="nav-link">Account</a></li>
+        <li class="navbar-item"><a href="adminAccount.php" class="nav-link">Account</a></li>
     </ul>
 </div>
 
