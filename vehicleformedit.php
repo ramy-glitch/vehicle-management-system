@@ -34,7 +34,7 @@ $vehicleId = $vehicle = null;
 
 // Initialize variables to store form data and error messages
 
-$vehicle_type = $license_plate = $make_model = $color = $odometer_reading = $fuel_type = $insurance_info = $location = $current_status = '';
+$vehicle_type = $license_plate = $make_model = $color = $odometer_reading = $fuel_type = $insurance_info = $location = '';
 $errorMessages = [];
 
 
@@ -57,7 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" ) {
     $fuel_type = $_POST["fuel_type"];
     $insurance_info = $_POST["insurance_info"];
     $location = $_POST["location"];
-    $current_status = $_POST["current_status"];
+    
 
 
     // Validate input fields
@@ -110,12 +110,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" ) {
         $location = $vehicle['vehicle_location'];   
     }
 
-    if (empty($current_status)) {
-        $current_status = $vehicle['vehicle_status'];
-        }else{
-            if (!in_array($current_status, ["out_of_service","under_maintenance"])) {
-        $errorMessages["current_status"] = "Please select the current status of the vehicle.";}
-        }
+
 
     // Process form data if no validation errors
     if (empty($errorMessages)) {
@@ -123,9 +118,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" ) {
         
         // SQL query to update vehicle data
         
-        $sql = "UPDATE vehicle SET vehicle_type = ?, vehicle_license_plate = ?, vehicle_model = ?, vehicle_color = ?, odometer_reading = ?, fuel_type = ?, inssurance_info = ?, vehicle_location = ?, vehicle_status = ? WHERE vehicle_id = ?";
+        $sql = "UPDATE vehicle SET vehicle_type = ?, vehicle_license_plate = ?, vehicle_model = ?, vehicle_color = ?, odometer_reading = ?, fuel_type = ?, inssurance_info = ?, vehicle_location = ? WHERE vehicle_id = ?";
         $stmt = mysqli_prepare($link, $sql); 
-        $stmt->bind_param("ssssissssi", $vehicle_type, $license_plate, $make_model, $color, $odometer_reading, $fuel_type, $insurance_info, $location, $current_status, $vehicleId);
+        $stmt->bind_param("ssssisssi", $vehicle_type, $license_plate, $make_model, $color, $odometer_reading, $fuel_type, $insurance_info, $location, $vehicleId);
         $stmt->execute();
 
 
@@ -207,16 +202,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" ) {
                 <p style="color: red;"><?php echo $errorMessages["location"]; ?></p>
             <?php } ?>
             
-            <!-- Current Status -->
-            <label for="current_status">Current Status:</label>
-            <select id="current_status" name="current_status" placeholder="<?php echo $vehicle['vehicle_status']; ?>" >
-                <option value="">Select Status</option>
-                <option value="out_of_service" <?php if($current_status == "out_of_service") echo "selected"; ?>>Out of Service</option>
-                <option value="under_maintenance" <?php if($current_status == "under_maintenance") echo "selected"; ?>>Under Maintenance</option>
-            </select>
-            <?php if(isset($errorMessages["current_status"])) { ?>
-                <p style="color: red;"><?php echo $errorMessages["current_status"]; ?></p>
-            <?php } ?>
             
             <!-- Form Buttons -->
             <input type="submit" value="submit">
