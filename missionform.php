@@ -10,7 +10,7 @@ else {
 
 <?php
 // Initialize variables to store form data and error messages
-$assigned_vehicle = $driver_name = $driver_phone = $start_datetime = $end_datetime = $origin = $destination = $purpose = $status = $cost = '';
+$vehicle_assignment = $driver_assignment = $start_datetime = $end_datetime = $origin = $destination = $purpose = $status = $cost = '';
 $errorMessages = [];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -25,7 +25,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $destination = $_POST["destination"];
     $purpose = $_POST["purpose"];
     $status = $_POST["status"];
-    $cost = $_POST["cost"];}
+    $cost = $_POST["cost"];
+    
+}
 
     // Validate each input field
     if ($vehicle_assignment === "none") {
