@@ -145,14 +145,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // SQL query to insert data into the database  
         
 
-        $sql = "INSERT INTO driver (driver_name, driver_birthdate, driver_phone, driver_address, username, pwd, employment_date, monthly_salary, driver_history, driver_status) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO driver (driver_name, driver_birthdate, driver_phone, driver_address, username, pwd, employment_date, monthly_salary, driver_history, driver_status, driver_license_number) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         $stmt = mysqli_prepare($link, $sql);     
 
         // Use "s" for string types and "d" for double/float types
         // Use "s" for date types as well (assuming date values are passed as strings)
-        mysqli_stmt_bind_param($stmt, "ssssssdsss", $full_name, $date_of_birth, $phone_number, $address, $username, $passwordh, $employment_date, $monthly_salary, $driving_history, $status);
+        mysqli_stmt_bind_param($stmt, "sssssssdsss", $full_name, $date_of_birth, $phone_number, $address, $username, $passwordh, $employment_date, $monthly_salary, $driving_history, $status, $license_number);
         
         // Execute the prepared statement
         mysqli_stmt_execute($stmt);
