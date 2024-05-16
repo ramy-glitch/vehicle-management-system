@@ -109,9 +109,12 @@ else {
                     echo '<td>' . htmlspecialchars($row["workshop_name"]) . '</td>';
                     echo '<td>' . htmlspecialchars($row["workshop_phone"]) . '</td>';
                     echo '<td>';
-                    echo '<button class="btn btn-secondary">View</button>';
-                    echo '<button class="btn btn-secondary">Edit</button>';
-                    echo '<button class="btn btn-secondary">Delete</button>';
+                    // View button opens maintenanceformview.php with specific maintenance ID
+                    echo '<a class="btn btn-secondary" href="maintenanceformview.php?id=' . $row["maintenance_id"] . '">View</a>&nbsp;&nbsp;';
+                    // Edit button opens maintenanceformedit.php with specific maintenance ID for editing
+                    echo '<a class="btn btn-secondary" href="maintenanceformedit.php?id=' . $row["maintenance_id"] . '">Edit</a>&nbsp;&nbsp;';
+                    // Delete button 
+                    echo '<a class="btn btn-secondary" href="maintenanceformdelete.php?id=' . $row["maintenance_id"] . '">Delete</a>&nbsp;&nbsp;';
                     echo '</td>';
                     echo '</tr>';
                 }
