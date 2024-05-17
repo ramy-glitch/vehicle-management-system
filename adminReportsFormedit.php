@@ -65,11 +65,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Process form data if no validation errors
     if (empty($errorMessages)) {
         // Process the form data (e.g., save to database)
-        $sql = "UPDATE admin_report SET report_date = ? , report_issue = ?, report_description = ? WHERE report_id = ? ";
+        /*$sql = "UPDATE admin_report SET report_date = ? , report_issue = ?, report_description = ? WHERE report_id = ? ";
         $stmt = mysqli_prepare($link, $sql);
         $stmt->bind_param("sssi", $report_date, $report_title, $report_content, $reportId);
         $stmt->execute();
-        $stmt->close();
+        $stmt->close();*/
+        $sql = "UPDATE admin_report SET report_date = '$report_date' , report_issue = '$report_title', report_description = '$report_content' WHERE report_id = $reportId ";
+        $result = mysqli_query($link, $sql);
+        
 
         // Redirect after successful submission
         header("Location: adminReportList.php");
@@ -89,7 +92,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
     <div class="container">
         <h2>Admin Report Form</h2>
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"])."?id=".$reportId;?>" method="post">
             <label for="report_title">Report Title:</label>
             <input type="text" id="report_title" name="report_title" value="<?php echo htmlspecialchars($report_title); ?>" placeholder="<?php echo htmlspecialchars($report['report_issue']); ?>"  >
             <?php if(isset($errorMessages["report_title"])) { ?>
