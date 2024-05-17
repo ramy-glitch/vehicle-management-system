@@ -25,7 +25,7 @@ $maintenanceId = $maintenance = null;
 
                 // Display maintenance information in editable input fields
                 if ($result->num_rows > 0) {
-                    $maintenance = $result->fetch_assoc();
+                    $maintenance = $result->fetch_assoc(); 
                 }
             }
 ?>
@@ -104,15 +104,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // SQL query to update maintenance record
         
-        $sql = "UPDATE vehicle_maintenance SET vehicle_id = ? ,maintenance_date = ? ,maintenance_type = ? ,maintenance_description = ? ,workshop_name = ? ,workshop_phone = ? ,cost = ?, next_maintenance_date = ? ,maintenance_status = ? WHERE maintenance_id = ?";  // Assuming 'maintenance_id' is the primary key of your vehicle_maintenance table
+       // $sql = "UPDATE vehicle_maintenance SET vehicle_id = ? , maintenance_date = ? , maintenance_type = ? , maintenance_description = ? , workshop_name = ? , workshop_phone = ? , cost = ? , next_maintenance_date = ? , maintenance_status = ? WHERE maintenance_id = ?";  // Assuming 'maintenance_id' is the primary key of your vehicle_maintenance table
+        $sql = "UPDATE vehicle_maintenance SET vehicle_id = '$vehicle_assignment', maintenance_date = '$date_of_maintenance', maintenance_type = '$maintenance_type', maintenance_description = '$maintenance_details', workshop_name = '$workshop_name', workshop_phone = '$workshop_phone', cost = '$cost', next_maintenance_date = '$next_maintenance_date', maintenance_status = '$maintenance_status' WHERE maintenance_id = '$maintenanceId'";  // Assuming 'maintenance_id' is the primary key of your vehicle_maintenance table
+        $up = mysqli_query($link, $sql);
 
-        $stmt = mysqli_prepare($link, $sql);
+        //$stmt = mysqli_prepare($link, $sql);
 
         //  $maintenance_id is the ID of the maintenance record you want to update
-        $stmt->bind_param("isssssdssi",$vehicle_assignment,$date_of_maintenance,$maintenance_type,$maintenance_details,$workshop_name,$workshop_phone,$cost,$next_maintenance_date,$maintenance_status,$maintenance_id);
+        //$stmt->bind_param("isssssdssi",$vehicle_assignment,$date_of_maintenance,$maintenance_type,$maintenance_details,$workshop_name,$workshop_phone,$cost,$next_maintenance_date,$maintenance_status,$maintenance_Id); 
 
-        $stmt->execute();
-        $stmt->close();
+        //$stmt->execute();
+        //$stmt->close();
 
         if ($maintenance_status == "completed" || $maintenance_status == "cancelled") {
             // SQL query to update vehicle status
