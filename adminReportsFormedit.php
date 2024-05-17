@@ -9,6 +9,28 @@ else {
 ?>
 
 <?php
+
+$reportId = $report = null;
+// Retrieve vehicle ID from URL parameter
+            if (isset($_GET['id'])) {
+                $reportId = $_GET['id'];
+
+
+                // SQL query to retrieve maintenance data by ID
+                $sql = "SELECT * FROM admin_report WHERE report_id = ?";
+                $stmt = mysqli_prepare($link, $sql);
+                $stmt->bind_param("i", $reportId);
+                $stmt->execute();
+                $result = $stmt->get_result();
+
+                // Display maintenance information in editable input fields
+                if ($result->num_rows > 0) {
+                    $maintenance = $result->fetch_assoc(); 
+                }
+            }
+?>
+
+<?php
 // Initialize variables to store form data and error messages
 $report_title = $report_content = $report_date = '';
 $errorMessages = [];
@@ -40,11 +62,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Process form data if no validation errors
     if (empty($errorMessages)) {
         // Process the form data (e.g., save to database)
-        $sql = "INSERT INTO admin_report (report_date, report_issue, report_description) VALUES (?, ?, ?)";
-        $stmt = mysqli_prepare($link, $sql);
-        $stmt->bind_param("sss", $report_date, $report_title, $report_content);
-        $stmt->execute();
-        $stmt->close();
+        $sql = "UPDATE admin_report SET report_date = ? , report_issue = ?, report_description = ? WHERE report_id = ? ";
+        
 
         // Redirect after successful submission
         header("Location: adminReportList.php");
