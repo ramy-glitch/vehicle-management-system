@@ -60,12 +60,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Report Form</title>
+    <title>Driver Report Form</title>
     <link rel="stylesheet" href="form.css">
 </head>
 <body>
     <div class="container">
-        <h2>Admin Report Form</h2>
+        <h2>Driver Report Form</h2>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
             <label for="report_title">Report Title:</label>
             <input type="text" id="report_title" name="report_title" value="<?php echo htmlspecialchars($report_title); ?>" required>

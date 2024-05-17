@@ -81,9 +81,12 @@ else {
                     echo '<td>' . htmlspecialchars($row["report_issue"]) . '</td>';
                     echo '<td>' . htmlspecialchars($row["report_date"]) . '</td>';
                     echo '<td>';
-                    echo '<button class="btn btn-secondary">View</button>';
-                    echo '<button class="btn btn-secondary">Response</button>';
-                    echo '<button class="btn btn-secondary">Delete</button>';
+                    // View button 
+                    echo '<a class="btn btn-secondary" href="ddriverReportsformview.php?id=' . $row['report_id'] . '">View</a>&nbsp;&nbsp;';
+                    // Edit button 
+                    echo '<a class="btn btn-secondary" href="ddriverReportsformresponse.php?id=' . $row['report_id'] . '">Response</a>&nbsp;&nbsp;';
+                    // Delete button 
+                    echo '<a class="btn btn-secondary" href="ddriverReportsformdelete.php?id=' . $row['report_id'] . '">Delete</a>&nbsp;&nbsp;';
                     echo '</td>';
                     echo '</tr>';
                 }
