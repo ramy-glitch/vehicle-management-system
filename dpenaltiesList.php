@@ -82,7 +82,7 @@ else {
             // Implement the search feature and reload button
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $search = $_POST['search'];
-                $sql .= " WHERE penality_type LIKE '%$search%' or penality_cost LIKE '%$search%' or penality_date LIKE '%$search%'";
+                $sql .= " AND (penality_type LIKE '%$search%' or penality_cost LIKE '%$search%' or penality_date LIKE '%$search%')";
 
                 if (isset($_POST['reload_btn'])) {
                     $sql = "SELECT penality_date, penality_type, penality_cost FROM penality_expense where driver_id = '$_SESSION[driver_id]'";

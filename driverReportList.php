@@ -90,7 +90,7 @@ else {
                         OR d.driver_name LIKE '%$search%'";
             
             if (isset($_POST['reload_btn'])) {
-                $sql = " SELECT driver_id ,dr.report_id,dr.report_issue, d.driver_license_number, d.driver_phone, d.driver_name
+                $sql = " SELECT d.driver_id ,dr.report_id,dr.report_issue, d.driver_license_number, d.driver_phone, d.driver_name ,dr.report_date
                         FROM driver_report dr
                         INNER JOIN driver d ON dr.driver_id = d.driver_id";
                 }
