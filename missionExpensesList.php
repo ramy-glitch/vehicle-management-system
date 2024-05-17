@@ -5,7 +5,7 @@ if (file_exists('dblink.php')) {
     die("File not found");
 }
 
-$sql = "SELECT m.end_location, m.start_date_time, m.end_date_time, m.cost
+$sql = "SELECT m.mission_id, m.end_location, m.start_date_time, m.end_date_time, m.cost
         FROM mission m";
 
 // Implement the search feature and reload button
@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             OR CONCAT(m.start_date_time, ' to ', m.end_date_time) LIKE '%$search%'";
 
     if (isset($_POST['reload_btn'])) {
-        $sql = "SELECT m.end_location, m.start_date_time, m.end_date_time, m.cost
+        $sql = "SELECT m.mission_id, m.end_location, m.start_date_time, m.end_date_time, m.cost
         FROM mission m";
     }
 }
@@ -96,8 +96,8 @@ $result = mysqli_query($link, $sql);
                     echo '<td>' . htmlspecialchars($row["start_date_time"]) . '</td>';
                     echo '<td>' . htmlspecialchars($row["cost"]) . '</td>';
                     echo '<td>
-                            <button class="btn btn-secondary">View</button>
-                            <button class="btn btn-secondary">Edit</button>
+                            <a class="btn btn-secondary" href="missionformview.php?id=' . $row["mission_id"] . '">View</a>&nbsp;&nbsp;
+                            <a class="btn btn-secondary" href="missionformedit.php?id=' . $row["mission_id"] . '">Edit</a>&nbsp;&nbsp;
                         </td>';
                     echo '</tr>';
                 }
