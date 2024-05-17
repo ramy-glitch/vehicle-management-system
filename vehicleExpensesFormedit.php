@@ -90,7 +90,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
     <div class="container">
         <h2>Vehicle Expenses Form</h2>
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"])."?id=".$veId;?>" method="post">
             
         <label for="vehicle_assignment">Vehicle Assignment:</label>
                 <select id="vehicle_assignment" name="vehicle_assignment">
@@ -121,7 +121,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             
             <!-- Type of Expense -->
             <label for="type_of_expense">Type of Expense:</label>
-            <input type="text" id="type_of_expense" name="type_of_expense" value="<?php echo htmlspecialchars($type_of_expense); ?>" placeholder="<?php echo htmlspecialchars($expense['expense_type']); ?>">
+            <input type="text" id="type_of_expense" name="type_of_expense" value="<?php echo htmlspecialchars($type_of_expense); ?>" placeholder="<?php echo htmlspecialchars($ve['expense_type']); ?>">
             <?php if(isset($errorMessages["type_of_expense"])) { ?>
                 <p style="color: red;"><?php echo $errorMessages["type_of_expense"]; ?></p>
             <?php } ?>
@@ -135,7 +135,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             
             <!-- Amount -->
             <label for="amount">Amount:</label>
-            <input type="number" id="amount" name="amount" value="<?php echo htmlspecialchars($amount); ?>" min="0" placeholder="<?php echo htmlspecialchars($expense['expense_cost']); ?>">
+            <input type="number" id="amount" name="amount" value="<?php echo htmlspecialchars($amount); ?>" min="0" placeholder="<?php echo htmlspecialchars($ve['expense_cost']); ?>">
             <?php if(isset($errorMessages["amount"])) { ?>
                 <p style="color: red;"><?php echo $errorMessages["amount"]; ?></p>
             <?php } ?>
