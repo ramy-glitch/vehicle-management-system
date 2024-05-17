@@ -265,7 +265,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             
             <label for="password">Password:</label>
-            <input type="password" id="password" name="password" value="<?php echo htmlspecialchars($password); ?>" placeholder="<?php echo htmlspecialchars($driver['pwd']); ?>" >
+            <input type="password" id="password" name="password" value="<?php echo htmlspecialchars($password); ?>" >
             <?php if(isset($errorMessages["password"])) { ?>
                 <p style="color: red;"><?php echo $errorMessages["password"]; ?></p>
             <?php } ?>

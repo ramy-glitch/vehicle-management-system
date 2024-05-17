@@ -6,21 +6,21 @@ if (file_exists('dblink.php')) {
 }
 
 // Query to fetch driver information
-$sql = "SELECT 
-d.driver_id,
-d.driver_name,
-d.driver_phone,
-d.driver_status,
-CASE 
-    WHEN m.mission_status = 'in_progress' THEN v.vehicle_license_plate
-    ELSE NULL
-END as vehicle_license_plate
-    FROM 
-        driver d
-    LEFT JOIN 
-        mission m ON d.driver_id = m.driver_id
-    LEFT JOIN 
-        vehicle v ON m.vehicle_id = v.vehicle_id";
+        $sql = "SELECT d.driver_id, d.driver_name, d.driver_phone, d.driver_status,
+        COALESCE(v.vehicle_license_plate, 'No vehicle assigned') AS vehicle_license_plate
+            FROM 
+                driver d
+            LEFT JOIN (
+                SELECT 
+                    m.driver_id,
+                    v.vehicle_license_plate
+                FROM 
+                    mission m
+                JOIN 
+                    vehicle v ON m.vehicle_id = v.vehicle_id
+                WHERE 
+                    m.mission_status = 'in_progress'
+            ) AS v ON d.driver_id = v.driver_id;";
 
 // Search functionality
 $search = '';
@@ -31,21 +31,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     if (isset($_POST["reload_button"])) {
         $search = '';
-        $sql = "SELECT 
-        d.driver_id,
-        d.driver_name,
-        d.driver_phone,
-        d.driver_status,
-        CASE 
-            WHEN m.mission_status = 'in_progress' THEN v.vehicle_license_plate
-            ELSE NULL
-        END as vehicle_license_plate
+        $sql = "SELECT d.driver_id, d.driver_name, d.driver_phone, d.driver_status,
+        COALESCE(v.vehicle_license_plate, 'No vehicle assigned') AS vehicle_license_plate
             FROM 
                 driver d
-            LEFT JOIN 
-                mission m ON d.driver_id = m.driver_id
-            LEFT JOIN 
-                vehicle v ON m.vehicle_id = v.vehicle_id";
+            LEFT JOIN (
+                SELECT 
+                    m.driver_id,
+                    v.vehicle_license_plate
+                FROM 
+                    mission m
+                JOIN 
+                    vehicle v ON m.vehicle_id = v.vehicle_id
+                WHERE 
+                    m.mission_status = 'in_progress'
+            ) AS v ON d.driver_id = v.driver_id;";
     }
 }
 
