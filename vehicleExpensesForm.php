@@ -30,8 +30,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $errorMessages["type_of_expense"] = "Please enter the type of expense.";
     }
 
-    if (empty($fee_date) || !preg_match('/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/', $fee_date)) {
+    if (empty($fee_date)) {
         $errorMessages["fee_date"] = "Please enter the date of the expense.";
+    }
+    if (!preg_match('/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/', $fee_date)) {
+        $errorMessages["fee_date"] = "Please enter a valid date.";
     }
 
     if (empty($amount) || !is_numeric($amount) || $amount <= 0 ) {
@@ -49,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt = mysqli_prepare($link, $sql);
 
         // Bind variables to the prepared statement as parameters
-        $stmt->bind_param("isdi", $vehicle_assignment, $type_of_expense, $fee_date, $amount);
+        $stmt->bind_param("issd", $vehicle_assignment, $type_of_expense, $fee_date, $amount);
 
         // Attempt to execute the prepared statement
         $stmt->execute();
