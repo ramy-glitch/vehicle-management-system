@@ -31,6 +31,7 @@ else {
             $row = $result->fetch_assoc();
             $stmt->close();
         }
+
     
     } 
 
@@ -43,7 +44,7 @@ else {
         <!-- Navbar items -->
         <li class="navbar-item"><a href="driverHomePage.php" class="nav-link">Dashboard</a></li>
         <li class="navbar-item"><a href="dmissionsList.php" class="nav-link">Missions</a></li>
-        <li class="navbar-item"><?php echo '<a href="dvehicleDetails.php?id=' . $row["vehicle_id"] . '"class="nav-link">Vehicle</a>'?></li>
+        <?php if ($result->num_rows == 0) { ?> <li class="navbar-item"><a href="#"class="nav-link">Vehicle</a></li><?php }else{?> <li class="navbar-item"><?php echo '<a href="dvehicleDetails.php?id=' . $row["vehicle_id"] . '"class="nav-link">Vehicle</a>'?></li><?php } ?>
         <li class="navbar-item"><a href="ddriverReports.php" class="nav-link">Reports</a></li>
         <li class="navbar-item"><a href="dpenaltiesList.php" class="nav-link">Penalties & Fines</a></li>
         <li class="navbar-item"><a href="#" class="nav-link">Notifications</a></li>

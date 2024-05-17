@@ -10,6 +10,25 @@ if (file_exists('dblink.php')) {
 
 ?>
 
+<?php    
+    if (isset($_SESSION['driver_id'])) {
+
+        $sql = "SELECT vehicle_id FROM mission WHERE driver_id = ? AND (mission_status = 'in_progress' or mission_status = 'scheduled')";
+        $stmt = mysqli_prepare($link, $sql);
+
+        if ($stmt) {
+            $stmt->bind_param("i", $_SESSION['driver_id']);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $row = $result->fetch_assoc();
+            $stmt->close();
+        }
+
+    
+    } 
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,7 +46,7 @@ if (file_exists('dblink.php')) {
         <!-- Navbar items -->
         <li class="navbar-item"><a href="driverHomePage.php" class="nav-link">Dashboard</a></li>
         <li class="navbar-item"><a href="dmissionsList.php" class="nav-link">Missions</a></li>
-        <li class="navbar-item"><a href="dvehicleDetails.php" class="nav-link">Vehicle</a></li>
+        <?php if ($result->num_rows == 0) { ?> <li class="navbar-item"><a href="#"class="nav-link">Vehicle</a></li><?php }else{?> <li class="navbar-item"><?php echo '<a href="dvehicleDetails.php?id=' . $row["vehicle_id"] . '"class="nav-link">Vehicle</a>'?></li><?php } ?>
         <li class="navbar-item"><a href="ddriverReports.php" class="nav-link">Reports</a></li>
         <li class="navbar-item"><a href="dpenaltiesList.php" class="nav-link">Penalties & Fines</a></li>
         <li class="navbar-item"><a href="#" class="nav-link">Notifications</a></li>
