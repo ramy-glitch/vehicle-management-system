@@ -80,7 +80,7 @@ else {
                     echo '<td>' . htmlspecialchars($row["end_location"]) . '</td>';
                     echo '<td>' . htmlspecialchars($row["end_date_time"]) . '</td>';
                     echo '<td>';
-                    echo '<button class="btn btn-secondary"><a href="dmissionDetails.php?mission_id=' . $row["mission_id"] . '">View</a></button>';
+                    echo '<a class="btn btn-secondary" href="missionformview.php?id=' . $row["mission_id"] . '">View</a>';
                     echo '</td>';
                     echo '</tr>';
                 }
