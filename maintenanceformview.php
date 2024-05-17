@@ -28,7 +28,7 @@ else {
 
             $maintenanceId = $maintenance = null;
             // Retrieve vehicle ID from URL parameter
-            if (isset($_GET['id'])) {
+    if (isset($_GET['id'])) {
                 $maintenanceId = $_GET['id'];
 
 
@@ -48,8 +48,6 @@ else {
         ?>
 
         <label for="vehicle_assignment">Vehicle Assignment:</label>
-                <select id="vehicle_assignment" name="vehicle_assignment">
-                    <option value="none" <?php if ($vehicle_assignment === 'none') echo "selected"; ?>>Actual</option>
                     <?php
                     // SQL query to retrieve vehicle data
                     $sql = "SELECT vehicle_id, vehicle_license_plate, vehicle_type, vehicle_model FROM vehicle WHERE vehicle_status = 'out_of_service'";
@@ -69,7 +67,6 @@ else {
                         }
                     }
                     ?>
-                </select>
             
             <!-- Date of Maintenance -->
             <label for="date_of_maintenance">Date of Maintenance:</label>
@@ -112,4 +109,4 @@ else {
     </div>
 </body>
 </html>
-<?php} mysqli_close($link); ?>
+<?php } mysqli_close($link); ?>
