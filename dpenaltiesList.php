@@ -1,4 +1,5 @@
 <?php
+session_start();
 if (file_exists('dblink.php')) 
 {
 	require 'dblink.php';
@@ -57,7 +58,7 @@ else {
         <tbody>
             <?php
             // Assuming $link is your database connection
-            $sql = "SELECT penality_date, penality_type, penality_cost FROM penality_expense";
+            $sql = "SELECT penality_date, penality_type, penality_cost FROM penality_expense where driver_id = '$_SESSION[driver_id]'";
 
             // Implement the search feature and reload button
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -65,7 +66,7 @@ else {
                 $sql .= " WHERE penality_type LIKE '%$search%' or penality_cost LIKE '%$search%' or penality_date LIKE '%$search%'";
 
                 if (isset($_POST['reload_btn'])) {
-                    $sql = "SELECT penality_date, penality_type, penality_cost FROM penality_expense";
+                    $sql = "SELECT penality_date, penality_type, penality_cost FROM penality_expense where driver_id = '$_SESSION[driver_id]'";
                 }
             }
 

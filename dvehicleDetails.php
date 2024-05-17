@@ -50,7 +50,7 @@ else {
         <textarea id="insurance_info" name="insurance_info" rows="4" cols="50"></textarea>
 
         <label for="current_status">Current Status:</label>
-        <select id="current_status" name="current_status" required>
+        <select id="current_status" name="current_status"  required>
             <option value="in_service">In Service</option>
             <option value="under_maintenance">Under Maintenance</option>
             <option value="out_of_service">Out of Service</option>
