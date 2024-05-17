@@ -5,7 +5,7 @@ if (file_exists('dblink.php')) {
     die("File not found");
 }
 
-$sql = "SELECT v.vehicle_license_plate, v.vehicle_model, ve.expense_type, ve.expense_date, ve.expense_cost
+$sql = "SELECT v.vehicle_license_plate, v.vehicle_model, ve.expense_type, ve.expense_date, ve.expense_cost, ve.expense_id
         FROM vehicle_expense ve
         INNER JOIN vehicle v ON ve.vehicle_id = v.vehicle_id";
 

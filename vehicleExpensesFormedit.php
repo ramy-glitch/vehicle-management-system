@@ -59,7 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     
 
-    if (empty($amount) || ) {
+    if (empty($amount)) {
         $amount = $ve['expense_cost'];
     }elseif(!is_numeric($amount) || $amount <= 0 ){
         $errorMessages["amount"] = "Please enter a valid amount.";
