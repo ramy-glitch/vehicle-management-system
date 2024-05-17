@@ -10,20 +10,20 @@ else {
 
 <?php
 // Initialize variables to store form data and error messages
-$vehicle_LP = $type_of_expense = $fee_date = $amount = '';
+$vehicle_assignment = $type_of_expense = $fee_date = $amount = '';
 $errorMessages = [];
 
 // Process form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Retrieve form data
-    $vehicle_LP = $_POST["vehicle_LP"];
+    $vehicle_assignment = $_POST["vehicle_assignment"];
     $type_of_expense = $_POST["type_of_expense"];
     $fee_date = $_POST["fee_date"];
     $amount = $_POST["amount"];
 
     // Validate input fields
-    if (empty($vehicle_LP) || !preg_match("~^\d{5,6}-[1-9]\d{2}-([1-4][0-9]|5[0-8])$~", $vehicle_LP)){   // Matches 123456-123-58 or 12345-123-58
-        $errorMessages["vehicle_LP"] = "Please enter the license plate number.";
+    if ($vehicle_assignment === "none") {
+        $errorMessages["vehicle_assignment"] = "Please select a vehicle assignment.";
     }
 
     if (empty($type_of_expense)) {
@@ -41,6 +41,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Process form data if no validation errors
     if (empty($errorMessages)) {
         // Process the form data (e.g., save to database)
+        
+        // Prepare an INSERT statement
+        $sql = "INSERT INTO vehicle_expense (vehicle_id, expense_type, expense_date, expense_cost)
+                VALUES (?, ?, ?, ?)";
+        
+        $stmt = mysqli_prepare($link, $sql);
+
+        // Bind variables to the prepared statement as parameters
+        $stmt->bind_param("isdi", $vehicle_assignment, $type_of_expense, $fee_date, $amount);
+
+        // Attempt to execute the prepared statement
+        $stmt->execute();
+
+        $stmt->close();
+
         // Redirect after successful submission
         header("Location: vehicleExpensesList.php");
         exit;
@@ -61,12 +76,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <h2>Vehicle Expenses Form</h2>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
             
-            <!-- License Plate Number -->
-            <label for="vehicle_LP">License Plate Number:</label>
-            <input type="text" id="vehicle_LP" name="vehicle_LP" value="<?php echo htmlspecialchars($vehicle_LP); ?>" placeholder="xxxxxx-xxx-xx" required>
-            <?php if(isset($errorMessages["vehicle_LP"])) { ?>
-                <p style="color: red;"><?php echo $errorMessages["vehicle_LP"]; ?></p>
-            <?php } ?>
+        <label for="vehicle_assignment">Vehicle Assignment:</label>
+                <select id="vehicle_assignment" name="vehicle_assignment">
+                    <option value="none" <?php if ($vehicle_assignment === 'none') echo "selected"; ?>>None</option>
+                    <?php
+                    // SQL query to retrieve vehicle data
+                    $sql = "SELECT vehicle_id, vehicle_license_plate, vehicle_type, vehicle_model FROM vehicle";
+                    $result = mysqli_query($link, $sql);
+
+                    // Check if any rows are returned
+                    if ($result->num_rows > 0) {
+                        // Output data of each row
+                        while ($row = $result->fetch_assoc()) {
+                            $vehicleId = $row["vehicle_id"];
+                            $vehicleType = htmlspecialchars($row["vehicle_type"]);
+                            $vehicleModel = htmlspecialchars($row["vehicle_model"]);
+                            $vehicle_pln = htmlspecialchars($row["vehicle_license_plate"]);
+
+                            // Determine if this option should be selected
+                            $selected = ($vehicle_assignment == $vehicleId) ? "selected" : "";
+
+                            // Output the option with the appropriate value and selected attribute
+                            echo '<option value="' . $vehicleId . '" ' . $selected . '>' . $vehicleType . ' ' . $vehicleModel . ' ' . $vehicle_pln . '</option>';
+                        }
+                    }
+                    ?>
+                </select>
             
             <!-- Type of Expense -->
             <label for="type_of_expense">Type of Expense:</label>

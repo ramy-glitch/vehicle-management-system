@@ -74,16 +74,16 @@ create table mission (
 );
 
 
-create table vehicle_expense (
-    expense_id int not null auto_increment,
-    vehicle_id int not null,
-    expense_date date not null,
-    expense_type varchar(255) not null,
-    expense_cost float not null,
-
-    primary key (expense_id),
-    foreign key (vehicle_id) references vehicle(vehicle_id)
-);
+        create table vehicle_expense (
+            expense_id int not null auto_increment,
+            vehicle_id int not null,
+            expense_date varchar(10) not null,
+            expense_type varchar(255) not null,
+            expense_cost float not null,
+        
+            primary key (expense_id),
+            foreign key (vehicle_id) references vehicle(vehicle_id)
+        );
 
 
 create table penality_expense (
