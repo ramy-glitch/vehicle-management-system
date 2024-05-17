@@ -232,6 +232,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <option value="completed" <?php if($maintenance_status == "completed") echo "selected"; ?>>Completed</option>
             <option value="cancelled" <?php if($maintenance_status == "cancelled") echo "selected"; ?>>Cancelled</option>
             </select>
+            <?php if(isset($errorMessages["status"])) { ?>
+                <p style="color: red;"><?php echo $errorMessages["status"]; ?></p>
+            <?php } ?>
 
             <!-- Next Maintenance Date -->
             <label for="next_maintenance_date">Next Scheduled Maintenance:</label>

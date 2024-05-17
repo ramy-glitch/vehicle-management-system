@@ -258,6 +258,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <option value="completed" <?php if($status == "completed") echo "selected"; ?>>Completed</option>
             <option value="cancelled" <?php if($status == "cancelled") echo "selected"; ?>>Cancelled</option>
             </select>
+            <?php if(isset($errorMessages["status"])) { ?>
+                <p style="color: red;"><?php echo $errorMessages["status"]; ?></p>
+            <?php } ?>
 
             <label for="cost">Cost:</label>
             <input type="number" id="cost" name="cost" value="<?php echo htmlspecialchars($cost); ?>" min="0" required>
