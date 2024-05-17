@@ -69,7 +69,7 @@ $result = mysqli_query($link, $sql);
 </div>
 
 <div class="container">
-    <h1>List of Vehicle Expenses</h1>
+    <h1>List of Vehicle Expenses</h1><br><br>
 
     <!-- Search and Filter -->
     <div class="search-container">
@@ -78,9 +78,9 @@ $result = mysqli_query($link, $sql);
             <button type="submit" class="btn btn-primary" name="search_btn">Search</button>
             <button type="submit" class="btn btn-primary" name="reload_btn">Reload All</button>
         </form>
-    </div>
+    </div><br><br>
 
-    <a href="vehicleExpensesForm.php" class="btn btn-primary">Add New Expense</a>
+    <a href="vehicleExpensesForm.php" class="btn btn-primary">Add New Expense</a><br><br>
 
     <!-- Vehicle Expenses List Table -->
     <table>

@@ -35,7 +35,7 @@ else {
 
 <!-- Main content container -->
 <div class="container">
-    <h1>Penalties & Fines</h1>
+    <h1>Penalties & Fines</h1><br><br>
 
     <!-- Search and Filter -->
     <div class="search-container">
@@ -44,7 +44,7 @@ else {
             <button type="submit" class="btn btn-primary" name="search_btn">Search</button>
             <button type="submit" class="btn btn-primary" name="reload_btn">Reload All</button>
         </form>
-    </div>
+    </div><br><br><br><br>
 
     <!-- Penalties List -->
     <table>
