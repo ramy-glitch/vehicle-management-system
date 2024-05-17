@@ -36,7 +36,6 @@ else {
         
         <li class="navbar-item"><a href="#" class="nav-link">Expenses Up-to-date</a>
             <ul class="dropdown">
-                <li><a href="driverExpensesList.php">Driver Expenses</a></li>
                 <li><a href="maintenanceExpensesList.php">Maintenance Expenses</a></li>
                 <li><a href="missionExpensesList.php">Missions Expenses</a></li>
                 <li><a href="vehicleExpensesList.php">Vehicle Expenses</a></li>
