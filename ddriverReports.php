@@ -84,7 +84,7 @@ else {
             // Implement the search feature and reload button
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $search = $_POST['search'];
-                $sql .= " WHERE report_issue LIKE '%$search%'";
+                $sql .= " AND (report_issue LIKE '%$search%' or report_date LIKE '%$search%')";
 
                 if (isset($_POST['reload_btn'])) {
                     $sql = "SELECT report_id, report_issue, report_date FROM driver_report where driver_id = '$_SESSION[driver_id]'";

@@ -77,19 +77,20 @@ else {
         <tbody>
             <?php
             //  $link is your database connection
-            $sql = "SELECT mission_id, mission_status, end_location, end_date_time FROM mission where driver_id = '$_SESSION[driver_id]'";
+            $sql = "SELECT mission_id, mission_status, end_location, end_date_time FROM mission WHERE driver_id = '$_SESSION[driver_id]'";
 
             // Implement the search feature and reload button
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $search = $_POST['search'];
-                $sql .= " WHERE end_location LIKE '%$search%' or end_date_time LIKE '%$search%' or mission_status LIKE '%$search%'";
+                $sql .= " AND (end_location LIKE '%$search%' OR end_date_time LIKE '%$search%' OR mission_status LIKE '%$search%')";
 
                 if (isset($_POST['reload_btn'])) {
-                    $sql = "SELECT mission_id, mission_status, end_location, end_date_time FROM mission where driver_id = '$_SESSION[driver_id]'";
+                    $sql = "SELECT mission_id, mission_status, end_location, end_date_time FROM mission WHERE driver_id = '$_SESSION[driver_id]'";
                 }
             }
 
             $result = mysqli_query($link, $sql);
+
 
             if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
