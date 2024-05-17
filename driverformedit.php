@@ -121,10 +121,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (empty($password)) {
         $password = $driver['pwd'];
-    }else{    if (strlen($password) < 8) {
+    }elseif (strlen($password) < 8) {
         $errorMessages["password"] = "Password must be at least 8 characters long.";
+    }else{
+        $passwordh = password_hash($password, PASSWORD_DEFAULT);
     }
-    }
+    
 
 
 
@@ -175,7 +177,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($errorMessages)) {
         // Process the form data (e.g., save to database)
 
-        $passwordh = password_hash($password, PASSWORD_DEFAULT); // Hash the password before saving to the database
+        
 
 
         

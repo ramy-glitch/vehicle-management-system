@@ -1,4 +1,5 @@
 <?php
+session_start();
 if (file_exists('dblink.php')) 
 {
 	require 'dblink.php';
@@ -57,16 +58,16 @@ else {
         </thead>
         <tbody>
             <?php
-            // Assuming $link is your database connection
-            $sql = "SELECT mission_id, mission_status, end_location, end_date_time FROM mission";
+            //  $link is your database connection
+            $sql = "SELECT mission_id, mission_status, end_location, end_date_time FROM mission where driver_id = '$_SESSION[driver_id]'";
 
             // Implement the search feature and reload button
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $search = $_POST['search'];
-                $sql .= " WHERE end_location LIKE '%$search%'";
+                $sql .= " WHERE end_location LIKE '%$search%' or end_date_time LIKE '%$search%' or mission_status LIKE '%$search%'";
 
                 if (isset($_POST['reload_btn'])) {
-                    $sql = "SELECT mission_id, mission_status, end_location, end_date_time FROM mission";
+                    $sql = "SELECT mission_id, mission_status, end_location, end_date_time FROM mission where driver_id = '$_SESSION[driver_id]'";
                 }
             }
 
