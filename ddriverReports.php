@@ -83,8 +83,6 @@ else {
                     echo '<td>';
                     // View button 
                     echo '<a class="btn btn-secondary" href="ddriverReportsformview.php?id=' . $row['report_id'] . '">View</a>&nbsp;&nbsp;';
-                    // Edit button 
-                    echo '<a class="btn btn-secondary" href="ddriverReportsformresponse.php?id=' . $row['report_id'] . '">Response</a>&nbsp;&nbsp;';
                     // Delete button 
                     echo '<a class="btn btn-secondary" href="ddriverReportsformdelete.php?id=' . $row['report_id'] . '">Delete</a>&nbsp;&nbsp;';
                     echo '</td>';

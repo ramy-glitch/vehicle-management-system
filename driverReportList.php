@@ -77,7 +77,7 @@ else {
             // Initial SQL query
 
             // Assuming $link is your database connection
-            $sql = " SELECT d.driver_id ,dr.report_issue, d.driver_license_number, d.driver_phone, d.driver_name,dr.report_date
+            $sql = " SELECT d.driver_id, dr.report_id ,dr.report_issue, d.driver_license_number, d.driver_phone, d.driver_name,dr.report_date
             FROM driver_report dr
             INNER JOIN driver d ON dr.driver_id = d.driver_id";
                     
@@ -90,7 +90,7 @@ else {
                         OR d.driver_name LIKE '%$search%'";
             
             if (isset($_POST['reload_btn'])) {
-                $sql = " SELECT driver_id ,dr.report_issue, d.driver_license_number, d.driver_phone, d.driver_name
+                $sql = " SELECT driver_id ,dr.report_id,dr.report_issue, d.driver_license_number, d.driver_phone, d.driver_name
                         FROM driver_report dr
                         INNER JOIN driver d ON dr.driver_id = d.driver_id";
                 }
@@ -106,8 +106,7 @@ else {
                     echo '<td>' . htmlspecialchars($row["driver_phone"]) . '</td>';
                     echo '<td>' . htmlspecialchars($row["report_date"]) . '</td>';
                     echo '<td>
-                            <button class="btn btn-secondary">View</button>
-                            <button class="btn btn-secondary">Response</button>
+                            <a class="btn btn-secondary" href="viewdriverreport.php?id=' . $row['report_id'] . '">View</a>&nbsp;&nbsp;
                         </td>';
                     echo '</tr>';
                 }

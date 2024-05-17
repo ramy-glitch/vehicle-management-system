@@ -77,7 +77,7 @@ else {
         <tbody>
             <?php
             // Assuming $link is your database connection
-            $sql = "SELECT workshop_name, workshop_phone, maintenance_type, maintenance_date, cost
+            $sql = "SELECT maintenance_id, workshop_name, workshop_phone, maintenance_type, maintenance_date, cost
                     FROM vehicle_maintenance";
 
             // Implement the search feature and reload button
@@ -86,7 +86,7 @@ else {
                 $sql .= " WHERE workshop_name LIKE '%$search%' OR maintenance_type LIKE '%$search%'";
 
                 if (isset($_POST['reload_btn'])) {
-                    $sql = "SELECT workshop_name, workshop_phone, maintenance_type, maintenance_date, cost
+                    $sql = "SELECT maintenance_id, workshop_name, workshop_phone, maintenance_type, maintenance_date, cost
                             FROM vehicle_maintenance";
                 }
             }
@@ -102,8 +102,9 @@ else {
                     echo '<td>' . htmlspecialchars($row["maintenance_date"]) . '</td>';
                     echo '<td>' . htmlspecialchars($row["cost"]) . 'DA</td>';
                     echo '<td>';
-                    echo '<button class="btn btn-secondary">View</button>';
-                    echo '<button class="btn btn-secondary">Edit</button>';
+                    echo '<a class="btn btn-secondary" href="maintenanceformview.php?id=' . $row['maintenance_id'] . '">View</a>&nbsp;&nbsp;';
+                    // Edit button opens maintenanceformedit.php with specific maintenance ID for editing
+                    echo '<a class="btn btn-secondary" href="maintenanceformedit.php?id=' . $row['maintenance_id'] . '">Edit</a>&nbsp;&nbsp;';
                     echo '</td>';
                     echo '</tr>';
                 }
