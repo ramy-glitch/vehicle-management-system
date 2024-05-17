@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             OR ve.expense_cost LIKE '$search%'";
 
     if (isset($_POST['reload_btn'])) {
-        $sql = "SELECT v.vehicle_license_plate, v.vehicle_model, ve.expense_type, ve.expense_date, ve.expense_cost
+        $sql = "SELECT v.vehicle_license_plate, v.vehicle_model, ve.expense_type, ve.expense_date, ve.expense_cost,ve.expense_id
                 FROM vehicle_expense ve
                 INNER JOIN vehicle v ON ve.vehicle_id = v.vehicle_id";
     }
@@ -105,9 +105,9 @@ $result = mysqli_query($link, $sql);
                     echo '<td>' . htmlspecialchars($row["expense_date"]) . '</td>';
                     echo '<td>' . htmlspecialchars($row["expense_cost"]) . '</td>';
                     echo '<td>
-                            <button class="btn btn-secondary">View</button>
-                            <button class="btn btn-secondary">Edit</button>
-                            <button class="btn btn-secondary">Delete</button>
+                    <a class="btn btn-secondary" href="vehicleExpensesFormview.php?id=' . $row["expense_id"] . '">View</a>&nbsp;&nbsp;
+                    <a class="btn btn-secondary" href="vehicleExpensesFormedit.php?id=' . $row["expense_id"] . '">Edit</a>&nbsp;&nbsp;
+                    <a class="btn btn-secondary" href="vehicleExpensesFormdelete.php?id=' . $row["expense_id"] . '">Delete</a>&nbsp;&nbsp;
                         </td>';
                     echo '</tr>';
                 }
