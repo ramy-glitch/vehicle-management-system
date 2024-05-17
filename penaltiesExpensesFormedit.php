@@ -129,7 +129,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             
             <!-- Penalty Type -->
             <label for="penalty_type">Penalty Type:</label>
-            <input type="text" id="penalty_type" name="penalty_type" value="<?php echo htmlspecialchars($penalty_type); ?>" placeholder="<?php echo htmlspecialchars($penality['penality_type']); ?>" >
+            <input type="text" id="penalty_type" name="penalty_type" value="<?php echo htmlspecialchars($penalty_type); ?>" placeholder="<?php echo htmlspecialchars($penalty['penality_type']); ?>" >
             <?php if(isset($errorMessages["penalty_type"])) { ?>
                 <p style="color: red;"><?php echo $errorMessages["penalty_type"]; ?></p>
             <?php } ?>
@@ -143,7 +143,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             
             <!-- Penalty Amount -->
             <label for="penalty_amount">Penalty Amount:</label>
-            <input type="number" id="penalty_amount" name="penalty_amount" value="<?php echo htmlspecialchars($penalty_amount); ?>" min="0" placeholder="<?php echo htmlspecialchars($penality['penality_cost']); ?>" >
+            <input type="number" id="penalty_amount" name="penalty_amount" value="<?php echo htmlspecialchars($penalty_amount); ?>" min="0" placeholder="<?php echo htmlspecialchars($penalty['penality_cost']); ?>" >
             <?php if(isset($errorMessages["penalty_amount"])) { ?>
                 <p style="color: red;"><?php echo $errorMessages["penalty_amount"]; ?></p>
             <?php } ?>
