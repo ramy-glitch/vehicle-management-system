@@ -112,7 +112,7 @@ create table driver_report (
     driver_id int not null,
     report_date date not null,
     report_issue varchar(255) not null,
-    vehicle_location varchar(255) not null,
+    report_description varchar(255) not null,
 
     primary key (report_id),
     foreign key (driver_id) references driver(driver_id)

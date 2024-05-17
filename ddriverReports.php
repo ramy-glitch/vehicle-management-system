@@ -47,7 +47,7 @@ else {
     </div>
 
     <!-- Write a new report Button -->
-    <a href="driverReportForm.php" class="btn btn-primary" style="width: fit-content;">Write a Report</a>
+    <a href="ddriverReportsform.php" class="btn btn-primary" style="width: fit-content;">Write a Report</a>
 
     <!-- Driver Reports List Table -->
     <table>

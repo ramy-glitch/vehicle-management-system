@@ -64,10 +64,9 @@ else {
         <thead>
             <tr>
                 <th>Issue</th>
-                <th>Driver License Number</th>
+                <th>Driver Name</th>
                 <th>Driver Phone</th>
-                <th>Vehicle LPN</th>
-                <th>Vehicle Location</th>
+                <th>Date</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -78,11 +77,9 @@ else {
             // Initial SQL query
 
             // Assuming $link is your database connection
-            $sql = "SELECT dr.report_issue, d.driver_license_number, d.driver_phone, v.vehicle_license_plate, v.vehicle_location
-                    FROM driver_report dr
-                    INNER JOIN driver d ON dr.driver_id = d.driver_id
-                    LEFT JOIN mission m ON dr.driver_id = m.driver_id
-                    LEFT JOIN vehicle v ON m.vehicle_id = v.vehicle_id";
+            $sql = " SELECT d.driver_id ,dr.report_issue, d.driver_license_number, d.driver_phone, d.driver_name,dr.report_date
+            FROM driver_report dr
+            INNER JOIN driver d ON dr.driver_id = d.driver_id";
                     
             // Implement the search feature and reload button
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -90,15 +87,12 @@ else {
                 $sql .= " WHERE dr.report_issue LIKE '%$search%'
                         OR d.driver_license_number LIKE '%$search%'
                         OR d.driver_phone LIKE '%$search%'
-                        OR v.vehicle_license_plate LIKE '%$search%'
-                        OR v.vehicle_location LIKE '%$search%'";
+                        OR d.driver_name LIKE '%$search%'";
             
             if (isset($_POST['reload_btn'])) {
-                $sql = "SELECT dr.report_issue, d.driver_license_number, d.driver_phone, v.vehicle_license_plate, v.vehicle_location
+                $sql = " SELECT driver_id ,dr.report_issue, d.driver_license_number, d.driver_phone, d.driver_name
                         FROM driver_report dr
-                        INNER JOIN driver d ON dr.driver_id = d.driver_id
-                        LEFT JOIN mission m ON dr.driver_id = m.driver_id
-                        LEFT JOIN vehicle v ON m.vehicle_id = v.vehicle_id";
+                        INNER JOIN driver d ON dr.driver_id = d.driver_id";
                 }
             }
             
@@ -108,14 +102,12 @@ else {
                 while ($row = $result->fetch_assoc()) {
                     echo '<tr>';
                     echo '<td>' . htmlspecialchars($row["report_issue"]) . '</td>';
-                    echo '<td>' . htmlspecialchars($row["driver_license_number"]) . '</td>';
+                    echo '<td>' . htmlspecialchars($row["driver_name"]) . '</td>';
                     echo '<td>' . htmlspecialchars($row["driver_phone"]) . '</td>';
-                    echo '<td>' . htmlspecialchars($row["vehicle_license_plate"]) . '</td>';
-                    echo '<td>' . htmlspecialchars($row["vehicle_location"]) . '</td>';
+                    echo '<td>' . htmlspecialchars($row["report_date"]) . '</td>';
                     echo '<td>
                             <button class="btn btn-secondary">View</button>
                             <button class="btn btn-secondary">Response</button>
-                            <button class="btn btn-secondary">Delete</button>
                         </td>';
                     echo '</tr>';
                 }
