@@ -20,14 +20,32 @@ if (file_exists('dblink.php')) {
                     vehicle v ON m.vehicle_id = v.vehicle_id
                 WHERE 
                     m.mission_status = 'in_progress' 
-            ) AS v ON d.driver_id = v.driver_id;";
+            ) AS v ON d.driver_id = v.driver_id";
 
 // Search functionality
 $search = '';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST["search_button"])) {
         $search = $_POST["search"];
-        $sql .= " WHERE driver_name LIKE '%$search%' OR driver_phone LIKE '%$search%' OR driver_status LIKE '$search%' OR vehicle_license_plate LIKE '%$search%'";
+        $sql = "SELECT d.driver_id, d.driver_name, d.driver_phone, d.driver_status,
+        COALESCE(v.vehicle_license_plate, 'No vehicle assigned') AS vehicle_license_plate
+            FROM 
+                driver d
+            LEFT JOIN (
+                SELECT 
+                    m.driver_id,
+                    v.vehicle_license_plate
+                FROM 
+                    mission m
+                JOIN 
+                    vehicle v ON m.vehicle_id = v.vehicle_id
+                WHERE 
+                    m.mission_status = 'in_progress' 
+            ) AS v ON d.driver_id = v.driver_id
+            WHERE d.driver_name LIKE '%$search%' OR d.driver_phone LIKE '%$search%' OR d.driver_status LIKE '%$search%' OR v.vehicle_license_plate LIKE '%$search%' OR d.driver_license_number LIKE '%$search%'";
+
+
+    
     }
     if (isset($_POST["reload_button"])) {
         $search = '';
