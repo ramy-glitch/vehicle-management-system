@@ -19,7 +19,7 @@ if (file_exists('dblink.php')) {
                 JOIN 
                     vehicle v ON m.vehicle_id = v.vehicle_id
                 WHERE 
-                    m.mission_status = 'in_progress'
+                    m.mission_status = 'in_progress' 
             ) AS v ON d.driver_id = v.driver_id;";
 
 // Search functionality

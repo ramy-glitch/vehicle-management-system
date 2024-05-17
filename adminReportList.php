@@ -97,6 +97,7 @@ else {
                     echo '<td>' . htmlspecialchars($row["report_date"]) . '</td>';
                     echo '<td>';
                     echo '<button class="btn btn-secondary">View</button>';
+                    echo '<button class="btn btn-secondary">Edit</button>';
                     echo '<button class="btn btn-secondary">Delete</button>';
                     echo '</td>';
                     echo '</tr>';
