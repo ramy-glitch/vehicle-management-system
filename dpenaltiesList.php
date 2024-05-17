@@ -77,7 +77,7 @@ else {
                     echo '<tr>';
                     echo '<td>' . htmlspecialchars($row["penality_date"]) . '</td>';
                     echo '<td>' . htmlspecialchars($row["penality_type"]) . '</td>';
-                    echo '<td>$' . htmlspecialchars($row["penality_cost"]) . '</td>';
+                    echo '<td>' . htmlspecialchars($row["penality_cost"]) . '</td>';
                     echo '</tr>';
                 }
             } else {
