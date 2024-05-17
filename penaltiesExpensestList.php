@@ -5,25 +5,22 @@ if (file_exists('dblink.php')) {
     die("File not found");
 }
 
-$sql = "SELECT p.vehicle_license_plate, pe.penality_type, d.driver_license_number, pe.penality_date, pe.penality_cost
+$sql = "SELECT pe.penality_id, pe.penality_type, d.driver_license_number, pe.penality_date, pe.penality_cost
         FROM penality_expense pe
-        INNER JOIN driver d ON pe.driver_id = d.driver_id
-        LEFT JOIN vehicle v ON d.vehicle_id = v.vehicle_id";
+        INNER JOIN driver d ON pe.driver_id = d.driver_id";
 
 // Implement the search feature and reload button
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $search = $_POST['search'];
-    $sql .= " WHERE p.vehicle_license_plate LIKE '%$search%'
-            OR pe.penality_type LIKE '%$search%'
+    $sql .= " WHERE  pe.penality_type LIKE '%$search%'
             OR d.driver_license_number LIKE '%$search%'
             OR pe.penality_date LIKE '%$search%'
             OR pe.penality_cost LIKE '%$search%'";
 
     if (isset($_POST['reload_btn'])) {
-        $sql = "SELECT p.vehicle_license_plate, pe.penality_type, d.driver_license_number, pe.penality_date, pe.penality_cost
+        $sql = "SELECT pe.penality_id, pe.penality_type, d.driver_license_number, pe.penality_date, pe.penality_cost
                 FROM penality_expense pe
-                INNER JOIN driver d ON pe.driver_id = d.driver_id
-                LEFT JOIN vehicle v ON d.vehicle_id = v.vehicle_id";
+                INNER JOIN driver d ON pe.driver_id = d.driver_id";
     }
 }
 
@@ -88,7 +85,6 @@ $result = mysqli_query($link, $sql);
     <table>
         <thead>
             <tr>
-                <th>License Plate number</th>
                 <th>Type</th>
                 <th>Driver Licence number</th>
                 <th>Date</th>
@@ -101,15 +97,14 @@ $result = mysqli_query($link, $sql);
             if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
                     echo '<tr>';
-                    echo '<td>' . htmlspecialchars($row["vehicle_license_plate"]) . '</td>';
                     echo '<td>' . htmlspecialchars($row["penality_type"]) . '</td>';
                     echo '<td>' . htmlspecialchars($row["driver_license_number"]) . '</td>';
                     echo '<td>' . htmlspecialchars($row["penality_date"]) . '</td>';
                     echo '<td>' . htmlspecialchars($row["penality_cost"]) . '</td>';
                     echo '<td>
-                            <button class="btn btn-secondary">View</button>
-                            <button class="btn btn-secondary">Edit</button>
-                            <button class="btn btn-secondary">Delete</button>
+                    <a class="btn btn-secondary" href="penaltiesExpensesFormview.php?id=' . $row["penality_id"] . '">View</a>&nbsp;&nbsp;
+                    <a class="btn btn-secondary" href="penaltiesExpensesFormedit.php?id=' . $row["penality_id"] . '">Edit</a>&nbsp;&nbsp;
+                    <a class="btn btn-secondary" href="penaltiesExpensesFormdelete.php?id=' . $row["penality_id"] . '">Delete</a>&nbsp;&nbsp;
                         </td>';
                     echo '</tr>';
                 }

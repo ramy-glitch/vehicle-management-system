@@ -9,6 +9,28 @@ else {
 ?>
 
 <?php
+
+$penaltyId = $penalty = null;
+// Retrieve vehicle ID from URL parameter
+            if (isset($_GET['id'])) {
+                $penaltyId = $_GET['id'];
+
+
+                // SQL query to retrieve maintenance data by ID
+                $sql = "SELECT * FROM penality_expense WHERE penality_id = ?";
+                $stmt = mysqli_prepare($link, $sql);
+                $stmt->bind_param("i", $penaltyId);
+                $stmt->execute();
+                $result = $stmt->get_result();
+
+                // Display maintenance information in editable input fields
+                if ($result->num_rows > 0) {
+                    $penalty = $result->fetch_assoc(); 
+                }
+            }
+?>
+
+<?php
 // Initialize variables to store form data and error messages
 $driver_concerned = $penalty_type = $penalty_date = $penalty_amount = '';
 $errorMessages = [];
@@ -26,18 +48,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Validate input fields
 
     if ($driver_concerned === "none") {
-        $errorMessages["driver_concerned"] = "Please select a driver assignment.";
+        $driver_concerned = $penalty['driver_id'];
     }
 
-    if (empty($penalty_type) || !preg_match("/^[a-zA-Z]+(?:[ ]*[a-zA-Z]+)*$/", $penalty_type)){
-        $errorMessages["penalty_type"] = "Please enter the penalty type.";
+    if (empty($penalty_type)){
+        $penalty_type = $penalty['penality_type'];
+    }elseif(!preg_match("/^[a-zA-Z]+(?:[ ]*[a-zA-Z]+)*$/", $penalty_type)){
+        $errorMessages["penalty_type"] = "Please enter the penalty type."; 
     }
 
-    if (empty($penalty_date) || !preg_match('/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/', $penalty_date)) {
+    if (empty($penalty_date)) {
+        $penalty_date = $penalty['penality_date'];
+    }elseif(!preg_match('/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/', $penalty_date)) {
         $errorMessages["penalty_date"] = "Please enter the penalty date.";
     }
 
-    if (empty($penalty_amount)|| !is_numeric($penalty_amount) || $penalty_amount < 0 ) {
+    if (empty($penalty_amount)) {
+        $penalty_amount = $penalty['penality_cost'];
+    }elseif(!is_numeric($penalty_amount) || $penalty_amount < 0 ) {
         $errorMessages["penalty_amount"] = "Please enter a valid penalty amount.";
     }
 
@@ -45,13 +73,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($errorMessages)) {
         // Process the form data (e.g., save to database)
 
-        // Prepare an INSERT statement
-        $sql = "INSERT INTO penality_expense (driver_id, penality_type, penality_date, penality_cost)
-                VALUES (?, ?, ?, ?)";
-        $stmt = mysqli_prepare($link, $sql);
-        $stmt->bind_param("issd", $driver_concerned, $penalty_type, $penalty_date, $penalty_amount);
-        $stmt->execute();
-        $stmt->close();
+
+        $sql = "UPDATE penality_expense SET driver_id = $driver_concerned, penality_type = '$penalty_type', penality_date = '$penalty_date', penality_cost = $penalty_amount WHERE penality_id = $penaltyId";
+        $stmt = mysqli_query($link, $sql);
+
 
         // Redirect after successful submission
         header("Location: penaltiesExpensestList.php");
@@ -71,12 +96,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
     <div class="container">
         <h2>Penalties and Fines Form</h2>
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"])."?id=".$penaltyId; ?>" method="post">
             
         
         <label for="driver_concerned">Driver Assignment:</label>
                 <select id="driver_concerned" name="driver_concerned">
-                    <option value="none" <?php if ($driver_concerned === 'none') echo "selected"; ?>>None</option>
+                    <option value="none" <?php if ($driver_concerned === 'none') echo "selected"; ?>>Actual</option>
                     <?php
                     // SQL query to retrieve inactive driver data
                     $sql = "SELECT driver_id, driver_name, driver_phone FROM driver ";
@@ -104,21 +129,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             
             <!-- Penalty Type -->
             <label for="penalty_type">Penalty Type:</label>
-            <input type="text" id="penalty_type" name="penalty_type" value="<?php echo htmlspecialchars($penalty_type); ?>" required>
+            <input type="text" id="penalty_type" name="penalty_type" value="<?php echo htmlspecialchars($penalty_type); ?>" placeholder="<?php echo htmlspecialchars($penality['penality_type']); ?>" >
             <?php if(isset($errorMessages["penalty_type"])) { ?>
                 <p style="color: red;"><?php echo $errorMessages["penalty_type"]; ?></p>
             <?php } ?>
             
             <!-- Penalty Date -->
             <label for="penalty_date">Penalty Date:</label>
-            <input type="date" id="penalty_date" name="penalty_date" value="<?php echo htmlspecialchars($penalty_date); ?>" required>
+            <input type="date" id="penalty_date" name="penalty_date" value="<?php echo htmlspecialchars($penalty_date); ?>" >
             <?php if(isset($errorMessages["penalty_date"])) { ?>
                 <p style="color: red;"><?php echo $errorMessages["penalty_date"]; ?></p>
             <?php } ?>
             
             <!-- Penalty Amount -->
             <label for="penalty_amount">Penalty Amount:</label>
-            <input type="number" id="penalty_amount" name="penalty_amount" value="<?php echo htmlspecialchars($penalty_amount); ?>" min="0" required>
+            <input type="number" id="penalty_amount" name="penalty_amount" value="<?php echo htmlspecialchars($penalty_amount); ?>" min="0" placeholder="<?php echo htmlspecialchars($penality['penality_cost']); ?>" >
             <?php if(isset($errorMessages["penalty_amount"])) { ?>
                 <p style="color: red;"><?php echo $errorMessages["penalty_amount"]; ?></p>
             <?php } ?>
