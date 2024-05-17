@@ -97,11 +97,11 @@ else {
                     echo '<td>' . htmlspecialchars($row["report_date"]) . '</td>';
                     echo '<td>';
                     // View button 
-                    echo '<a class="btn btn-secondary" href="maintenanceformview.php?id=' . $row['report_id'] . '">View</a>&nbsp;&nbsp;';
+                    echo '<a class="btn btn-secondary" href="adminReportsFormview.php?id=' . $row['report_id'] . '">View</a>&nbsp;&nbsp;';
                     // Edit button 
-                    echo '<a class="btn btn-secondary" href="maintenanceformedit.php?id=' . $row['report_id'] . '">Edit</a>&nbsp;&nbsp;';
+                    echo '<a class="btn btn-secondary" href="adminReportsFormedit.php?id=' . $row['report_id'] . '">Edit</a>&nbsp;&nbsp;';
                     // Delete button 
-                    echo '<a class="btn btn-secondary" href="maintenanceformdelete.php?id=' . $row['report_id'] . '">Delete</a>&nbsp;&nbsp;';
+                    echo '<a class="btn btn-secondary" href="adminReportsFormdelete.php?id=' . $row['report_id'] . '">Delete</a>&nbsp;&nbsp;';
                     echo '</td>';
                     echo '</tr>';
                 }
