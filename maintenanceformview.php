@@ -50,8 +50,7 @@ else {
         <label for="vehicle_assignment">Vehicle Assignment:</label>
                     <?php
                     // SQL query to retrieve vehicle data
-                    $sql = "SELECT vehicle_id, vehicle_license_plate, vehicle_type, vehicle_model FROM vehicle WHERE vehicle_status = 'out_of_service'";
-                    $result = mysqli_query($link, $sql);
+                    $sql = "SELECT vehicle_id, vehicle_license_plate, vehicle_type, vehicle_model FROM vehicle WHERE vehicle_id = $maintenance['vehicle_id']";
 
                     // Check if any rows are returned
                     if ($result->num_rows > 0) {
