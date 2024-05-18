@@ -1,11 +1,6 @@
 <?php
-// Check if database connection file exists
-if (file_exists('dblink.php')) {
-    require 'dblink.php';
-} else {
-    die("Database connection file not found");
-}
 
+die("connection to the database removed for security reasons");
 // Initialize variables
 $currentStatus = $vehicle = null;
 
