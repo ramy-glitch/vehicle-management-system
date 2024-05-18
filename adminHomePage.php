@@ -51,7 +51,30 @@ else {
 
     <div class="section">
         <h1>Welcome, Admin!</h1>
-        <p>Total Vehicles: 100 | Total Drivers: 50 | Ongoing Missions: 10</p>
+
+        <?php 
+            $sql = "SELECT COUNT(vehicle_id) AS totalVehicles FROM vehicle";
+            $result = mysqli_query($link, $sql);
+            $row = mysqli_fetch_assoc($result);
+            $totalVehicles = $row['totalVehicles'];
+
+            $sql = "SELECT COUNT(driver_id) AS totalDrivers FROM driver";
+            $result = mysqli_query($link, $sql);
+            $row = mysqli_fetch_assoc($result);
+            $totalDrivers = $row['totalDrivers'];
+
+            $sql = "SELECT COUNT(mission_id) AS totalMissions FROM mission WHERE mission_status = 'in_progress' ";
+            $result = mysqli_query($link, $sql);
+            $row = mysqli_fetch_assoc($result);
+            $totalMissions = $row['totalMissions'];
+
+            $sql = "SELECT COUNT(mission_id) AS totalScheduledMissions FROM mission WHERE mission_status = 'scheduled' ";
+            $result = mysqli_query($link, $sql);
+            $row = mysqli_fetch_assoc($result);
+            $totalScheduledMissions = $row['totalScheduledMissions'];
+        ?>
+
+        <p>Total Vehicles: <?php echo $totalVehicles; ?> | Total Drivers: <?php echo $totalDrivers; ?>  | Ongoing Missions: <?php echo $totalMissions; ?>  | scheduled Missions: <?php echo $totalScheduledMissions; ?> </p>
     </div>
 
     <div class="section">
@@ -66,42 +89,62 @@ else {
     </div>
 
     <div class="section">
-        <h1>Recent Activities and Notifications</h1>
+        <h1> Today's Scheduled Missions:</h1>
         <div>
-            <h2>Recent Activity Feed:</h2>
-            <p>Driver John Doe completed Mission XYZ.</p>
-            <p>Vehicle ABC underwent maintenance.</p>
-        </div>
-        <div>
-            <h2>Notifications:</h2>
-            <p>New mission assignment for Driver Jane Doe.</p>
-        </div>
-    </div>
+            <table>
+                <tr>
+                    <th>Mission purpose</th>
+                    <th>Driver</th>
+                    <th>Vehicle</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                    <th>Destination</th>
+                    <th>Status</th>
+                </tr>
+                <?php
 
-    <div class="section">
-        <h1>Visual Data Representation</h1>
-        <p>Placeholder for Vehicle Utilization Graph</p>
-        <p>Placeholder for Driver Performance Metrics</p>
-    </div>
+                    function truncateString($str, $maxLength, $ellipsis = '...') {
+                        if (mb_strlen($str) <= $maxLength) {
+                            return $str; // No need to truncate
+                        } else {
+                            // Truncate and add ellipsis
+                            return mb_substr($str, 0, $maxLength) . $ellipsis;
+                        }
+                    }
+                    
+                    $sql = "SELECT mission_id, purpose, driver_name, vehicle_model, start_date_time, end_date_time, end_location, mission_status FROM mission JOIN driver ON mission.driver_id = driver.driver_id JOIN vehicle ON mission.vehicle_id = vehicle.vehicle_id WHERE mission_status = 'scheduled' AND DATE(start_date_time) = CURDATE()";
+                    $result = mysqli_query($link, $sql);
 
-    <div class="section">
-        <h1>Quick Search and Filtering</h1>
-        <div>
-            <input type="text" class="search-input" placeholder="Search Vehicles...">
-            <select class="filter-select">
-                <option value="all">All</option>
-                <option value="in-service">In Service</option>
-                <option value="maintenance">Maintenance</option>
-            </select>
+                    if (mysqli_num_rows($result) > 0) {
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            echo "<tr>";
+                            
+                            $purpose = truncateString($row['purpose'], 30) ;
+
+                            echo "<td>" . $purpose . "</td>";
+                            echo "<td>" . $row['driver_name'] . "</td>";
+                            echo "<td>" . $row['vehicle_model'] . "</td>";
+                            echo "<td>" . $row['start_date_time'] . "</td>";
+                            echo "<td>" . $row['end_date_time'] . "</td>";
+                            echo "<td>" . $row['end_location'] . "</td>";
+                            echo "<td>" . $row['mission_status'] . "</td>";
+                            echo "</tr>";
+                        }
+                    } else {
+                        echo "<tr><td colspan='7'>No scheduled missions for today.</td></tr>";
+                    }
+                ?>
+            </table>
         </div>
-    </div>
+
+
 
     <div class="section">
         <h1>Help and Support</h1>
         <div>
-            <button class="action-button">FAQs</button>
+            <p>For any assistance or support, please contact our support team.</p>
             <button class="action-button">Contact Support</button>
-            <button class="action-button">User Guide</button>
+            
         </div>
     </div>
 
