@@ -268,22 +268,5 @@ else {
 
 </table>
 
-<!-- Maintenance Statistics -->
-<h2>Maintenance Statistics</h2>
-<table>
-    <tr>
-        <th>Total Maintenance Costs</th>
-        <td>$50,000</td>
-    </tr>
-    <tr>
-        <th>Average Maintenance Cost per Vehicle</th>
-        <td>$500</td>
-    </tr>
-    <tr>
-        <th>Maintenance Frequency</th>
-        <td>Every 3 months</td>
-    </tr>
-</table>
-
 </body>
 </html>
