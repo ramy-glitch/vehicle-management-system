@@ -18,7 +18,7 @@ create table vehicle (
     vehicle_location varchar(50) not null,
     vehicle_status varchar(50) not null,
 
-    constraint pk_vehicle_id primary key (vehicle_id)
+    primary key (vehicle_id)
 );
 
 create table vehicle_maintenance (
