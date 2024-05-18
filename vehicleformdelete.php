@@ -28,7 +28,7 @@ if (isset($_GET['id'])) {
         if ($currentStatus == 'in_service') {
             // Vehicle is in service, display message
             echo "<script>alert('Vehicle is currently in service and cannot be deleted.')</script>";
-        } else {
+        } elseif($currentStatus == 'out_of_service'|| $currentStatus == 'under_maintenance') {
             // Add a confirmation dialog before deleting the vehicle
             echo "<script>if (confirm('Are you sure you want to delete this vehicle?')) {";
 
