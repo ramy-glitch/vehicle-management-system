@@ -257,7 +257,7 @@ else {
         <h1>Help and Support</h1>
         <div>
             <p>For any assistance or support, please contact our support team.</p>
-            <button class="action-button">Contact Support</button>
+            <button class="action-button" onclick="window.location.href='adminReportsForm.php'">Contact Support</button>
             
         </div>
     </div>
