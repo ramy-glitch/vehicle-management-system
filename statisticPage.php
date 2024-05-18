@@ -114,6 +114,24 @@ else {
         <th>Vehicle Types</th>
         <td>Car: <?php echo $row['car']; ?> | Sedan: <?php echo $row2['sedan']; ?> | SUV: <?php echo $row3['suv']; ?> | Van: <?php echo $row4['van']; ?> | Bus: <?php echo $row5['bus']; ?> | Truck: <?php echo $row6['truck']; ?></td>
     </tr>
+    <tr>
+        <?php 
+            $sql = "SELECT COUNT(vehicle_id) AS electric FROM vehicle WHERE fuel_type like '%Electric%'";
+            $result = mysqli_query($link, $sql);
+            $row = mysqli_fetch_assoc($result);
+
+            $sql = "SELECT COUNT(vehicle_id) AS essence FROM vehicle WHERE fuel_type like '%essence%'";
+            $result = mysqli_query($link, $sql);
+            $row2 = mysqli_fetch_assoc($result);
+
+            $sql = "SELECT COUNT(vehicle_id) AS diesel FROM vehicle WHERE fuel_type like '%diesel%' or fuel_type like '%gasoil%' ";
+            $result = mysqli_query($link, $sql);
+            $row3 = mysqli_fetch_assoc($result);
+        ?>
+        <th>Vehicle Fuel Types</th>
+        <td>Electric: <?php echo $row['electric']; ?> | Essence: <?php echo $row2['essence']; ?> | Diesel: <?php echo $row3['diesel']; ?></td>
+    </tr>
+</table>
 
 <!-- Driver Statistics -->
 <h2>Driver Statistics</h2>
@@ -141,6 +159,19 @@ else {
         <th>Driver Status</th>
         <td>Active: <?php echo $row['active_drivers']; ?> | Inactive: <?php echo $row2['inactive_drivers']; ?></td>
     </tr>
+    <tr>
+        <?php
+            $sql = "SELECT AVG(YEAR(CURDATE()) - YEAR(STR_TO_DATE(driver_birthdate, '%Y-%m-%d'))) AS avg_driver_age
+            FROM driver";
+            $result = mysqli_query($link, $sql);
+            $row = mysqli_fetch_assoc($result);
+            $row['avg_driver_age'] = round($row['avg_driver_age']);
+        ?>
+
+            <th>Drivers Average Age:</th> 
+            <td><?php echo $row['avg_driver_age'].' years old'; ?></td>
+    </tr>
+</table>
 
 
 <!-- Mission Statistics -->
