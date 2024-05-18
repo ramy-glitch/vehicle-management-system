@@ -178,34 +178,94 @@ else {
 <h2>Mission Statistics</h2>
 <table>
     <tr>
+        <?php 
+            $sql = "SELECT COUNT(mission_id) AS total_missions FROM mission";
+            $result = mysqli_query($link, $sql);
+            $row = mysqli_fetch_assoc($result);
+        ?>
+
         <th>Total Number of Missions</th>
-        <td>200</td>
+        <td><?php echo $row['total_missions']; ?></td>
     </tr>
     <tr>
+        <?php 
+            $sql = "SELECT COUNT(mission_id) AS successful_missions FROM mission WHERE mission_status = 'completed'";
+            $result = mysqli_query($link, $sql);
+            $row = mysqli_fetch_assoc($result);
+
+            $sql = "SELECT COUNT(mission_id) AS failed_missions FROM mission WHERE mission_status = 'cancelled'";
+            $result = mysqli_query($link, $sql);
+            $row2 = mysqli_fetch_assoc($result);
+
+            $row['total_missions'] = $row['successful_missions'] + $row2['failed_missions'];
+            $average = ($row['successful_missions'] / $row['total_missions']) * 100;
+        ?>
+
+
         <th>Mission Success Rate</th>
-        <td>85%</td>
+        <td>Completed: <?php echo $row['successful_missions']; ?> | Cancelled: <?php echo $row2['failed_missions']; ?> | Average: <?php echo round($average).'%'; ?></td>
     </tr>
     <tr>
+        <?php 
+            $sql = "SELECT AVG(TIME_TO_SEC(TIMEDIFF(end_date_time, start_date_time)) / 3600) AS avg_duration
+            FROM mission";
+            $result = mysqli_query($link, $sql);
+            $row = mysqli_fetch_assoc($result);
+        ?>
         <th>Average Mission Duration</th>
-        <td>2 hours</td>
+        <td><?php echo round($row['avg_duration']).' hours'; ?></td>
     </tr>
 </table>
 
 <!-- Expense Statistics -->
-<h2>Expense Statistics</h2>
+<h2>Expense Statistics year <?php echo date("Y"); ?>:</h2>
 <table>
     <tr>
-        <th>Total Expenses</th>
-        <td>$150,000</td>
+        <?php 
+            $sql ="SELECT SUM(cost) AS total_expenses
+            FROM mission
+            WHERE YEAR(start_date_time) = YEAR(CURRENT_DATE)";
+            $result = mysqli_query($link, $sql);
+            $row = mysqli_fetch_assoc($result);
+        ?>
+            
+        <th>Total Missions Expenses:</th>
+        <td><?php echo $row['total_expenses'].'DA'; ?></td>
     </tr>
     <tr>
-        <th>Cost per Mile</th>
-        <td>$0.50 per mile</td>
+        <?php 
+            $sql ="SELECT SUM(cost) AS total_expenses
+            FROM vehicle_maintenance 
+            WHERE YEAR(maintenance_date) = YEAR(CURRENT_DATE)";
+            $result = mysqli_query($link, $sql);
+            $row = mysqli_fetch_assoc($result);
+        ?>
+        <th>Total Maintenance Expenses:</th>
+        <td><?php echo $row['total_expenses'].'DA'; ?></td>
     </tr>
     <tr>
-        <th>Cost per Mission</th>
-        <td>$750 per mission</td>
+        <?php 
+            $sql ="SELECT SUM(penality_cost) AS total_expenses
+            FROM penality_expense
+            WHERE YEAR(penality_date) = YEAR(CURRENT_DATE)";
+            $result = mysqli_query($link, $sql);
+            $row = mysqli_fetch_assoc($result);
+        ?>
+        <th>Total Penalties Expenses:</th>
+        <td><?php echo $row['total_expenses'].'DA'; ?></td>
     </tr>
+    <tr>
+        <?php 
+            $sql ="SELECT SUM(expense_cost) AS total_expenses
+            FROM vehicle_expense
+            WHERE YEAR(expense_date) = YEAR(CURRENT_DATE)";
+            $result = mysqli_query($link, $sql);
+            $row = mysqli_fetch_assoc($result);
+        ?>
+        <th>Total Vehicle Expenses:</th>
+        <td><?php echo $row['total_expenses'].'DA'; ?></td>
+    </tr>
+
 </table>
 
 <!-- Maintenance Statistics -->
