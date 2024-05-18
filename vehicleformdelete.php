@@ -1,6 +1,6 @@
 <?php
 
-die("<h1>The connection to the database has been removed for security reasons</h1>");
+die("<h1>The connection to the database has been removed Until the feature is completely developped</h1>");
 // Initialize variables
 $currentStatus = $vehicle = null;
 
