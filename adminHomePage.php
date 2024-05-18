@@ -75,7 +75,7 @@ else {
         ?>
 
         <p>Total Vehicles: <?php echo $totalVehicles; ?> | Total Drivers: <?php echo $totalDrivers; ?>  | Ongoing Missions: <?php echo $totalMissions; ?>  | scheduled Missions: <?php echo $totalScheduledMissions; ?> </p>
-    </div>
+    </div><br><br><br>
 
     <div class="section">
         <h2 style="color: blue;">Quick Access</h2>
@@ -86,7 +86,7 @@ else {
             <button class="action-button secondary" onclick="window.location.href='maintenanceList.php'">Manage Maintenance</button>
             <button class="action-button secondary" onclick="window.location.href='adminAccount.php'">Configure Settings</button>
         </div>
-    </div>
+    </div><br><br><br>
 
     <div class="section">
         <h2 style="color: blue;"> Today's Scheduled Missions:</h2>
@@ -137,7 +137,7 @@ else {
             </table>
         </div>
 
-    </div>
+    </div><br><br><br>
 
     <div class="section">
         <h2 style="color: blue;">Recent Missions:</h2>
@@ -176,7 +176,7 @@ else {
             </table>
         </div>
 
-    </div>
+    </div><br><br><br>
 
     <div class="section">
         <h2 style="color: blue;">Today's scheduled Maintenances:</h2>
@@ -213,7 +213,7 @@ else {
             </table>
         </div>
 
-    </div>
+    </div><br><br><br>
 
 
     <div class="section">
@@ -250,7 +250,7 @@ else {
         </div>
 
     
-    </div>
+    </div><br><br><br>
 
 
     <div class="section">
