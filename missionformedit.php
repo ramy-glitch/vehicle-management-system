@@ -298,7 +298,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <label for="status">Status:</label>
             <select id="status" name="status" required>
-                <option value="none" <?php if ($status == "none") echo "selected"; ?>>None</option>
+                <option value="none" <?php if ($status == "none") echo "selected"; ?>>Actual</option>
                 <option value="scheduled" <?php if($status == "scheduled") echo "selected"; ?>>Scheduled</option>
                 <option value="in_progress" <?php if($status == "in_progress") echo "selected"; ?>>In Progress</option>
                 <option value="completed" <?php if($status == "completed") echo "selected"; ?>>Completed</option>

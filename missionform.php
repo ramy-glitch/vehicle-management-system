@@ -70,7 +70,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $errorMessages["status"] = "Please select a valid status.";
     }
     
-    date_default_timezone_set('Africa/Algiers');
+    /*date_default_timezone_set('Africa/Algiers');
     if($status == "completed" && $end_datetime > date("Y-m-d\TH:i")){
         $errorMessages["status"] = "Mission cannot be completed before the end date and time.";
     }
@@ -85,7 +85,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if($status == "scheduled" && $start_datetime < date("Y-m-d\TH:i")){
         $errorMessages["status"] = "Mission cannot be scheduled after the start date and time.";
-    }
+    }*/
 
     // Process form data if no validation errors
     if (empty($errorMessages)) {
