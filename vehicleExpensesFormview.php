@@ -90,3 +90,4 @@ $veId = $ve = null;
 </html>
 
 
+<?php mysqli_close($link); ?>

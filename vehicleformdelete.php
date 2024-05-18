@@ -46,8 +46,7 @@ if (isset($_GET['id'])) {
         echo "<script>alert('Vehicle not found.')</script>";
     }
 
-    // Close database connection
-    mysqli_close($link);
+
 
     // Display "Go Back" button within HTML structure
     echo '<html>';
@@ -59,5 +58,9 @@ if (isset($_GET['id'])) {
     echo '<p><a href="vehiclesList.php"><button>Go Back to Vehicle List</button></a></p>';
     echo '</body>';
     echo '</html>';
+
+
 }
+    // Close database connection
+    mysqli_close($link);
 ?>
