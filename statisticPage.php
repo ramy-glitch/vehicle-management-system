@@ -53,41 +53,95 @@ else {
 
 <!-- Vehicle Statistics -->
 <h2>Vehicle Statistics</h2>
+    
 <table>
     <tr>
+        <?php 
+            $sql = "SELECT COUNT(vehicle_id) AS total_vehicles FROM vehicle";
+            $result = mysqli_query($link, $sql);
+            $row = mysqli_fetch_assoc($result);
+        ?>
+        
         <th>Total Number of Vehicles</th>
-        <td>100</td>
+        <td><?php echo $row['total_vehicles']; ?></td>
     </tr>
     <tr>
-        <th>Vehicle Utilization</th>
-        <td>75%</td>
+
+        <?php 
+            $sql = "SELECT COUNT(vehicle_id) AS active_vehicles FROM vehicle WHERE vehicle_status = 'in_service'";
+            $result = mysqli_query($link, $sql);
+            $row = mysqli_fetch_assoc($result);
+
+            $sql = "SELECT COUNT(vehicle_id) AS inactive_vehicles FROM vehicle WHERE vehicle_status = 'out_of_service'";
+            $result = mysqli_query($link, $sql);
+            $row2 = mysqli_fetch_assoc($result);
+
+            $sql = "SELECT COUNT(vehicle_id) AS maintenance_vehicles FROM vehicle WHERE vehicle_status = 'under_maintenance'";
+            $result = mysqli_query($link, $sql);
+            $row3 = mysqli_fetch_assoc($result);
+        ?>
+        <th>Vehicle Status</th>
+        <td>Active: <?php echo $row['active_vehicles']; ?> | Inactive: <?php echo $row2['inactive_vehicles']; ?> | Under Maintenance: <?php echo $row3['maintenance_vehicles']; ?></td>
     </tr>
     <tr>
-        <th>Fuel Efficiency</th>
-        <td>20 miles per gallon</td>
+
+        <?php 
+            $sql = "SELECT COUNT(vehicle_id) AS car FROM vehicle WHERE vehicle_type like '%Car%'";
+            $result = mysqli_query($link, $sql);
+            $row = mysqli_fetch_assoc($result);
+
+            $sql = "SELECT COUNT(vehicle_id) AS sedan FROM vehicle WHERE vehicle_type like '%Sedan%'";
+            $result = mysqli_query($link, $sql);
+            $row2 = mysqli_fetch_assoc($result);
+
+            $sql = "SELECT COUNT(vehicle_id) AS suv FROM vehicle WHERE vehicle_type like '%SUV%'";
+            $result = mysqli_query($link, $sql);
+            $row3 = mysqli_fetch_assoc($result);
+
+            $sql = "SELECT COUNT(vehicle_id) AS van FROM vehicle WHERE vehicle_type like '%Van%'";
+            $result = mysqli_query($link, $sql);
+            $row4 = mysqli_fetch_assoc($result);
+
+            $sql = "SELECT COUNT(vehicle_id) AS bus FROM vehicle WHERE vehicle_type like '%Bus%'";
+            $result = mysqli_query($link, $sql);
+            $row5 = mysqli_fetch_assoc($result);
+
+            $sql = "SELECT COUNT(vehicle_id) AS truck FROM vehicle WHERE vehicle_type like '%Truck%'";
+            $result = mysqli_query($link, $sql);
+            $row6 = mysqli_fetch_assoc($result);
+        ?>
+        
+        <th>Vehicle Types</th>
+        <td>Car: <?php echo $row['car']; ?> | Sedan: <?php echo $row2['sedan']; ?> | SUV: <?php echo $row3['suv']; ?> | Van: <?php echo $row4['van']; ?> | Bus: <?php echo $row5['bus']; ?> | Truck: <?php echo $row6['truck']; ?></td>
     </tr>
-    <tr>
-        <th>Maintenance Costs</th>
-        <td>Total: $50,000 | Average per Vehicle: $500</td>
-    </tr>
-</table>
 
 <!-- Driver Statistics -->
 <h2>Driver Statistics</h2>
+
 <table>
     <tr>
+        <?php 
+            $sql = "SELECT COUNT(driver_id) AS total_drivers FROM driver";
+            $result = mysqli_query($link, $sql);
+            $row = mysqli_fetch_assoc($result);
+        ?>
         <th>Total Number of Drivers</th>
-        <td>50</td>
+        <td><?php echo $row['total_drivers']; ?></td>
     </tr>
     <tr>
-        <th>Driver Performance</th>
-        <td>Completed Missions: 500 | Adherence to Schedules: 90%</td>
+        <?php 
+            $sql = "SELECT COUNT(driver_id) AS active_drivers FROM driver WHERE driver_status = 'active'";
+            $result = mysqli_query($link, $sql);
+            $row = mysqli_fetch_assoc($result);
+
+            $sql = "SELECT COUNT(driver_id) AS inactive_drivers FROM driver WHERE driver_status = 'inactive'";
+            $result = mysqli_query($link, $sql);
+            $row2 = mysqli_fetch_assoc($result);
+        ?>
+        <th>Driver Status</th>
+        <td>Active: <?php echo $row['active_drivers']; ?> | Inactive: <?php echo $row2['inactive_drivers']; ?></td>
     </tr>
-    <tr>
-        <th>Driver Safety</th>
-        <td>Traffic Violations: 20 | Accidents: 5</td>
-    </tr>
-</table>
+
 
 <!-- Mission Statistics -->
 <h2>Mission Statistics</h2>
