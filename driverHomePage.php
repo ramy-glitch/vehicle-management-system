@@ -101,7 +101,7 @@ else {
     <div class="section">
         <h1>My Current Mission</h1>
         <div>
-            <p>Status: <?php echo $row['mission_status']; ?></p>
+            <p>Status: <?php if($result->num_rows > 0){ echo $row['mission_status'];} else{echo "no mission assigned";} ?></p>
         </div>
     </div>
 
