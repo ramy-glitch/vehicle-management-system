@@ -25,7 +25,7 @@
             
 
                 // SQL query to retrieve vehicle data by ID
-                $sql = "SELECT * FROM vehicle inner join mission on vehicle.vehicle_id = mission.vehicle_id  inner join driver on mission.driver_id = driver.driver_id where driver.driver_id = ?";
+                $sql = "SELECT * FROM vehicle inner join mission on vehicle.vehicle_id = mission.vehicle_id  inner join driver on mission.driver_id = driver.driver_id where driver.driver_id = ? and mission_status = 'in progress'";
                 $stmt = mysqli_prepare($link, $sql);
                 $stmt->bind_param("i", $_SESSION['driver_id']);
                 $stmt->execute();
