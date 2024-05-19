@@ -22,14 +22,27 @@
                 die("File not found");
             }
 
-            
+            // Check if the user is logged in
 
-                // SQL query to retrieve vehicle data by ID
-                $sql = "SELECT * FROM vehicle inner join mission on vehicle.vehicle_id = mission.vehicle_id  inner join driver on mission.driver_id = driver.driver_id where driver.driver_id = ? and mission_status = 'in progress'";
-                $stmt = mysqli_prepare($link, $sql);
-                $stmt->bind_param("i", $_SESSION['driver_id']);
-                $stmt->execute();
-                $result = $stmt->get_result();
+            if(!isset($_SESSION['driver_id'])) {
+
+                $vehicleId = $vehicle = null;
+                // Retrieve vehicle ID from URL parameter
+                            if (isset($_GET['id'])) {
+                                $vehicleId = $_GET['id'];
+
+
+                                
+                                $sql = "SELECT * FROM vehicle WHERE vehicle_id = ?";
+                                $stmt = mysqli_prepare($link, $sql);
+                                $stmt->bind_param("i", $vehicleId);
+                                $stmt->execute();
+                                $result = $stmt->get_result();
+                                $stmt->close();
+                            }
+                        }
+
+            
 
                 // Display vehicle information
                 if ($result->num_rows > 0) {
