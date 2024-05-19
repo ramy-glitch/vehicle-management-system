@@ -22,27 +22,27 @@
                 die("File not found");
             }
 
-            // Check if the user is logged in
+            $result = null;
 
-            if(!isset($_SESSION['driver_id'])) {
+            if(isset($_SESSION['driver_id'])) {
 
                 $vehicleId = $vehicle = null;
-                // Retrieve vehicle ID from URL parameter
-                            if (isset($_GET['id'])) {
-                                $vehicleId = $_GET['id'];
+                
+                if (isset($_GET['id'])) {
+                    $vehicleId = $_GET['id'];
 
 
-                                
-                                $sql = "SELECT * FROM vehicle WHERE vehicle_id = ?";
-                                $stmt = mysqli_prepare($link, $sql);
-                                $stmt->bind_param("i", $vehicleId);
-                                $stmt->execute();
-                                $result = $stmt->get_result();
-                                $stmt->close();
-                            }
-                        }
+                                        
+                    $sql = "SELECT * FROM vehicle WHERE vehicle_id = ?";
+                    $stmt = mysqli_prepare($link, $sql);
+                    $stmt->bind_param("i", $vehicleId);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
+                    $stmt->close();
+                }
+                        
 
-            
+            }
 
                 // Display vehicle information
                 if ($result->num_rows > 0) {
