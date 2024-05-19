@@ -42,7 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 WHERE 
                     m.mission_status = 'in_progress' 
             ) AS v ON d.driver_id = v.driver_id
-            WHERE d.driver_name LIKE '%$search%' OR d.driver_phone LIKE '%$search%' OR d.driver_status LIKE '%$search%' OR v.vehicle_license_plate LIKE '%$search%' OR d.driver_license_number LIKE '%$search%'";
+            WHERE d.driver_name LIKE '%$search%' OR d.driver_phone LIKE '%$search%' OR d.driver_status LIKE '$search%' OR v.vehicle_license_plate LIKE '%$search%' OR d.driver_license_number LIKE '%$search%'";
 
 
     
