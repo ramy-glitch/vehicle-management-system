@@ -1,66 +1,84 @@
+
 <?php
-
-die("<h1>The connection to the database has been removed Until the feature is completely developped</h1>");
-// Initialize variables
-$currentStatus = $vehicle = null;
-
-// Retrieve vehicle ID from URL parameter
-if (isset($_GET['id'])) {
-    $vehicleId = $_GET['id'];
-
-    // Check vehicle status
-    $sql = "SELECT vehicle_status FROM vehicle WHERE vehicle_id = ?";
-    $stmt = mysqli_prepare($link, $sql);
-    mysqli_stmt_bind_param($stmt, "i", $vehicleId);
-    mysqli_stmt_execute($stmt);
-    $result = mysqli_stmt_get_result($stmt);
-
-    if ($result && mysqli_num_rows($result) > 0) {
-        $row = mysqli_fetch_assoc($result);
-        $currentStatus = $row['vehicle_status'];
-
-        // Check vehicle status and perform actions accordingly
-        if ($currentStatus == 'in_service') {
-            // Vehicle is in service, display message
-            echo "<script>alert('Vehicle is currently in service and cannot be deleted.')</script>";
-        } elseif($currentStatus == 'out_of_service'|| $currentStatus == 'under_maintenance') {
-            // Add a confirmation dialog before deleting the vehicle
-            echo "<script>if (confirm('Are you sure you want to delete this vehicle?')) {";
-
-            // Vehicle can be deleted
-            $deleteSql = "DELETE FROM vehicle WHERE vehicle_id = ?";
-            $deleteStmt = mysqli_prepare($link, $deleteSql);
-            mysqli_stmt_bind_param($deleteStmt, "i", $vehicleId);
-            if (mysqli_stmt_execute($deleteStmt)) {
-                echo "alert('Vehicle deleted successfully.');";
-            } else {
-                echo "alert('Failed to delete vehicle.');";
-            }
-
-            echo "} else {";
-            echo "alert('Vehicle deletion cancelled.');";
-            echo "}</script>";
-        }
-    } else {
-        // Vehicle not found
-        echo "<script>alert('Vehicle not found.')</script>";
-    }
-
-
-
-    // Display "Go Back" button within HTML structure
-    echo '<html>';
-    echo '<head>';
-    echo '<title>Vehicle Deletion Result</title>';
-    echo '</head>';
-    echo '<body>';
-    echo '<h2>Vehicle Deletion Result</h2>';
-    echo '<p><a href="vehiclesList.php"><button>Go Back to Vehicle List</button></a></p>';
-    echo '</body>';
-    echo '</html>';
-
-
+if (file_exists('dblink.php')) 
+{
+	require 'dblink.php';
 }
-    // Close database connection
-    mysqli_close($link);
+else {
+	die("File not found");
+}
+
+
+    
+$Id = null; $errorMessages = [];
+
+            if (isset($_GET['id'])) {
+                $Id = $_GET['id'];
+            }
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete This Vehicle</title>
+    <link rel="stylesheet" href="form.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Delete This Vehicle</h2>
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"])."?id=".$Id; ?>" method="post">
+
+            <label>Are you sure you want to delete this record ?</label>
+
+            <input type="submit" value="Delete" name="delete_btn">
+            <input type="button" value="Cancel" onclick="window.location.href='vehiclesList.php'">
+        </form>
+        <?php
+
+            if (isset($_POST['delete_btn']) ){
+                
+                $sql = "SELECT vehicle_status from vehicle WHERE vehicle_id = $Id";
+                $stmt = mysqli_query($link, $sql);
+                $row = mysqli_fetch_assoc($stmt);
+                $status = $row['vehicle_status'];
+                if($status == 'out_of_service'){
+
+                    $sql = "DELETE FROM vehicle_expense WHERE vehicle_id = $Id";
+                    $stmt = mysqli_query($link, $sql);
+
+                    $sql = "DELETE FROM vehicle_maintenance WHERE vehicle_id = $Id";
+                    $stmt = mysqli_query($link, $sql);
+
+                    $sql = "DELETE FROM mission WHERE vehicle_id = $Id";
+                    $stmt = mysqli_query($link, $sql);
+
+                    $sql ="DELETE FROM vehicle WHERE vehicle_id = $Id";
+                    $stmt = mysqli_query($link, $sql);
+                    
+                    mysqli_close($link);
+                    header("Location: vehiclesList.php");
+                    exit;
+                }else{
+                        $errorMessages["no_delete"] = "You can only delete inactive drivers";
+                }  
+                
+            }
+        ?>
+
+            <?php if(isset($errorMessages["no_delete"])) { ?>
+                    <p style="color: red;"><?php echo $errorMessages["no_delete"]; ?></p>
+            <?php } ?>
+
+
+    </div>
+</body>
+</html>
+
+
+
+
+
+
+
