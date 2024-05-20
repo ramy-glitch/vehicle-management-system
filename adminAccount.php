@@ -1,5 +1,12 @@
 <?php
+
+// Start a session
 session_start();
+if (!isset($_SESSION['adminid'])) {
+
+    header("Location: loginpage.php");
+    exit;
+}
 
 // Check if the database connection file exists
 if (file_exists('dblink.php')) {
@@ -88,7 +95,7 @@ if (file_exists('dblink.php')) {
 if (isset($_POST['logout_btn'])) {
     // Redirect to index.html upon logout
     header("Location: index.html");
-    // Destroy session data
+    // Unset aand Destroy session data
     session_unset();
     session_destroy();
     exit();

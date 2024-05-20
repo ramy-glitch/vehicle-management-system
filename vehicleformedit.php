@@ -1,5 +1,12 @@
 <?php
 
+session_start();
+if (!isset($_SESSION['adminid'])) {
+
+    header("Location: loginpage.php");
+    exit;
+}
+
 if (file_exists('dblink.php')) 
 {
 	require 'dblink.php';

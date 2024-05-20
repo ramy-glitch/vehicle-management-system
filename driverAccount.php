@@ -1,5 +1,10 @@
 <?php
 session_start();
+if (!isset($_SESSION['driver_id'])) {
+
+    header("Location: loginpage.php");
+    exit;
+}
 
 // Check if the database connection file exists
 if (file_exists('dblink.php')) {

@@ -17,7 +17,7 @@ if (isset($_POST["username"]) && isset($_POST["password"]) && !empty($_POST["use
 
     if (isset($_POST["sbt"])) {
         // Prepare and execute query for admin login
-        $query = "SELECT username, adminpwd FROM adminlist WHERE username = '$username'";
+        $query = "SELECT adminid,username, adminpwd FROM adminlist WHERE username = '$username'";
         $result = mysqli_query($link, $query);
 
         if (mysqli_num_rows($result) > 0) {
@@ -26,6 +26,7 @@ if (isset($_POST["username"]) && isset($_POST["password"]) && !empty($_POST["use
 
             if (password_verify($password, $hash)) {
                 // Set session variable for admin
+                $_SESSION['adminid'] = $row['adminid'];
                 $_SESSION['admin_username'] = $row['username'];
                 header("Location: adminHomePage.php"); // Redirect to the admin's page
                 exit;
