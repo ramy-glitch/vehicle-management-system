@@ -197,8 +197,11 @@ else {
             $result = mysqli_query($link, $sql);
             $row2 = mysqli_fetch_assoc($result);
 
+            
             $row['total_missions'] = $row['successful_missions'] + $row2['failed_missions'];
-            $average = ($row['successful_missions'] / $row['total_missions']) * 100;
+            $average = 0;
+            if($row['total_missions'] != 0){
+            $average = ($row['successful_missions'] / $row['total_missions']) * 100;}
         ?>
 
 
