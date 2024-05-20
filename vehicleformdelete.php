@@ -56,12 +56,12 @@ $Id = null; $errorMessages = [];
 
                     $sql ="DELETE FROM vehicle WHERE vehicle_id = $Id";
                     $stmt = mysqli_query($link, $sql);
-                    
+
                     mysqli_close($link);
                     header("Location: vehiclesList.php");
                     exit;
                 }else{
-                        $errorMessages["no_delete"] = "You can only delete inactive drivers";
+                        $errorMessages["no_delete"] = "You can only delete out of service vehicles";
                 }  
                 
             }
