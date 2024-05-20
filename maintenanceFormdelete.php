@@ -45,10 +45,14 @@ $Id = null;
 <?php
 
     if (isset($_POST['delete_btn']) ){
-
+        
+        $sql = "UPDATE vehicle SET vehicle_status = 'out_of_service' WHERE vehicle_id in (SELECT vehicle_id FROM vehicle_maintenance WHERE maintenance_id = $Id)";
+        $stmt = mysqli_query($link, $sql);
 
         $sql = "DELETE FROM vehicle_maintenance WHERE maintenance_id = $Id";
         $stmt = mysqli_query($link, $sql);
+
+
 
         mysqli_close($link);
         header("Location: maintenanceList.php");
