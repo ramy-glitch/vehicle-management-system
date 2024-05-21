@@ -41,7 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $errorMessages["vehicle_type"] = "Please enter the type of vehicle.";
     }
 
-    $pattern = '~^\d{5,6}-[1-9]\d{2}-([1-4][0-9]|5[0-8])$~';
+    $pattern = '~^\d{5,6}-[1-9]\d{2}-(0[1-9]|[1-4][0-9]|5[0-8])$~';
 
     if (!preg_match($pattern, $license_plate)) {                                     // Matches 123456-123-58 or 12345-123-58
         $errorMessages["license_plate"] = "Please enter the license plate number.";
