@@ -124,10 +124,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (empty($username)) {
         $username = $driver['username'];
+    }else{
+    $sql = "SELECT * FROM driver WHERE username = ?";
+    $stmt = mysqli_prepare($link, $sql);
+    mysqli_stmt_bind_param($stmt, "s", $username);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+        if ($row) {
+            $errorMessages["username"] = "Username already exists.";
+        }
     }
 
     if (empty($password)) {
-        $password = $driver['pwd'];
+        $errorMessages["password"] = "Please enter a password.";
     }elseif (strlen($password) < 8) {
         $errorMessages["password"] = "Password must be at least 8 characters long.";
     }else{

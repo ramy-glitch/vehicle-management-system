@@ -94,8 +94,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $errorMessages["address"] = "Please enter a valid address.";
     }
 
+
     if (empty($username)) {
         $errorMessages["username"] = "Please enter a valid username.";
+    }
+
+    $sql = "SELECT * FROM driver WHERE username = ?";
+    $stmt = mysqli_prepare($link, $sql);
+    mysqli_stmt_bind_param($stmt, "s", $username);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+    if ($row) {
+        $errorMessages["username"] = "Username already exists.";
     }
 
     if (empty($password)) {
