@@ -72,24 +72,24 @@ $veId = $ve = null;
 
 
                             // Output the option with the appropriate value and selected attribute
-                            echo '<input type="text" value="'  . $vehicleType . ' ' . $vehicleModel . ' ' . $vehicle_pln . '">';
+                            echo '<input type="text" value="'  . $vehicleType . ' ' . $vehicleModel . ' ' . $vehicle_pln . '" readonly>';
                         }
                     }
                     ?>
             
             <!-- Type of Expense -->
             <label for="type_of_expense">Type of Expense:</label>
-            <input type="text" id="type_of_expense" name="type_of_expense" value="<?php echo htmlspecialchars($ve['expense_type']); ?>">
+            <input type="text" id="type_of_expense" name="type_of_expense" value="<?php echo htmlspecialchars($ve['expense_type']); ?>" readonly>
 
             
             <!-- Date of Expense -->
             <label for="fee_date">Date:</label>
-            <input type="text" id="fee_date" name="fee_date" value="<?php echo htmlspecialchars($ve['expense_date']); ?>" >
+            <input type="text" id="fee_date" name="fee_date" value="<?php echo htmlspecialchars($ve['expense_date']); ?>" readonly>
 
             
             <!-- Amount -->
             <label for="amount">Amount:</label>
-            <input type="text" id="amount" name="amount" value="<?php echo htmlspecialchars($ve['expense_cost']); ?>" >
+            <input type="text" id="amount" name="amount" value="<?php echo htmlspecialchars($ve['expense_cost']); ?>" readonly>
 
             <input type="button" value="Back" onclick="window.location.href='vehicleExpensesList.php'">
         </form>

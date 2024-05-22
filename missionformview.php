@@ -102,27 +102,27 @@ $missionId = $mission = null;
 
 
             <label for="start_datetime">Start Date and Time:</label>
-            <input type="text" id="start_datetime" name="start_datetime" value="<?php echo htmlspecialchars($mission['start_date_time']); ?>">
+            <input type="text" id="start_datetime" name="start_datetime" value="<?php echo htmlspecialchars($mission['start_date_time']); ?>" readonly>
 
             <label for="end_datetime">End Date and Time:</label>
-            <input type="text" id="end_datetime" name="end_datetime" value="<?php echo htmlspecialchars($mission['end_date_time']); ?>" >
+            <input type="text" id="end_datetime" name="end_datetime" value="<?php echo htmlspecialchars($mission['end_date_time']); ?>" readonly >
 
             <label for="origin">Origin Location:</label>
-            <input type="text" id="origin" name="origin" value="<?php echo htmlspecialchars($mission['start_location']); ?>" >
+            <input type="text" id="origin" name="origin" value="<?php echo htmlspecialchars($mission['start_location']); ?>" readonly>
             
 
             <label for="destination">Destination Location:</label>
-            <input type="text" id="destination" name="destination" value="<?php echo htmlspecialchars($mission['end_location']); ?>">
+            <input type="text" id="destination" name="destination" value="<?php echo htmlspecialchars($mission['end_location']); ?>" readonly>
 
             <label for="purpose">Purpose:</label>
-            <textarea id="purpose" name="purpose" rows="4" cols="50" ><?php echo htmlspecialchars($mission['purpose']); ?></textarea>
+            <textarea id="purpose" name="purpose" rows="4" cols="50" readonly ><?php echo htmlspecialchars($mission['purpose']); ?></textarea>
 
 
             <label for="status">Status:</label>
-            <input type="text" id="status" name="status" value="<?php echo htmlspecialchars($mission['mission_status']); ?>">
+            <input type="text" id="status" name="status" value="<?php echo htmlspecialchars($mission['mission_status']); ?>" readonly>
 
             <label for="cost">Cost:</label>
-            <input type="number" id="cost" name="cost" value="<?php echo htmlspecialchars($mission['cost']); ?>">
+            <input type="text" id="cost" name="cost" value="<?php echo htmlspecialchars($mission['cost']); ?>" readonly>
 
 
             <input type="button" value="Back" onclick="window.location.href='missionList.php'">

@@ -82,37 +82,37 @@ else {
             
             <!-- Date of Maintenance -->
             <label for="date_of_maintenance">Date of Maintenance:</label>
-            <input type="text" id="date_of_maintenance" name="date_of_maintenance" value="<?php echo htmlspecialchars($maintenance['maintenance_date']); ?>" >
+            <input type="text" id="date_of_maintenance" name="date_of_maintenance" value="<?php echo htmlspecialchars($maintenance['maintenance_date']); ?>" readonly>
             
             <!-- Type of Maintenance -->
             <label for="maintenance_type">Type of Maintenance:</label>
-            <input type="text" id="maintenance_type" name="maintenance_type" value="<?php echo htmlspecialchars($maintenance['maintenance_type']); ?>">
+            <input type="text" id="maintenance_type" name="maintenance_type" value="<?php echo htmlspecialchars($maintenance['maintenance_type']); ?>" readonly>
 
             
             <!-- Details of Maintenance -->
             <label for="maintenance_details">Details of Maintenance:</label>
-            <textarea id="maintenance_details" name="maintenance_details" rows="4" ><?php echo htmlspecialchars($maintenance['maintenance_description']); ?></textarea>
+            <textarea id="maintenance_details" name="maintenance_details" rows="4" readonly ><?php echo htmlspecialchars($maintenance['maintenance_description']); ?></textarea>
 
             <!-- Workshop Name -->
             <label for="workshop_name">Workshop Name:</label>
-            <input type="text" id="workshop_name" name="workshop_name" value="<?php echo htmlspecialchars($maintenance['workshop_name']); ?>">
+            <input type="text" id="workshop_name" name="workshop_name" value="<?php echo htmlspecialchars($maintenance['workshop_name']); ?>" readonly>
 
 
             <!-- Workshop Phone -->
             <label for="workshop_phone">Workshop Phone:</label>
-            <input type="tel" id="workshop_phone" name="workshop_phone" value="<?php echo htmlspecialchars($maintenance['workshop_phone']); ?>" >
+            <input type="text" id="workshop_phone" name="workshop_phone" value="<?php echo htmlspecialchars($maintenance['workshop_phone']); ?>" readonly >
 
             <!-- Cost -->
             <label for="cost">Cost (Da):</label>
-            <input type="number" id="cost" name="cost" value="<?php echo htmlspecialchars($maintenance['cost']); ?>" >
+            <input type="text" id="cost" name="cost" value="<?php echo htmlspecialchars($maintenance['cost']); ?>" readonly>
 
             <!-- Status -->
             <label for="status">Status:</label>
-            <input type="text" id="status" name="status" value="<?php echo htmlspecialchars($maintenance['maintenance_status']); ?>">
+            <input type="text" id="status" name="status" value="<?php echo htmlspecialchars($maintenance['maintenance_status']); ?>" readonly>
 
             <!-- Next Maintenance Date -->
             <label for="next_maintenance_date">Next Scheduled Maintenance:</label>
-            <input type="text" id="next_maintenance_date" name="next_maintenance_date" value="<?php echo htmlspecialchars($maintenance['next_maintenance_date']); ?>">
+            <input type="text" id="next_maintenance_date" name="next_maintenance_date" value="<?php echo htmlspecialchars($maintenance['next_maintenance_date']); ?>" readonly>
 
 
 

@@ -58,48 +58,43 @@ $driverId = $driver = null;
 ?>
 
             <label for="license_number">Driver’s License Number:</label>
-            <input type="text" id="license_number" name="license_number" value="<?php echo htmlspecialchars($driver['driver_license_number']); ?>" >
+            <input type="text" id="license_number" name="license_number" value="<?php echo htmlspecialchars($driver['driver_license_number']); ?>" readonly>
             
             
             <label for="full_name">Full Name:</label>
-            <input type="text" id="full_name" name="full_name" value="<?php echo htmlspecialchars($driver['driver_name']); ?>" >
+            <input type="text" id="full_name" name="full_name" value="<?php echo htmlspecialchars($driver['driver_name']); ?>" readonly >
             
             
             <label for="date_of_birth">Date of Birth:</label>
-            <input type="text" id="date_of_birth" name="date_of_birth" value="<?php echo htmlspecialchars($driver['driver_birthdate']); ?>" /> >
+            <input type="text" id="date_of_birth" name="date_of_birth" value="<?php echo htmlspecialchars($driver['driver_birthdate']); ?>" readonly/> 
 
 
             <label for="phone_number">Phone Number:</label>
-            <input type="tel" id="phone_number" name="phone_number" value="<?php echo htmlspecialchars($driver['driver_phone']); ?>">
+            <input type="text" id="phone_number" name="phone_number" value="<?php echo htmlspecialchars($driver['driver_phone']); ?>" readonly>
 
 
             <label for="address">Address:</label>
-            <textarea id="address" name="address" rows="4" cols="50" ><?php echo htmlspecialchars($driver['driver_address']); ?></textarea>
+            <textarea id="address" name="address" rows="4" cols="50" readonly ><?php echo htmlspecialchars($driver['driver_address']); ?></textarea>
 
 
             
             <label for="username">Username:</label>
-            <input type="text" id="username" name="username" value="<?php echo htmlspecialchars($driver['username']); ?>" >
-
-
-            
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" value="<?php echo htmlspecialchars($driver['pwd']); ?>" >
+            <input type="text" id="username" name="username" value="<?php echo htmlspecialchars($driver['username']); ?>" readonly >
 
 
             
             <label for="employment_date">Employment Date:</label>
-            <input type="text" id="employment_date" name="employment_date" value="<?php echo htmlspecialchars($driver['employment_date']); ?>" >
+            <input type="text" id="employment_date" name="employment_date" value="<?php echo htmlspecialchars($driver['employment_date']); ?>" readonly >
 
 
             
             <label for="monthly_salary">Monthly Salary (Da):</label>
-            <input type="number" id="monthly_salary" name="monthly_salary" value="<?php echo htmlspecialchars($driver['monthly_salary']); ?>">
+            <input type="text" id="monthly_salary" name="monthly_salary" value="<?php echo htmlspecialchars($driver['monthly_salary']); ?>" readonly>
 
 
             
             <label for="driving_history">Driving History:</label>
-            <textarea id="driving_history" name="driving_history" rows="4" cols="50" ><?php echo htmlspecialchars($driver['driver_history']); ?></textarea>
+            <textarea id="driving_history" name="driving_history" rows="4" cols="50" readonly ><?php echo htmlspecialchars($driver['driver_history']); ?></textarea>
 
 
             

@@ -51,15 +51,15 @@ $reportId = $report = null;
         <h2>Driver Report Form</h2>
         <form>
             <label for="report_title">Report Title:</label>
-            <input type="text" id="report_title" name="report_title" value="<?php echo htmlspecialchars($report['report_issue']); ?>" >
+            <input type="text" id="report_title" name="report_title" value="<?php echo htmlspecialchars($report['report_issue']); ?>" readonly >
 
 
             <label for="report_content">Report Content:</label>
-            <textarea id="report_content" name="report_content" rows="6" ><?php echo htmlspecialchars($report['report_description']); ?></textarea>
+            <textarea id="report_content" name="report_content" rows="6" readonly ><?php echo htmlspecialchars($report['report_description']); ?></textarea>
 
 
             <label for="report_date">Report Date:</label>
-            <input type="text" id="report_date" name="report_date" value="<?php echo htmlspecialchars($report['report_date']); ?>" >
+            <input type="text" id="report_date" name="report_date" value="<?php echo htmlspecialchars($report['report_date']); ?>" readonly >
 
             <input type="button" value="Back" onclick="window.location.href='ddriverReports.php'">
         </form>

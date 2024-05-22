@@ -120,7 +120,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     date_default_timezone_set('Africa/Algiers');
     /*if($status == "completed" && $end_datetime > date("Y-m-d\TH:i")){
         $errorMessages["status"] = "Mission cannot be completed before the end date and time.";
-    }*/
+    }
 
     if($status == "cancelled" && $end_datetime < date("Y-m-d\TH:i")){
         $errorMessages["status"] = "Mission cannot be cancelled after the end date and time.";
@@ -132,7 +132,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if($status == "scheduled" && $start_datetime < date("Y-m-d\TH:i")){
         $errorMessages["status"] = "Mission cannot be scheduled after the start date and time.";
-    }
+    }*/
 
     }
 

@@ -243,7 +243,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             
             <label for="date_of_birth">Date of Birth:</label>
-            <input type="date" id="date_of_birth" name="date_of_birth" value="<?php echo htmlspecialchars($date_of_birth); ?>" placeholder="<?php echo htmlspecialchars($driver['driver_birthdate']); ?>" /> >
+            <input type="date" id="date_of_birth" name="date_of_birth" value="<?php echo htmlspecialchars($date_of_birth); ?>" placeholder="<?php echo htmlspecialchars($driver['driver_birthdate']); ?>" /> 
             
             <?php if(isset($errorMessages["date_of_birth"])) { ?>
                 <p style="color: red;"><?php echo $errorMessages["date_of_birth"]; ?></p>

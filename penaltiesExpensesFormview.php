@@ -67,7 +67,7 @@ $penaltyId = $penalty = null;
                             $driverPhone = htmlspecialchars($row["driver_phone"]);
 
                             // Output the option with the appropriate value and selected attribute
-                            echo '<input type="text" value="' . $driverName . ' - ' . $driverPhone . '">';
+                            echo '<input type="text" value="' . $driverName . ' - ' . $driverPhone . '" readonly >';
                         }
                     }
                     ?>
@@ -76,16 +76,16 @@ $penaltyId = $penalty = null;
             
             <!-- Penalty Type -->
             <label for="penalty_type">Penalty Type:</label>
-            <input type="text" id="penalty_type" name="penalty_type" value="<?php echo htmlspecialchars($penalty['penality_type']); ?>" >
+            <input type="text" id="penalty_type" name="penalty_type" value="<?php echo htmlspecialchars($penalty['penality_type']); ?>"  readonly>
 
             
             <!-- Penalty Date -->
             <label for="penalty_date">Penalty Date:</label>
-            <input type="text" id="penalty_date" name="penalty_date" value="<?php echo htmlspecialchars($penalty['penality_date']); ?>" >
+            <input type="text" id="penalty_date" name="penalty_date" value="<?php echo htmlspecialchars($penalty['penality_date']); ?>" readonly >
             
             <!-- Penalty Amount -->
             <label for="penalty_amount">Penalty Amount:</label>
-            <input type="text" id="penalty_amount" name="penalty_amount" value="<?php echo htmlspecialchars($penalty['penality_cost']); ?>" >
+            <input type="text" id="penalty_amount" name="penalty_amount" value="<?php echo htmlspecialchars($penalty['penality_cost']); ?>" readonly >
 
             <input type="button" value="Back" onclick="window.location.href='penaltiesExpensestList.php'">
         </form>
