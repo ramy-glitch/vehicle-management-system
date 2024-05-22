@@ -55,6 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $errorMessages["end_datetime"] = "Please enter a valid end date and time.";
     }
 
+
     if (empty($origin) || !preg_match("/^[a-zA-Z]+(?:[ ]*[a-zA-Z]+)*$/", $origin)){
         $errorMessages["origin"] = "Please enter a valid origin location.";
     }

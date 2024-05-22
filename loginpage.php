@@ -31,7 +31,7 @@ if (isset($_POST["username"]) && isset($_POST["password"]) && !empty($_POST["use
                 header("Location: adminHomePage.php"); // Redirect to the admin's page
                 exit;
             } else {
-                $message = "Invalid password.";
+                $message = "Invalid account.";
             }
         } else {
             // Prepare and execute query for driver login
@@ -49,10 +49,10 @@ if (isset($_POST["username"]) && isset($_POST["password"]) && !empty($_POST["use
                     header("Location: driverHomePage.php"); // Redirect to the driver's page
                     exit;
                 } else {
-                    $message = "Invalid password.";
+                    $message = "Invalid account.";
                 }
             } else {
-                $message = "Invalid username.";
+                $message = "Invalid account.";
             }
         }
     }
